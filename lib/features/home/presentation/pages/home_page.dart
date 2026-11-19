@@ -8,7 +8,6 @@ import '../bloc/home_state.dart';
 import '../widgets/home_attendance_card_widget.dart';
 import '../widgets/home_error_widget.dart';
 import '../widgets/home_menu_grid_widget.dart';
-import '../widgets/home_stats_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -68,6 +67,7 @@ class HomeView extends StatelessWidget {
                     // 1. Today's Attendance Card (Kehadiran Hari Ini)
                     HomeAttendanceCardWidget(
                       attendance: dashboard.todayAttendance,
+                      statistics: dashboard.statistics,
                       onClockOutTap: () {
                         context.read<HomeBloc>().add(
                               const ClockOutAttendanceEvent(
@@ -87,15 +87,8 @@ class HomeView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    // 2. Layanan Mandiri Personel (6 Modul Utama)
+                    // 2. Layanan Mandiri Personel (4 Modul Utama)
                     HomeMenuGridWidget(menus: dashboard.menus),
-                    const SizedBox(height: 20),
-
-                    // 3. Ringkasan Bulan Ini (November 2026)
-                    HomeStatsSection(
-                      statistics: dashboard.statistics,
-                      periodLabel: dashboard.summaryPeriod,
-                    ),
                   ],
                 ),
               ),

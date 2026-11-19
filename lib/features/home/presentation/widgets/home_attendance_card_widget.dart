@@ -1,16 +1,79 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../domain/entities/home_statistic.dart';
 import '../../domain/entities/today_attendance.dart';
 
 class HomeAttendanceCardWidget extends StatelessWidget {
   final TodayAttendance attendance;
+  final List<HomeStatistic>? statistics;
   final VoidCallback? onClockOutTap;
 
   const HomeAttendanceCardWidget({
     super.key,
     required this.attendance,
+    this.statistics,
     this.onClockOutTap,
   });
+
+  static const List<HomeStatistic> _defaultStatistics = [
+    HomeStatistic(
+      id: '1',
+      title: 'Saldo Cuti',
+      value: '5',
+      unit: 'Hari',
+      footer: 'Tersedia',
+      code: 'leave_balance',
+    ),
+    HomeStatistic(
+      id: '2',
+      title: 'Kehadiran',
+      value: '18',
+      unit: '/20',
+      footer: '90% Target',
+      code: 'attendance',
+    ),
+    HomeStatistic(
+      id: '3',
+      title: 'Denda Telat',
+      value: 'Rp 0',
+      footer: 'Disiplin Prima',
+      code: 'penalty',
+    ),
+  ];
+
+  String _getDisplayValue(HomeStatistic stat) {
+    if (stat.unit != null && stat.unit!.isNotEmpty) {
+      if (stat.unit!.startsWith('/')) {
+        return '${stat.value}${stat.unit}';
+      }
+      return '${stat.value} ${stat.unit}';
+    }
+    return stat.value;
+  }
+
+  String _getFooterText(HomeStatistic stat) {
+    switch (stat.code) {
+      case 'leave_balance':
+        return 'Tersedia';
+      case 'attendance':
+        return '90% Target';
+      case 'penalty':
+        return 'Disiplin Prima';
+      default:
+        return stat.footer.isNotEmpty ? stat.footer : 'Tersedia';
+    }
+  }
+
+  Color _getFooterColor(String code) {
+    switch (code) {
+      case 'attendance':
+        return const Color(0xFF2563EB); // Vibrant info blue as in design
+      case 'leave_balance':
+      case 'penalty':
+      default:
+        return const Color(0xFF15803D); // Forest green as in design
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -380,8 +443,104 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                 ),
               ),
             ),
+
+            const SizedBox(height: 12),
+
+            // 3 Summary Metric Cards (Saldo Cuti, Kehadiran, Denda Telat)
+            Builder(
+              builder: (context) {
+                final stats = (statistics != null && statistics!.isNotEmpty)
+                    ? statistics!
+                    : _defaultStatistics;
+
+                return Row(
+                  children: List.generate(stats.length, (index) {
+                    final stat = stats[index];
+                    return Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: index == 0 ? 0 : 4,
+                          right: index == stats.length - 1 ? 0 : 4,
+                        ),
+                        child: _buildMetricItem(
+                          title: stat.title,
+                          value: _getDisplayValue(stat),
+                          footer: _getFooterText(stat),
+                          footerColor: _getFooterColor(stat.code),
+                        ),
+                      ),
+                    );
+                  }),
+                );
+              },
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildMetricItem({
+    required String title,
+    required String value,
+    required String footer,
+    required Color footerColor,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(
+          color: AppColors.accentBlueBorder,
+          width: 1,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x060F172A),
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+              color: AppColors.textSecondary,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.w700,
+              color: AppColors.onSurface,
+              height: 1.1,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            footer,
+            style: TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: footerColor,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }

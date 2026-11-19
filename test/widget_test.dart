@@ -33,22 +33,34 @@ void main() {
     expect(find.text('Menunggu'), findsOneWidget);
     expect(find.text('Clock-Out Sekarang (Pulang)'), findsOneWidget);
 
-    // Verify Layanan Mandiri Personel (6 Modul Utama)
+    // Verify Layanan Mandiri Personel (4 Modul Utama)
     expect(find.text('Layanan Mandiri Personel'), findsOneWidget);
-    expect(find.text('6 Modul Utama'), findsOneWidget);
-    expect(find.text('Presensi GPS'), findsOneWidget);
-    expect(find.text('Koreksi Absen'), findsOneWidget);
+    expect(find.text('4 Modul Utama'), findsOneWidget);
+    expect(find.text('Riwayat Absen'), findsOneWidget);
     expect(find.text('Ajukan Cuti'), findsOneWidget);
     expect(find.text('Jadwal & Libur'), findsOneWidget);
     expect(find.text('Slip Payroll'), findsOneWidget);
-    expect(find.text('Approval Tim'), findsOneWidget);
 
-    // Verify Ringkasan Bulan Ini
-    expect(find.text('Ringkasan Bulan Ini'), findsOneWidget);
-    expect(find.text('November 2026'), findsOneWidget);
+    // Verify removed modules
+    expect(find.text('Presensi GPS'), findsNothing);
+    expect(find.text('Approval Tim'), findsNothing);
+    expect(find.text('Koreksi Absen'), findsNothing);
+    expect(find.text('Riwayat Cuti'), findsNothing);
+
+    // Verify Summary Cards integrated inside Today's Attendance Card
     expect(find.text('Saldo Cuti'), findsOneWidget);
+    expect(find.text('5 Hari'), findsOneWidget);
+    expect(find.text('Tersedia'), findsOneWidget);
     expect(find.text('Kehadiran'), findsOneWidget);
+    expect(find.text('18/20'), findsOneWidget);
+    expect(find.text('90% Target'), findsOneWidget);
     expect(find.text('Denda Telat'), findsOneWidget);
+    expect(find.text('Rp 0'), findsOneWidget);
+    expect(find.text('Disiplin Prima'), findsOneWidget);
+
+    // Verify 'Ringkasan Bulan Ini' section has been removed
+    expect(find.text('Ringkasan Bulan Ini'), findsNothing);
+    expect(find.text('November 2026'), findsNothing);
   });
 
   testWidgets(

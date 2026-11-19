@@ -17,9 +17,12 @@ class HomeMenuGridWidget extends StatelessWidget {
       case 'gps':
         return Icons.location_on_outlined;
       case 'koreksi':
-        return Icons.edit_calendar_outlined;
+      case 'riwayat_absen':
+      case 'history':
+        return Icons.history_rounded;
       case 'cuti':
-        return Icons.calendar_today_outlined;
+      case 'riwayat_cuti':
+        return Icons.event_note_outlined;
       case 'jadwal':
         return Icons.calendar_month_outlined;
       case 'payroll':
