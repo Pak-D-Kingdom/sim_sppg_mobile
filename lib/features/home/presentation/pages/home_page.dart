@@ -6,12 +6,8 @@ import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
 import '../widgets/home_attendance_card_widget.dart';
-import '../widgets/home_bottom_nav_widget.dart';
 import '../widgets/home_error_widget.dart';
-import '../widgets/home_header_widget.dart';
 import '../widgets/home_menu_grid_widget.dart';
-import '../widgets/home_operational_alert_widget.dart';
-import '../widgets/home_quality_banner_widget.dart';
 import '../widgets/home_stats_section.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,22 +15,20 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<HomeBloc>()..add(const LoadHomeDashboardEvent()),
-      child: const HomeView(),
-    );
+    try {
+      context.read<HomeBloc>();
+      return const HomeView();
+    } catch (_) {
+      return BlocProvider(
+        create: (_) => sl<HomeBloc>()..add(const LoadHomeDashboardEvent()),
+        child: const HomeView(),
+      );
+    }
   }
 }
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   const HomeView({super.key});
-
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
-  int _currentNavIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -67,40 +61,11 @@ class _HomeViewState extends State<HomeView> {
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(0, 8, 0, 96),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 1. Top AppBar & User Profile Card
-                    HomeHeaderWidget(
-                      appTitle: dashboard.appTitle,
-                      appVersion: dashboard.appVersion,
-                      agencyName: dashboard.agencyName,
-                      userName: dashboard.userName,
-                      userNik: dashboard.userNik,
-                      userRole: dashboard.userRole,
-                      employmentBadge: dashboard.employmentBadge,
-                      locationBadge: dashboard.locationBadge,
-                      unreadNotifications: dashboard.unreadNotifications,
-                      onNotificationTap: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              '${dashboard.unreadNotifications} notifikasi operasional baru',
-                            ),
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 16),
-
-                    // 2. Operational Warning Banner (Peringatan Operasional)
-                    HomeOperationalAlertWidget(
-                      alert: dashboard.operationalAlert,
-                    ),
-                    const SizedBox(height: 16),
-
-                    // 3. Today's Attendance Card (Kehadiran Hari Ini)
+                    // 1. Today's Attendance Card (Kehadiran Hari Ini)
                     HomeAttendanceCardWidget(
                       attendance: dashboard.todayAttendance,
                       onClockOutTap: () {
@@ -120,22 +85,17 @@ class _HomeViewState extends State<HomeView> {
                         );
                       },
                     ),
-                    const SizedBox(height: 22),
+                    const SizedBox(height: 20),
 
-                    // 4. Layanan Mandiri Personel (6 Modul Utama)
+                    // 2. Layanan Mandiri Personel (6 Modul Utama)
                     HomeMenuGridWidget(menus: dashboard.menus),
-                    const SizedBox(height: 22),
+                    const SizedBox(height: 20),
 
-                    // 5. Ringkasan Bulan Ini (November 2026)
+                    // 3. Ringkasan Bulan Ini (November 2026)
                     HomeStatsSection(
                       statistics: dashboard.statistics,
                       periodLabel: dashboard.summaryPeriod,
                     ),
-                    const SizedBox(height: 18),
-
-                    // 6. Standar Mutu SPPG Quality Banner
-                    HomeQualityBannerWidget(banner: dashboard.qualityBanner),
-                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -143,24 +103,6 @@ class _HomeViewState extends State<HomeView> {
           }
 
           return const SizedBox.shrink();
-        },
-      ),
-      bottomNavigationBar: HomeBottomNavWidget(
-        currentIndex: _currentNavIndex,
-        onTap: (index) {
-          setState(() {
-            _currentNavIndex = index;
-          });
-          if (index != 0) {
-            final labels = ['Beranda', 'Presensi', 'Jadwal', 'Payroll', 'Akun'];
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Navigasi ke modul ${labels[index]}'),
-                duration: const Duration(milliseconds: 800),
-                behavior: SnackBarBehavior.floating,
-              ),
-            );
-          }
         },
       ),
     );

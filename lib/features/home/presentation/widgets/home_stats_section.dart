@@ -12,38 +12,40 @@ class HomeStatsSection extends StatelessWidget {
     this.periodLabel = 'November 2026',
   });
 
-  Color _getAccentColor(String code) {
-    switch (code) {
-      case 'attendance':
-        return AppColors.secondary;
-      case 'leave_balance':
-      case 'penalty':
-      default:
-        return AppColors.primary;
-    }
-  }
-
-  Color _getIconBgColor(String code) {
-    switch (code) {
-      case 'attendance':
-        return AppColors.secondarySoft;
-      case 'leave_balance':
-      case 'penalty':
-      default:
-        return AppColors.primarySoft;
-    }
-  }
-
   IconData _getIconForCode(String code) {
     switch (code) {
       case 'leave_balance':
-        return Icons.favorite_border_rounded;
+        return Icons.edit_calendar_outlined;
       case 'attendance':
-        return Icons.check_box_outlined;
+        return Icons.check_circle_outline;
       case 'penalty':
-        return Icons.verified_user_rounded;
+        return Icons.shield_outlined;
       default:
         return Icons.analytics_outlined;
+    }
+  }
+
+  Color _getFooterColor(String code) {
+    switch (code) {
+      case 'attendance':
+        return AppColors.primary;
+      case 'leave_balance':
+      case 'penalty':
+      default:
+        return AppColors.tertiary;
+    }
+  }
+
+  String _getFooterText(HomeStatistic stat) {
+    switch (stat.code) {
+      case 'leave_balance':
+        return 'Tersedia';
+      case 'attendance':
+        return '90% Target';
+      case 'penalty':
+        return 'Disiplin Prima';
+      default:
+        return stat.footer;
     }
   }
 
@@ -52,18 +54,18 @@ class HomeStatsSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Section Header Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 'Ringkasan Bulan Ini',
                 style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AppColors.onSurface,
                   letterSpacing: -0.2,
                 ),
@@ -71,7 +73,7 @@ class HomeStatsSection extends StatelessWidget {
               Text(
                 periodLabel,
                 style: const TextStyle(
-                  fontSize: 11.5,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary,
                 ),
@@ -80,15 +82,24 @@ class HomeStatsSection extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
+
+        // 3-Column Metrics Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: List.generate(statistics.length, (index) {
               final stat = statistics[index];
-              final accentColor = _getAccentColor(stat.code);
-              final iconBgColor = _getIconBgColor(stat.code);
               final icon = _getIconForCode(stat.code);
-              final isPenalty = stat.code == 'penalty';
+              final footerColor = _getFooterColor(stat.code);
+              final footerText = _getFooterText(stat);
+
+              // Concatenate value and unit cleanly (e.g. "5 Hari", "18/20", "Rp 0")
+              final String displayValue =
+                  stat.unit != null && stat.unit!.isNotEmpty
+                      ? (stat.unit!.startsWith('/')
+                          ? '${stat.value}${stat.unit}'
+                          : '${stat.value} ${stat.unit}')
+                      : stat.value;
 
               return Expanded(
                 child: Padding(
@@ -97,89 +108,88 @@ class HomeStatsSection extends StatelessWidget {
                     right: index == statistics.length - 1 ? 0 : 5,
                   ),
                   child: Container(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 4,
+                      vertical: 12,
+                    ),
                     decoration: BoxDecoration(
-                      color: AppColors.cardBg,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.border, width: 1),
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: AppColors.border,
+                        width: 1,
+                      ),
                       boxShadow: const [
                         BoxShadow(
                           color: Color(0x060F172A),
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
+                          blurRadius: 4,
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        // Centered 32x32 Light Blue Container
                         Container(
-                          width: 28,
-                          height: 28,
+                          width: 32,
+                          height: 32,
                           decoration: BoxDecoration(
-                            color: iconBgColor,
+                            color: AppColors.surfaceContainerLow,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
                             child: Icon(
                               icon,
-                              size: 16,
-                              color: accentColor,
+                              size: 18,
+                              color: AppColors.primary,
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 8),
+
+                        // Title
                         Text(
                           stat.title,
+                          textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w500,
                             color: AppColors.textSecondary,
+                            height: 1.2,
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                stat.value,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w800,
-                                  color: isPenalty
-                                      ? AppColors.primary
-                                      : AppColors.onSurface,
-                                ),
-                              ),
-                            ),
-                            if (stat.unit != null && stat.unit!.isNotEmpty) ...[
-                              const SizedBox(width: 2),
-                              Text(
-                                stat.unit!,
-                                style: const TextStyle(
-                                  fontSize: 11.5,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.textSecondary,
-                                ),
-                              ),
-                            ],
-                          ],
+
+                        // Value
+                        Text(
+                          displayValue,
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.onSurface,
+                            height: 1.2,
+                          ),
                         ),
                         const SizedBox(height: 6),
+
+                        // Footer Status Text
                         Text(
-                          stat.footer,
+                          footerText,
+                          textAlign: TextAlign.center,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
-                            color: accentColor,
+                            color: footerColor,
+                            height: 1.2,
                           ),
                         ),
                       ],

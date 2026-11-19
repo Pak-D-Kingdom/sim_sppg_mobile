@@ -1,6 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'core/theme/app_theme.dart';
-import 'features/home/presentation/pages/home_page.dart';
+import 'features/main/presentation/pages/main_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'SIM SPPG Mobile',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const HomePage(),
+      home: const MainPage(),
     );
   }
 }

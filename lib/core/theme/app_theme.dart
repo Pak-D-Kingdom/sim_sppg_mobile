@@ -5,13 +5,14 @@ class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
+      fontFamily: 'Poppins',
       colorScheme: const ColorScheme.light(
         primary: AppColors.primary,
         onPrimary: AppColors.onPrimary,
         primaryContainer: AppColors.primaryContainer,
         secondary: AppColors.secondary,
         onSecondary: Colors.white,
-        secondaryContainer: AppColors.secondaryFixed,
+        secondaryContainer: AppColors.secondaryContainer,
         tertiary: AppColors.tertiary,
         error: AppColors.error,
         surface: AppColors.surface,
@@ -47,7 +48,7 @@ class AppTheme {
           minimumSize: const Size.fromHeight(48),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12),
           ),
           textStyle: const TextStyle(
             fontSize: 14,

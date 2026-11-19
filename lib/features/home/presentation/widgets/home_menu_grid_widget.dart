@@ -17,59 +17,29 @@ class HomeMenuGridWidget extends StatelessWidget {
       case 'gps':
         return Icons.location_on_outlined;
       case 'koreksi':
-        return Icons.event_available_outlined;
+        return Icons.edit_calendar_outlined;
       case 'cuti':
-        return Icons.date_range_outlined;
+        return Icons.calendar_today_outlined;
       case 'jadwal':
         return Icons.calendar_month_outlined;
       case 'payroll':
-        return Icons.receipt_long_outlined;
+        return Icons.payments_outlined;
       case 'approval':
-        return Icons.task_outlined;
+        return Icons.fact_check_outlined;
       default:
         return Icons.grid_view_rounded;
     }
   }
 
-  Color _getIconColor(String theme) {
-    switch (theme) {
-      case 'blue':
-        return AppColors.secondary;
-      case 'amber':
-        return AppColors.tertiary;
-      case 'red':
-        return AppColors.error;
-      case 'green':
-      default:
-        return AppColors.primary;
-    }
-  }
-
-  Color _getIconBgColor(String theme) {
-    switch (theme) {
-      case 'blue':
-        return AppColors.secondarySoft;
-      case 'amber':
-        return const Color(0xFFFFF3E6);
-      case 'red':
-        return AppColors.errorSoft;
-      case 'green':
-      default:
-        return AppColors.primarySoft;
-    }
-  }
-
   Widget _buildBadge(String badgeText, String theme) {
-    final bool isUrgentRed = theme == 'red';
-    final Color bgColor = isUrgentRed
-        ? AppColors.error
-        : (theme == 'blue' ? AppColors.secondarySoft : AppColors.primarySoft);
-    final Color textColor = isUrgentRed
-        ? Colors.white
-        : (theme == 'blue' ? AppColors.secondary : AppColors.primary);
+    final bool isPending = badgeText.contains('Pending') || theme == 'red';
+    final Color bgColor =
+        isPending ? AppColors.errorContainer : AppColors.secondaryContainer;
+    final Color textColor =
+        isPending ? AppColors.error : const Color(0xFF1E3A8A);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2.5),
       decoration: BoxDecoration(
         color: bgColor,
         borderRadius: BorderRadius.circular(999),
@@ -80,6 +50,7 @@ class HomeMenuGridWidget extends StatelessWidget {
           fontSize: 10,
           fontWeight: FontWeight.w700,
           color: textColor,
+          height: 1.15,
         ),
       ),
     );
@@ -90,18 +61,18 @@ class HomeMenuGridWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // Section Header Row
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.baseline,
-            textBaseline: TextBaseline.alphabetic,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
                 'Layanan Mandiri Personel',
                 style: TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   color: AppColors.onSurface,
                   letterSpacing: -0.2,
                 ),
@@ -109,7 +80,7 @@ class HomeMenuGridWidget extends StatelessWidget {
               Text(
                 '${menus.length} Modul Utama',
                 style: const TextStyle(
-                  fontSize: 11.5,
+                  fontSize: 12,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary,
                 ),
@@ -118,6 +89,8 @@ class HomeMenuGridWidget extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 12),
+
+        // 2x3 Grid
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: GridView.builder(
@@ -128,15 +101,13 @@ class HomeMenuGridWidget extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: 12,
               mainAxisSpacing: 12,
-              childAspectRatio: 1.42,
+              childAspectRatio: 1.40,
             ),
             itemBuilder: (context, index) {
               final menu = menus[index];
-              final iconColor = _getIconColor(menu.theme);
-              final iconBgColor = _getIconBgColor(menu.theme);
 
               return Material(
-                color: AppColors.cardBg,
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(16),
@@ -157,12 +128,15 @@ class HomeMenuGridWidget extends StatelessWidget {
                     padding: const EdgeInsets.all(14),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: AppColors.border, width: 1),
+                      border: Border.all(
+                        color: AppColors.border,
+                        width: 1,
+                      ),
                       boxShadow: const [
                         BoxShadow(
                           color: Color(0x060F172A),
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
+                          blurRadius: 4,
+                          offset: Offset(0, 1),
                         ),
                       ],
                     ),
@@ -170,22 +144,23 @@ class HomeMenuGridWidget extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // Top row: Icon box & Badge
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              width: 38,
-                              height: 38,
+                              width: 40,
+                              height: 40,
                               decoration: BoxDecoration(
-                                color: iconBgColor,
-                                borderRadius: BorderRadius.circular(10),
+                                color: AppColors.surfaceContainerLow,
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               child: Center(
                                 child: Icon(
                                   _getIconData(menu.icon),
-                                  color: iconColor,
-                                  size: 20,
+                                  color: AppColors.primary,
+                                  size: 22,
                                 ),
                               ),
                             ),
@@ -194,17 +169,21 @@ class HomeMenuGridWidget extends StatelessWidget {
                               _buildBadge(menu.badgeText!, menu.theme),
                           ],
                         ),
+
+                        // Bottom labels
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
                               menu.title,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
-                                fontSize: 13.5,
-                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
                                 color: AppColors.onSurface,
+                                height: 1.2,
                               ),
                             ),
                             const SizedBox(height: 2),
@@ -216,6 +195,7 @@ class HomeMenuGridWidget extends StatelessWidget {
                                 fontSize: 11,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.textSecondary,
+                                height: 1.2,
                               ),
                             ),
                           ],
