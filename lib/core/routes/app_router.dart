@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../constants/app_colors.dart';
+import '../../features/jadwal/presentation/pages/jadwal_page.dart';
 import '../../features/main/presentation/pages/main_page.dart';
 import '../../features/notification/presentation/pages/notification_page.dart';
 import 'app_routes.dart';
@@ -45,12 +46,7 @@ class AppRouter {
 
       case AppRoutes.jadwal:
         return MaterialPageRoute(
-          builder: (_) => const _ModulePlaceholderScreen(
-            title: 'Jadwal & Libur',
-            description:
-                'Kalender shift kerja, rotasi regu, dan jadwal libur SPPG.',
-            icon: Icons.calendar_month_outlined,
-          ),
+          builder: (_) => const JadwalPage(),
           settings: settings,
         );
 

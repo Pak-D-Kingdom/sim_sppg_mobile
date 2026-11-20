@@ -6,6 +6,12 @@ import 'features/home/data/repositories/home_repository_impl.dart';
 import 'features/home/domain/repositories/home_repository.dart';
 import 'features/home/domain/usecases/get_home_dashboard.dart';
 import 'features/home/presentation/bloc/home_bloc.dart';
+import 'features/jadwal/data/datasources/jadwal_remote_data_source.dart';
+import 'features/jadwal/data/datasources/jadwal_remote_data_source_impl.dart';
+import 'features/jadwal/data/repositories/jadwal_repository_impl.dart';
+import 'features/jadwal/domain/repositories/jadwal_repository.dart';
+import 'features/jadwal/domain/usecases/get_jadwal.dart';
+import 'features/jadwal/presentation/bloc/jadwal_bloc.dart';
 import 'features/notification/data/datasources/notification_remote_data_source.dart';
 import 'features/notification/data/datasources/notification_remote_data_source_impl.dart';
 import 'features/notification/data/repositories/notification_repository_impl.dart';
@@ -68,6 +74,31 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<HomeRemoteDataSource>(
     () => HomeRemoteDataSourceImpl(
+      dioClient: sl(),
+    ),
+  );
+
+  //! Features - Jadwal
+  // Bloc
+  sl.registerFactory(
+    () => JadwalBloc(
+      getJadwal: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetJadwal(sl()));
+
+  // Repository
+  sl.registerLazySingleton<JadwalRepository>(
+    () => JadwalRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<JadwalRemoteDataSource>(
+    () => JadwalRemoteDataSourceImpl(
       dioClient: sl(),
     ),
   );

@@ -6,6 +6,9 @@ import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../../home/presentation/bloc/home_event.dart';
 import '../../../home/presentation/bloc/home_state.dart';
 import '../../../home/presentation/pages/home_page.dart';
+import '../../../jadwal/presentation/bloc/jadwal_bloc.dart';
+import '../../../jadwal/presentation/bloc/jadwal_event.dart';
+import '../../../jadwal/presentation/pages/jadwal_page.dart';
 import '../widgets/main_bottom_nav_widget.dart';
 import '../widgets/main_top_bar_widget.dart';
 
@@ -14,8 +17,15 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<HomeBloc>()..add(const LoadHomeDashboardEvent()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => sl<HomeBloc>()..add(const LoadHomeDashboardEvent()),
+        ),
+        BlocProvider(
+          create: (_) => sl<JadwalBloc>()..add(const LoadJadwalEvent()),
+        ),
+      ],
       child: const _MainPageContent(),
     );
   }
@@ -33,11 +43,7 @@ class _MainPageContentState extends State<_MainPageContent> {
 
   final List<Widget> _pages = const [
     HomePage(),
-    _PlaceholderTabScreen(
-      title: 'Jadwal & Shift',
-      description: 'Manajemen jadwal shift dan rotasi tim dapur sentral.',
-      icon: Icons.calendar_today_outlined,
-    ),
+    JadwalPage(),
     _PlaceholderTabScreen(
       title: 'Presensi Scan (QR & GPS)',
       description: 'Fitur presensi scan QR dapur dan verifikasi biometrik.',
@@ -61,19 +67,20 @@ class _MainPageContentState extends State<_MainPageContent> {
       backgroundColor: AppColors.background,
       body: Column(
         children: [
-          // Dynamic Top Bar matching the design
-          BlocBuilder<HomeBloc, HomeState>(
-            builder: (context, state) {
-              if (state is HomeLoaded) {
-                return MainTopBarWidget(
-                  userName: state.dashboard.userName,
-                  locationBadge: 'SPPG Rawamangun 01',
-                  unreadNotifications: state.dashboard.unreadNotifications,
-                );
-              }
-              return const MainTopBarWidget();
-            },
-          ),
+          // Dynamic Top Bar shown on Home tab
+          if (_currentIndex == 0)
+            BlocBuilder<HomeBloc, HomeState>(
+              builder: (context, state) {
+                if (state is HomeLoaded) {
+                  return MainTopBarWidget(
+                    userName: state.dashboard.userName,
+                    locationBadge: 'SPPG Rawamangun 01',
+                    unreadNotifications: state.dashboard.unreadNotifications,
+                  );
+                }
+                return const MainTopBarWidget();
+              },
+            ),
 
           // Active Screen
           Expanded(
