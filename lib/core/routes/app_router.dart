@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../constants/app_colors.dart';
+import '../../features/cuti/main/presentation/pages/main_cuti_page.dart';
 import '../../features/jadwal/presentation/pages/jadwal_page.dart';
 import '../../features/main/presentation/pages/main_page.dart';
 import '../../features/notification/presentation/pages/notification_page.dart';
@@ -35,12 +36,7 @@ class AppRouter {
 
       case AppRoutes.ajukanCuti:
         return MaterialPageRoute(
-          builder: (_) => const _ModulePlaceholderScreen(
-            title: 'Ajukan Cuti',
-            description:
-                'Formulir pengajuan cuti tahunan, sakit, dan izin dinas.',
-            icon: Icons.calendar_today_outlined,
-          ),
+          builder: (_) => const MainCutiPage(),
           settings: settings,
         );
 

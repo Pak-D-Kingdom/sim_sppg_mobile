@@ -10,4 +10,5 @@ class ApiEndpoints {
   static const String userProfile = '/user/profile';
   static const String notifications = '/notifications';
   static const String jadwal = '/jadwal';
+  static const String cuti = '/cuti';
 }

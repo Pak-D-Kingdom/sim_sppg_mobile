@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../domain/entities/jadwal_summary.dart';
 
 class JadwalSummaryCardsWidget extends StatelessWidget {
@@ -41,6 +42,9 @@ class JadwalSummaryCardsWidget extends StatelessWidget {
             value: summary.kuotaCuti,
             valueColor: const Color(0xFF7C3AED),
             subtitle: summary.sisaCuti,
+            onTap: () {
+              Navigator.pushNamed(context, AppRoutes.ajukanCuti);
+            },
           ),
         ),
       ],
@@ -52,8 +56,9 @@ class JadwalSummaryCardsWidget extends StatelessWidget {
     required String value,
     required Color valueColor,
     String? subtitle,
+    VoidCallback? onTap,
   }) {
-    return Container(
+    final cardContent = Container(
       height: 88,
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
       decoration: BoxDecoration(
@@ -114,5 +119,15 @@ class JadwalSummaryCardsWidget extends StatelessWidget {
         ],
       ),
     );
+
+    if (onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: cardContent,
+      );
+    }
+
+    return cardContent;
   }
 }
