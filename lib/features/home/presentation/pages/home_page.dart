@@ -88,7 +88,12 @@ class HomeView extends StatelessWidget {
                     const SizedBox(height: 20),
 
                     // 2. Layanan Mandiri Personel (4 Modul Utama)
-                    HomeMenuGridWidget(menus: dashboard.menus),
+                    HomeMenuGridWidget(
+                      menus: dashboard.menus,
+                      onMenuTap: (menu) {
+                        Navigator.pushNamed(context, menu.route);
+                      },
+                    ),
                   ],
                 ),
               ),

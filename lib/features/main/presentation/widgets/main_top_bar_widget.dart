@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/routes/app_routes.dart';
 
 class MainTopBarWidget extends StatelessWidget {
   final String userName;
@@ -146,14 +147,7 @@ class MainTopBarWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                   onTap: onNotificationTap ??
                       () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              '$unreadNotifications notifikasi operasional baru',
-                            ),
-                            behavior: SnackBarBehavior.floating,
-                          ),
-                        );
+                        Navigator.pushNamed(context, AppRoutes.notification);
                       },
                   child: Container(
                     width: 40,

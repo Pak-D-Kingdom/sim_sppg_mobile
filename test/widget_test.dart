@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sim_sppg_mobile/features/home/presentation/pages/home_page.dart';
 import 'package:sim_sppg_mobile/features/main/presentation/widgets/main_bottom_nav_widget.dart';
 import 'package:sim_sppg_mobile/injection_container.dart' as di;
@@ -91,5 +92,23 @@ void main() {
     // Verify Dashboard elements are visible again
     expect(find.text('Siti Rahmawati, A.Md.Gz'), findsOneWidget);
     expect(find.text('Layanan Mandiri Personel'), findsOneWidget);
+  });
+
+  testWidgets(
+      'Navigates to NotificationPage when notification bell icon is tapped',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(const MyApp());
+    await tester.pumpAndSettle();
+
+    // Tap notification bell icon in TopBar
+    final bellFinder = find.byIcon(Icons.notifications_none_rounded);
+    expect(bellFinder, findsOneWidget);
+    await tester.tap(bellFinder);
+    await tester.pumpAndSettle();
+
+    // Verify NotificationPage is rendered
+    expect(find.text('Notifikasi'), findsOneWidget);
+    expect(find.text('Tandai dibaca'), findsOneWidget);
+    expect(find.text('HARI INI'), findsOneWidget);
   });
 }

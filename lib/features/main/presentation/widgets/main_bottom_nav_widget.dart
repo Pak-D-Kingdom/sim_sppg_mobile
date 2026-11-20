@@ -5,6 +5,8 @@ class MainBottomNavWidget extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
+  static const Color _activeBlue = Color(0xFF2563EB);
+
   const MainBottomNavWidget({
     super.key,
     required this.currentIndex,
@@ -130,8 +132,7 @@ class MainBottomNavWidget extends StatelessWidget {
     required String tooltip,
   }) {
     final bool isSelected = currentIndex == index;
-    final Color itemColor =
-        isSelected ? AppColors.onSurface : AppColors.textSecondary;
+    final Color itemColor = isSelected ? _activeBlue : AppColors.textSecondary;
 
     return Expanded(
       child: Tooltip(
@@ -140,25 +141,49 @@ class MainBottomNavWidget extends StatelessWidget {
           onTap: () => onTap(index),
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                isSelected ? activeIcon : icon,
-                size: 22,
-                color: itemColor,
-              ),
-              const SizedBox(height: 3),
-              Text(
-                label,
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                  color: itemColor,
-                  height: 1.2,
+          child: SizedBox(
+            height: 62,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                // Indikator garis atas saat menu aktif (dipilih)
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  width: isSelected ? 34 : 0,
+                  height: 3.5,
+                  decoration: BoxDecoration(
+                    color: isSelected ? _activeBlue : Colors.transparent,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
                 ),
-              ),
-            ],
+
+                // Icon dan label navigasi
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        isSelected ? activeIcon : icon,
+                        size: 22,
+                        color: itemColor,
+                      ),
+                      const SizedBox(height: 3),
+                      Text(
+                        label,
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight:
+                              isSelected ? FontWeight.w700 : FontWeight.w500,
+                          color: itemColor,
+                          height: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
