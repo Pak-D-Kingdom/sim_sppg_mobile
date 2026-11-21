@@ -21,27 +21,31 @@ class JadwalLoaded extends JadwalState {
   final JadwalData data;
   final DateTime selectedDate;
   final JadwalDay selectedDay;
+  final bool isCalendarLoading;
 
   const JadwalLoaded({
     required this.data,
     required this.selectedDate,
     required this.selectedDay,
+    this.isCalendarLoading = false,
   });
 
   JadwalLoaded copyWith({
     JadwalData? data,
     DateTime? selectedDate,
     JadwalDay? selectedDay,
+    bool? isCalendarLoading,
   }) {
     return JadwalLoaded(
       data: data ?? this.data,
       selectedDate: selectedDate ?? this.selectedDate,
       selectedDay: selectedDay ?? this.selectedDay,
+      isCalendarLoading: isCalendarLoading ?? this.isCalendarLoading,
     );
   }
 
   @override
-  List<Object?> get props => [data, selectedDate, selectedDay];
+  List<Object?> get props => [data, selectedDate, selectedDay, isCalendarLoading];
 }
 
 class JadwalError extends JadwalState {

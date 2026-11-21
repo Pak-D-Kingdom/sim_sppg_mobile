@@ -12,6 +12,7 @@ class JadwalCalendarWidget extends StatelessWidget {
   final ValueChanged<DateTime> onSelectDate;
   final VoidCallback onPreviousMonth;
   final VoidCallback onNextMonth;
+  final bool isLoading;
 
   const JadwalCalendarWidget({
     super.key,
@@ -23,6 +24,7 @@ class JadwalCalendarWidget extends StatelessWidget {
     required this.onSelectDate,
     required this.onPreviousMonth,
     required this.onNextMonth,
+    this.isLoading = false,
   });
 
   static const List<String> _weekdays = [
@@ -77,23 +79,44 @@ class JadwalCalendarWidget extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.chevron_left_rounded, size: 22),
-                color: AppColors.onSurface,
-                onPressed: onPreviousMonth,
+                color: isLoading
+                    ? AppColors.textSecondary.withValues(alpha: 0.3)
+                    : AppColors.onSurface,
+                onPressed: isLoading ? null : onPreviousMonth,
                 visualDensity: VisualDensity.compact,
                 splashRadius: 20,
               ),
-              Text(
-                currentMonthYear,
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.onSurface,
-                ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    currentMonthYear,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.onSurface,
+                    ),
+                  ),
+                  if (isLoading) ...[
+                    const SizedBox(width: 8),
+                    const SizedBox(
+                      width: 14,
+                      height: 14,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Color(0xFF2563EB)),
+                      ),
+                    ),
+                  ],
+                ],
               ),
               IconButton(
                 icon: const Icon(Icons.chevron_right_rounded, size: 22),
-                color: AppColors.onSurface,
-                onPressed: onNextMonth,
+                color: isLoading
+                    ? AppColors.textSecondary.withValues(alpha: 0.3)
+                    : AppColors.onSurface,
+                onPressed: isLoading ? null : onNextMonth,
                 visualDensity: VisualDensity.compact,
                 splashRadius: 20,
               ),
@@ -120,8 +143,12 @@ class JadwalCalendarWidget extends StatelessWidget {
           ),
           const SizedBox(height: 10),
 
-          // 3. Dates Grid
-          _buildDatesGrid(startOffset),
+          // 3. Dates Grid with smooth opacity during month change
+          AnimatedOpacity(
+            opacity: isLoading ? 0.35 : 1.0,
+            duration: const Duration(milliseconds: 180),
+            child: _buildDatesGrid(startOffset),
+          ),
 
           const SizedBox(height: 14),
           const Divider(color: Color(0xFFF1F5F9), height: 1),

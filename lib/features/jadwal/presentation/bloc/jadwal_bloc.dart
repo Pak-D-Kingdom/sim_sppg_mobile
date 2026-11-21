@@ -89,6 +89,8 @@ class JadwalBloc extends Bloc<JadwalEvent, JadwalState> {
   ) async {
     final currentState = state;
     if (currentState is JadwalLoaded) {
+      if (currentState.isCalendarLoading) return;
+
       int newMonth = currentState.data.currentMonth + event.offset;
       int newYear = currentState.data.currentYear;
 
@@ -100,10 +102,15 @@ class JadwalBloc extends Bloc<JadwalEvent, JadwalState> {
         newYear += 1;
       }
 
-      emit(const JadwalLoading());
-      final result = await getJadwal(GetJadwalParams(month: newMonth, year: newYear));
+      // Hanya tandai kalender yang sedang me-load, tanpa mereset halaman
+      emit(currentState.copyWith(isCalendarLoading: true));
+
+      final result =
+          await getJadwal(GetJadwalParams(month: newMonth, year: newYear));
       result.fold(
-        (failure) => emit(JadwalError(message: failure.message)),
+        (failure) {
+          emit(currentState.copyWith(isCalendarLoading: false));
+        },
         (data) {
           final targetDay = data.days.isNotEmpty ? data.days.first : null;
           if (targetDay != null) {
@@ -112,10 +119,11 @@ class JadwalBloc extends Bloc<JadwalEvent, JadwalState> {
                 data: data,
                 selectedDate: targetDay.date,
                 selectedDay: targetDay,
+                isCalendarLoading: false,
               ),
             );
           } else {
-            emit(const JadwalError(message: 'Data jadwal tidak ditemukan.'));
+            emit(currentState.copyWith(isCalendarLoading: false));
           }
         },
       );

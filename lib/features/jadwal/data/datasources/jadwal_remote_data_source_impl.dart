@@ -36,8 +36,8 @@ class JadwalRemoteDataSourceImpl implements JadwalRemoteDataSource {
   }
 
   JadwalDataModel _generateSampleJadwalData(int month, int year) {
-    // Generate dates for November 2026 exactly matching the reference design
-    const int totalDays = 30;
+    // Generate dates dynamically based on days in month
+    final int totalDays = DateTime(year, month + 1, 0).day;
     final List<JadwalDay> days = [];
 
     final indonesianDayNames = [

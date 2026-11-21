@@ -78,57 +78,68 @@ class _JadwalPageView extends StatelessWidget {
                 ),
               );
             } else if (state is JadwalLoaded) {
-              return SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 1. Header (Title & Subtitle)
-                    JadwalHeaderWidget(
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Fixed / Sticky Top Bar (Tidak ikut ter-scroll)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
+                    child: JadwalHeaderWidget(
                       title: state.data.title,
                       location: state.data.location,
                       showBackButton: canPop,
                     ),
-                    const SizedBox(height: 16),
+                  ),
 
-                    // 2. Summary Metric Cards (Hari Kerja, Libur/Off, Kuota Cuti)
-                    JadwalSummaryCardsWidget(
-                      summary: state.data.summary,
-                    ),
-                    const SizedBox(height: 16),
+                  // Konten yang dapat di-scroll
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(16, 4, 16, 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 2. Summary Metric Cards (Hari Kerja, Libur/Off, Kuota Cuti)
+                          JadwalSummaryCardsWidget(
+                            summary: state.data.summary,
+                          ),
+                          const SizedBox(height: 16),
 
-                    // 3. Calendar Card with Legend
-                    JadwalCalendarWidget(
-                      currentMonthYear: state.data.currentMonthYear,
-                      currentMonth: state.data.currentMonth,
-                      currentYear: state.data.currentYear,
-                      days: state.data.days,
-                      selectedDate: state.selectedDate,
-                      onSelectDate: (date) {
-                        context
-                            .read<JadwalBloc>()
-                            .add(SelectJadwalDateEvent(date));
-                      },
-                      onPreviousMonth: () {
-                        context
-                            .read<JadwalBloc>()
-                            .add(const ChangeMonthEvent(-1));
-                      },
-                      onNextMonth: () {
-                        context
-                            .read<JadwalBloc>()
-                            .add(const ChangeMonthEvent(1));
-                      },
-                    ),
-                    const SizedBox(height: 16),
+                          // 3. Calendar Card with Legend
+                          JadwalCalendarWidget(
+                            currentMonthYear: state.data.currentMonthYear,
+                            currentMonth: state.data.currentMonth,
+                            currentYear: state.data.currentYear,
+                            days: state.data.days,
+                            selectedDate: state.selectedDate,
+                            isLoading: state.isCalendarLoading,
+                            onSelectDate: (date) {
+                              context
+                                  .read<JadwalBloc>()
+                                  .add(SelectJadwalDateEvent(date));
+                            },
+                            onPreviousMonth: () {
+                              context
+                                  .read<JadwalBloc>()
+                                  .add(const ChangeMonthEvent(-1));
+                            },
+                            onNextMonth: () {
+                              context
+                                  .read<JadwalBloc>()
+                                  .add(const ChangeMonthEvent(1));
+                            },
+                          ),
+                          const SizedBox(height: 16),
 
-                    // 4. Detail Card for the Selected Date
-                    JadwalDetailCardWidget(
-                      day: state.selectedDay,
+                          // 4. Detail Card for the Selected Date
+                          JadwalDetailCardWidget(
+                            day: state.selectedDay,
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               );
             }
             return const SizedBox.shrink();
