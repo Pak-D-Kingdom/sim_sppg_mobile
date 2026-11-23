@@ -63,15 +63,15 @@ class HomeRemoteDataSourceImpl implements HomeRemoteDataSource {
         HomeMenuModel(
           id: 'm1',
           title: 'Riwayat Absen',
-          subtitle: 'Catatan log kehadiran',
+          subtitle: 'Log kehadiran & koreksi',
           icon: 'riwayat_absen',
           route: '/presensi/riwayat',
           theme: 'blue',
         ),
         HomeMenuModel(
           id: 'm2',
-          title: 'Ajukan Cuti',
-          subtitle: 'Izin sakit & tahunan',
+          title: 'Cuti & Izin',
+          subtitle: 'Tahunan, sakit & darurat',
           icon: 'cuti',
           route: '/cuti/ajukan',
           badgeText: 'Sisa 5',

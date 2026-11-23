@@ -38,7 +38,7 @@ void main() {
     expect(find.text('Layanan Mandiri Personel'), findsOneWidget);
     expect(find.text('4 Modul Utama'), findsOneWidget);
     expect(find.text('Riwayat Absen'), findsOneWidget);
-    expect(find.text('Ajukan Cuti'), findsOneWidget);
+    expect(find.text('Cuti & Izin'), findsOneWidget);
     expect(find.text('Jadwal & Libur'), findsOneWidget);
     expect(find.text('Slip Payroll'), findsOneWidget);
 

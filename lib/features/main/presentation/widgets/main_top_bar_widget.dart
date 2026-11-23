@@ -41,8 +41,8 @@ class MainTopBarWidget extends StatelessWidget {
                       clipBehavior: Clip.none,
                       children: [
                         Container(
-                          width: 46,
-                          height: 46,
+                          width: 48,
+                          height: 48,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             boxShadow: [
@@ -57,8 +57,8 @@ class MainTopBarWidget extends StatelessWidget {
                             child: avatarUrl != null && avatarUrl!.isNotEmpty
                                 ? Image.network(
                                     avatarUrl!,
-                                    width: 46,
-                                    height: 46,
+                                    width: 48,
+                                    height: 48,
                                     fit: BoxFit.cover,
                                     errorBuilder:
                                         (context, error, stackTrace) =>
@@ -72,8 +72,8 @@ class MainTopBarWidget extends StatelessWidget {
                           bottom: 0,
                           right: 0,
                           child: Container(
-                            width: 12,
-                            height: 12,
+                            width: 13,
+                            height: 13,
                             decoration: BoxDecoration(
                               color: AppColors.tertiary,
                               shape: BoxShape.circle,
@@ -94,35 +94,11 @@ class MainTopBarWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          // Location Pill
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: AppColors.accentBlue,
-                              borderRadius: BorderRadius.circular(999),
-                            ),
-                            child: Text(
-                              locationBadge,
-                              style: const TextStyle(
-                                fontSize: 11,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.onSurface,
-                                height: 1.2,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-
                           // User Name
                           Text(
                             userName,
                             style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 15.5,
                               fontWeight: FontWeight.w700,
                               color: AppColors.onSurface,
                               height: 1.25,
@@ -130,6 +106,30 @@ class MainTopBarWidget extends StatelessWidget {
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                          ),
+                          const SizedBox(height: 4),
+
+                          // Location Pill
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10,
+                              vertical: 3,
+                            ),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFDBEAFE),
+                              borderRadius: BorderRadius.circular(999),
+                            ),
+                            child: Text(
+                              locationBadge,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                fontWeight: FontWeight.w700,
+                                color: Color(0xFF1D5CE6),
+                                height: 1.2,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       ),
@@ -150,20 +150,20 @@ class MainTopBarWidget extends StatelessWidget {
                         Navigator.pushNamed(context, AppRoutes.notification);
                       },
                   child: Container(
-                    width: 40,
-                    height: 40,
+                    width: 42,
+                    height: 42,
                     decoration: BoxDecoration(
                       color: AppColors.surfaceContainerLowest,
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: AppColors.border,
+                        color: const Color(0xFFE8EEF5),
                         width: 1,
                       ),
                       boxShadow: const [
                         BoxShadow(
-                          color: Color(0x060F172A),
-                          blurRadius: 4,
-                          offset: Offset(0, 1),
+                          color: Color(0x0A0F172A),
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
                         ),
                       ],
                     ),
@@ -173,18 +173,18 @@ class MainTopBarWidget extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.notifications_none_rounded,
-                          size: 20,
-                          color: AppColors.secondary,
+                          size: 21,
+                          color: Color(0xFF1E293B),
                         ),
                         if (unreadNotifications > 0)
                           Positioned(
                             top: 8,
-                            right: 8,
+                            right: 9,
                             child: Container(
                               width: 8,
                               height: 8,
                               decoration: BoxDecoration(
-                                color: AppColors.primary,
+                                color: const Color(0xFF1D5CE6),
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   color: Colors.white,
@@ -207,8 +207,8 @@ class MainTopBarWidget extends StatelessWidget {
 
   Widget _buildAvatarFallback() {
     return Container(
-      width: 46,
-      height: 46,
+      width: 48,
+      height: 48,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
