@@ -58,6 +58,12 @@ import 'features/presensi/data/repositories/presensi_repository_impl.dart';
 import 'features/presensi/domain/repositories/presensi_repository.dart';
 import 'features/presensi/domain/usecases/submit_presensi.dart';
 import 'features/presensi/presentation/bloc/presensi_bloc.dart';
+import 'features/riwayat_absen/data/datasources/riwayat_absen_remote_data_source.dart';
+import 'features/riwayat_absen/data/datasources/riwayat_absen_remote_data_source_impl.dart';
+import 'features/riwayat_absen/data/repositories/riwayat_absen_repository_impl.dart';
+import 'features/riwayat_absen/domain/repositories/riwayat_absen_repository.dart';
+import 'features/riwayat_absen/domain/usecases/get_riwayat_absen.dart';
+import 'features/riwayat_absen/presentation/bloc/riwayat_absen_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -299,6 +305,31 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<PresensiRemoteDataSource>(
     () => PresensiRemoteDataSourceImpl(
+      dioClient: sl(),
+    ),
+  );
+
+  //! Features - Riwayat Absen
+  // Bloc
+  sl.registerFactory(
+    () => RiwayatAbsenBloc(
+      getRiwayatAbsen: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetRiwayatAbsen(sl()));
+
+  // Repository
+  sl.registerLazySingleton<RiwayatAbsenRepository>(
+    () => RiwayatAbsenRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<RiwayatAbsenRemoteDataSource>(
+    () => RiwayatAbsenRemoteDataSourceImpl(
       dioClient: sl(),
     ),
   );

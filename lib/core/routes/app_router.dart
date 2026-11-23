@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../constants/app_colors.dart';
+import '../../features/cuti/main/domain/entities/cuti_tab_type.dart';
 import '../../features/cuti/main/presentation/pages/main_cuti_page.dart';
 import '../../features/jadwal/presentation/pages/jadwal_page.dart';
 import '../../features/main/presentation/pages/main_page.dart';
@@ -9,6 +10,7 @@ import '../../features/payroll/presentation/pages/payroll_detail_slip_page.dart'
 import '../../features/payroll/presentation/pages/payroll_page.dart';
 import '../../features/presensi/domain/entities/presensi_data.dart';
 import '../../features/presensi/presentation/pages/presensi_scan_page.dart';
+import '../../features/riwayat_absen/presentation/pages/riwayat_absen_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -30,12 +32,7 @@ class AppRouter {
 
       case AppRoutes.riwayatAbsen:
         return MaterialPageRoute(
-          builder: (_) => const _ModulePlaceholderScreen(
-            title: 'Riwayat Absen',
-            description:
-                'Rekap log presensi clock-in & clock-out dapur sentral.',
-            icon: Icons.history_rounded,
-          ),
+          builder: (_) => const RiwayatAbsenPage(),
           settings: settings,
         );
 
@@ -49,8 +46,11 @@ class AppRouter {
         );
 
       case AppRoutes.ajukanCuti:
+        final initialTab = settings.arguments is CutiTabType
+            ? settings.arguments as CutiTabType
+            : CutiTabType.cutiTahunan;
         return MaterialPageRoute(
-          builder: (_) => const MainCutiPage(),
+          builder: (_) => MainCutiPage(initialTab: initialTab),
           settings: settings,
         );
 
@@ -94,102 +94,5 @@ class AppRouter {
           settings: settings,
         );
     }
-  }
-}
-
-class _ModulePlaceholderScreen extends StatelessWidget {
-  final String title;
-  final String description;
-  final IconData icon;
-
-  const _ModulePlaceholderScreen({
-    required this.title,
-    required this.description,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-            color: AppColors.onSurface,
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
-          color: AppColors.onSurface,
-          onPressed: () => Navigator.maybePop(context),
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 72,
-                height: 72,
-                decoration: BoxDecoration(
-                  color: AppColors.primarySoft,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Icon(
-                    icon,
-                    size: 38,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.onSurface,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                description,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.textSecondary,
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
-                decoration: BoxDecoration(
-                  color: AppColors.secondarySoft,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: const Text(
-                  'Modul Siap Terintegrasi',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.secondary,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
   }
 }
