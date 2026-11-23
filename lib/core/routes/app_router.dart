@@ -4,6 +4,11 @@ import '../../features/cuti/main/presentation/pages/main_cuti_page.dart';
 import '../../features/jadwal/presentation/pages/jadwal_page.dart';
 import '../../features/main/presentation/pages/main_page.dart';
 import '../../features/notification/presentation/pages/notification_page.dart';
+import '../../features/payroll/presentation/pages/payroll_denda_tunjangan_page.dart';
+import '../../features/payroll/presentation/pages/payroll_detail_slip_page.dart';
+import '../../features/payroll/presentation/pages/payroll_page.dart';
+import '../../features/presensi/domain/entities/presensi_data.dart';
+import '../../features/presensi/presentation/pages/presensi_scan_page.dart';
 import 'app_routes.dart';
 
 class AppRouter {
@@ -34,6 +39,15 @@ class AppRouter {
           settings: settings,
         );
 
+      case AppRoutes.presensi:
+        final initialType = settings.arguments is PresensiType
+            ? settings.arguments as PresensiType
+            : null;
+        return MaterialPageRoute(
+          builder: (_) => PresensiScanPage(initialType: initialType),
+          settings: settings,
+        );
+
       case AppRoutes.ajukanCuti:
         return MaterialPageRoute(
           builder: (_) => const MainCutiPage(),
@@ -48,12 +62,19 @@ class AppRouter {
 
       case AppRoutes.payroll:
         return MaterialPageRoute(
-          builder: (_) => const _ModulePlaceholderScreen(
-            title: 'Slip Payroll',
-            description:
-                'Rincian gaji bulanan, transparansi denda keterlambatan, dan insentif mutu.',
-            icon: Icons.payments_outlined,
-          ),
+          builder: (_) => const PayrollPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.payrollDetail:
+        return MaterialPageRoute(
+          builder: (_) => const PayrollDetailSlipPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.payrollDendaTunjangan:
+        return MaterialPageRoute(
+          builder: (_) => const PayrollDendaTunjanganPage(),
           settings: settings,
         );
 

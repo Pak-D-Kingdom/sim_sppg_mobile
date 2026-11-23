@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/routes/app_routes.dart';
 import '../../../../injection_container.dart';
+import '../../../presensi/domain/entities/presensi_data.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_event.dart';
 import '../bloc/home_state.dart';
@@ -68,20 +70,18 @@ class HomeView extends StatelessWidget {
                     HomeAttendanceCardWidget(
                       attendance: dashboard.todayAttendance,
                       statistics: dashboard.statistics,
+                      onClockInTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.presensi,
+                          arguments: PresensiType.clockIn,
+                        );
+                      },
                       onClockOutTap: () {
-                        context.read<HomeBloc>().add(
-                              const ClockOutAttendanceEvent(
-                                clockOutTime: '13:02',
-                              ),
-                            );
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Clock-Out berhasil tercatat pada 13:02 WIB',
-                            ),
-                            backgroundColor: AppColors.primary,
-                            behavior: SnackBarBehavior.floating,
-                          ),
+                        Navigator.pushNamed(
+                          context,
+                          AppRoutes.presensi,
+                          arguments: PresensiType.clockOut,
                         );
                       },
                     ),

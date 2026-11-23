@@ -9,6 +9,12 @@ import '../../../home/presentation/pages/home_page.dart';
 import '../../../jadwal/presentation/bloc/jadwal_bloc.dart';
 import '../../../jadwal/presentation/bloc/jadwal_event.dart';
 import '../../../jadwal/presentation/pages/jadwal_page.dart';
+import '../../../payroll/presentation/bloc/payroll_bloc.dart';
+import '../../../payroll/presentation/bloc/payroll_event.dart';
+import '../../../payroll/presentation/pages/payroll_page.dart';
+import '../../../presensi/presentation/bloc/presensi_bloc.dart';
+import '../../../presensi/presentation/bloc/presensi_event.dart';
+import '../../../presensi/presentation/pages/presensi_scan_page.dart';
 import '../widgets/main_bottom_nav_widget.dart';
 import '../widgets/main_top_bar_widget.dart';
 
@@ -24,6 +30,12 @@ class MainPage extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => sl<JadwalBloc>()..add(const LoadJadwalEvent()),
+        ),
+        BlocProvider(
+          create: (_) => sl<PayrollBloc>()..add(const LoadPayrollEvent()),
+        ),
+        BlocProvider(
+          create: (_) => sl<PresensiBloc>()..add(const LoadPresensiStatusEvent()),
         ),
       ],
       child: const _MainPageContent(),
@@ -44,16 +56,8 @@ class _MainPageContentState extends State<_MainPageContent> {
   final List<Widget> _pages = const [
     HomePage(),
     JadwalPage(),
-    _PlaceholderTabScreen(
-      title: 'Presensi Scan (QR & GPS)',
-      description: 'Fitur presensi scan QR dapur dan verifikasi biometrik.',
-      icon: Icons.qr_code_scanner_rounded,
-    ),
-    _PlaceholderTabScreen(
-      title: 'Slip Payroll',
-      description: 'Rekapitulasi gaji bulanan dan rincian kehadiran.',
-      icon: Icons.receipt_long_outlined,
-    ),
+    PresensiScanPage(),
+    PayrollPage(),
     _PlaceholderTabScreen(
       title: 'Profil & Akun',
       description: 'Pengaturan akun staf, sertifikasi gizi, dan preferensi.',

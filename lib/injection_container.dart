@@ -46,6 +46,18 @@ import 'features/notification/domain/usecases/get_notifications.dart';
 import 'features/notification/domain/usecases/mark_all_notifications_as_read.dart';
 import 'features/notification/domain/usecases/mark_notification_as_read.dart';
 import 'features/notification/presentation/bloc/notification_bloc.dart';
+import 'features/payroll/data/datasources/payroll_remote_data_source.dart';
+import 'features/payroll/data/datasources/payroll_remote_data_source_impl.dart';
+import 'features/payroll/data/repositories/payroll_repository_impl.dart';
+import 'features/payroll/domain/repositories/payroll_repository.dart';
+import 'features/payroll/domain/usecases/get_payroll_data.dart';
+import 'features/payroll/presentation/bloc/payroll_bloc.dart';
+import 'features/presensi/data/datasources/presensi_remote_data_source.dart';
+import 'features/presensi/data/datasources/presensi_remote_data_source_impl.dart';
+import 'features/presensi/data/repositories/presensi_repository_impl.dart';
+import 'features/presensi/domain/repositories/presensi_repository.dart';
+import 'features/presensi/domain/usecases/submit_presensi.dart';
+import 'features/presensi/presentation/bloc/presensi_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -233,6 +245,60 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<CutiRemoteDataSource>(
     () => CutiRemoteDataSourceImpl(
+      dioClient: sl(),
+    ),
+  );
+
+  //! Features - Payroll
+  // Bloc
+  sl.registerFactory(
+    () => PayrollBloc(
+      getPayrollData: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetPayrollData(sl()));
+
+  // Repository
+  sl.registerLazySingleton<PayrollRepository>(
+    () => PayrollRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<PayrollRemoteDataSource>(
+    () => PayrollRemoteDataSourceImpl(
+      dioClient: sl(),
+    ),
+  );
+
+  //! Features - Presensi
+  // Bloc
+  sl.registerFactory(
+    () => PresensiBloc(
+      getPresensiStatus: sl(),
+      submitClockIn: sl(),
+      submitClockOut: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetPresensiStatus(sl()));
+  sl.registerLazySingleton(() => SubmitClockIn(sl()));
+  sl.registerLazySingleton(() => SubmitClockOut(sl()));
+
+  // Repository
+  sl.registerLazySingleton<PresensiRepository>(
+    () => PresensiRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<PresensiRemoteDataSource>(
+    () => PresensiRemoteDataSourceImpl(
       dioClient: sl(),
     ),
   );

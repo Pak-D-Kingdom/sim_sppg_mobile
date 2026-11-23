@@ -6,12 +6,14 @@ import '../../domain/entities/today_attendance.dart';
 class HomeAttendanceCardWidget extends StatelessWidget {
   final TodayAttendance attendance;
   final List<HomeStatistic>? statistics;
+  final VoidCallback? onClockInTap;
   final VoidCallback? onClockOutTap;
 
   const HomeAttendanceCardWidget({
     super.key,
     required this.attendance,
     this.statistics,
+    this.onClockInTap,
     this.onClockOutTap,
   });
 
@@ -181,27 +183,30 @@ class HomeAttendanceCardWidget extends StatelessWidget {
               children: [
                 // Clock-In Card
                 Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 12,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(14),
-                      border: Border.all(
-                        color: AppColors.accentBlueBorder,
-                        width: 1,
+                  child: InkWell(
+                    onTap: onClockInTap,
+                    borderRadius: BorderRadius.circular(14),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 12,
                       ),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color(0x060F172A),
-                          blurRadius: 4,
-                          offset: Offset(0, 1),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: AppColors.accentBlueBorder,
+                          width: 1,
                         ),
-                      ],
-                    ),
-                    child: Column(
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Color(0x060F172A),
+                            blurRadius: 4,
+                            offset: Offset(0, 1),
+                          ),
+                        ],
+                      ),
+                      child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -276,6 +281,7 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
 
                 const SizedBox(width: 10),
 

@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/entities/izin_darurat_entity.dart';
 import '../../domain/usecases/submit_izin_darurat.dart';
 import 'izin_darurat_event.dart';
 import 'izin_darurat_state.dart';

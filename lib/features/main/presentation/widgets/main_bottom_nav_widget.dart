@@ -57,7 +57,7 @@ class MainBottomNavWidget extends StatelessWidget {
                 tooltip: 'Jadwal',
               ),
 
-              // 3. Central Raised Scan Button (Presensi)
+              // 3. Central Raised Scan Button (Presensi) dengan 3 Lingkaran Konsentris
               Expanded(
                 child: Tooltip(
                   message: 'Presensi',
@@ -66,31 +66,64 @@ class MainBottomNavWidget extends StatelessWidget {
                     behavior: HitTestBehavior.opaque,
                     child: Center(
                       child: Transform.translate(
-                        offset: const Offset(0, -14),
+                        offset: const Offset(0, -16),
                         child: Container(
-                          width: 56,
-                          height: 56,
-                          decoration: BoxDecoration(
-                            color: AppColors.accentBlue,
+                          // Lingkaran 1: Paling Luar (Outer Ring - #C7DCF4)
+                          width: 76,
+                          height: 76,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFFC7DCF4),
                             shape: BoxShape.circle,
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color(0x669FC5E8),
-                                blurRadius: 14,
-                                offset: Offset(0, 6),
-                              ),
+                            boxShadow: [
                               BoxShadow(
                                 color: Color(0x409FC5E8),
-                                blurRadius: 6,
-                                offset: Offset(0, 2),
+                                blurRadius: 10,
+                                spreadRadius: 1,
                               ),
                             ],
                           ),
-                          child: const Center(
-                            child: FaceScanIcon(
-                              size: 26,
-                              color: Color(0xFF0F172A),
-                              strokeWidth: 2.2,
+                          child: Center(
+                            child: Container(
+                              // Lingkaran 2: Tengah (Middle Ring - #9FC5E8)
+                              width: 64,
+                              height: 64,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF9FC5E8),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Container(
+                                  // Lingkaran 3: Paling Dalam (Core Solid Button - #2563EB)
+                                  width: 52,
+                                  height: 52,
+                                  decoration: BoxDecoration(
+                                    color: _activeBlue,
+                                    shape: BoxShape.circle,
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF2B70FF),
+                                        Color(0xFF1D5DE6),
+                                      ],
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: const Color(0xFF1D4ED8).withValues(alpha: 0.35),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: const Center(
+                                    child: FaceScanIcon(
+                                      size: 26,
+                                      color: Colors.white,
+                                      strokeWidth: 2.2,
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -103,8 +136,8 @@ class MainBottomNavWidget extends StatelessWidget {
               // 4. Payroll
               _buildNavItem(
                 index: 3,
-                icon: Icons.receipt_long_outlined,
-                activeIcon: Icons.receipt_long_rounded,
+                icon: Icons.credit_card_outlined,
+                activeIcon: Icons.credit_card_rounded,
                 label: 'Payroll',
                 tooltip: 'Payroll',
               ),
@@ -132,7 +165,7 @@ class MainBottomNavWidget extends StatelessWidget {
     required String tooltip,
   }) {
     final bool isSelected = currentIndex == index;
-    final Color itemColor = isSelected ? _activeBlue : AppColors.textSecondary;
+    final Color itemColor = isSelected ? _activeBlue : const Color(0xFF64748B);
 
     return Expanded(
       child: Tooltip(
@@ -165,14 +198,14 @@ class MainBottomNavWidget extends StatelessWidget {
                     children: [
                       Icon(
                         isSelected ? activeIcon : icon,
-                        size: 22,
+                        size: 23,
                         color: itemColor,
                       ),
                       const SizedBox(height: 3),
                       Text(
                         label,
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 11.5,
                           fontWeight:
                               isSelected ? FontWeight.w700 : FontWeight.w500,
                           color: itemColor,
@@ -277,30 +310,22 @@ class _FaceScanPainter extends CustomPainter {
       ..lineTo(3 * scale, 17 * scale);
     canvas.drawPath(blPath, paint);
 
-    // Smile: M8 14 s1.5 2 4 2 4-2 4-2
+    // Smile: smooth happy smile
     final smilePath = Path()
-      ..moveTo(8 * scale, 14 * scale)
+      ..moveTo(8.5 * scale, 13.8 * scale)
       ..cubicTo(
-        9.5 * scale,
-        16 * scale,
-        10.5 * scale,
-        16 * scale,
-        12 * scale,
-        16 * scale,
-      )
-      ..cubicTo(
-        13.5 * scale,
-        16 * scale,
-        14.5 * scale,
-        16 * scale,
-        16 * scale,
-        14 * scale,
+        9.6 * scale,
+        16.5 * scale,
+        14.4 * scale,
+        16.5 * scale,
+        15.5 * scale,
+        13.8 * scale,
       );
     canvas.drawPath(smilePath, paint);
 
-    // Two eye dots: (9, 9) and (15, 9)
-    canvas.drawCircle(Offset(9 * scale, 9 * scale), 1.15 * scale, dotPaint);
-    canvas.drawCircle(Offset(15 * scale, 9 * scale), 1.15 * scale, dotPaint);
+    // Two eye dots: (9.0, 9.2) and (15.0, 9.2)
+    canvas.drawCircle(Offset(9.0 * scale, 9.2 * scale), 1.5 * scale, dotPaint);
+    canvas.drawCircle(Offset(15.0 * scale, 9.2 * scale), 1.5 * scale, dotPaint);
   }
 
   @override
