@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       title: 'SIM SPPG Mobile',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      initialRoute: AppRoutes.main,
+      initialRoute: AppRoutes.login,
       onGenerateRoute: AppRouter.onGenerateRoute,
       builder: (context, child) {
         return AnnotatedRegion<SystemUiOverlayStyle>(

@@ -1,5 +1,10 @@
 import 'package:material_ui/material_ui.dart';
 import '../constants/app_colors.dart';
+import '../../features/akun/presentation/pages/akun_page.dart';
+import '../../features/akun/presentation/pages/pusat_bantuan_page.dart';
+import '../../features/akun/presentation/pages/ubah_kata_sandi_page.dart';
+import '../../features/auth/presentation/pages/login_page.dart';
+import '../../features/auth/presentation/pages/lupa_kata_sandi_page.dart';
 import '../../features/cuti/main/domain/entities/cuti_tab_type.dart';
 import '../../features/cuti/main/presentation/pages/main_cuti_page.dart';
 import '../../features/jadwal/presentation/pages/jadwal_page.dart';
@@ -21,6 +26,18 @@ class AppRouter {
       case AppRoutes.main:
         return MaterialPageRoute(
           builder: (_) => const MainPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.login:
+        return MaterialPageRoute(
+          builder: (_) => const LoginPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.lupaKataSandi:
+        return MaterialPageRoute(
+          builder: (_) => const LupaKataSandiPage(),
           settings: settings,
         );
 
@@ -75,6 +92,24 @@ class AppRouter {
       case AppRoutes.payrollDendaTunjangan:
         return MaterialPageRoute(
           builder: (_) => const PayrollDendaTunjanganPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.akun:
+        return MaterialPageRoute(
+          builder: (_) => const AkunPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.ubahKataSandi:
+        return MaterialPageRoute(
+          builder: (_) => const UbahKataSandiPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.pusatBantuan:
+        return MaterialPageRoute(
+          builder: (_) => const PusatBantuanPage(),
           settings: settings,
         );
 

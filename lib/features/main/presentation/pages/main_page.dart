@@ -2,6 +2,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../injection_container.dart';
+import '../../../akun/presentation/bloc/akun_bloc.dart';
+import '../../../akun/presentation/bloc/akun_event.dart';
+import '../../../akun/presentation/pages/akun_page.dart';
 import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../../home/presentation/bloc/home_event.dart';
 import '../../../home/presentation/bloc/home_state.dart';
@@ -37,6 +40,9 @@ class MainPage extends StatelessWidget {
         BlocProvider(
           create: (_) => sl<PresensiBloc>()..add(const LoadPresensiStatusEvent()),
         ),
+        BlocProvider(
+          create: (_) => sl<AkunBloc>()..add(const LoadAkunProfileEvent()),
+        ),
       ],
       child: const _MainPageContent(),
     );
@@ -58,11 +64,7 @@ class _MainPageContentState extends State<_MainPageContent> {
     JadwalPage(),
     PresensiScanPage(),
     PayrollPage(),
-    _PlaceholderTabScreen(
-      title: 'Profil & Akun',
-      description: 'Pengaturan akun staf, sertifikasi gizi, dan preferensi.',
-      icon: Icons.person_outline_rounded,
-    ),
+    AkunPage(),
   ];
 
   @override
@@ -102,81 +104,6 @@ class _MainPageContentState extends State<_MainPageContent> {
             _currentIndex = index;
           });
         },
-      ),
-    );
-  }
-}
-
-class _PlaceholderTabScreen extends StatelessWidget {
-  final String title;
-  final String description;
-  final IconData icon;
-
-  const _PlaceholderTabScreen({
-    required this.title,
-    required this.description,
-    required this.icon,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: 68,
-              height: 68,
-              decoration: BoxDecoration(
-                color: AppColors.primarySoft,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Icon(
-                  icon,
-                  size: 36,
-                  color: AppColors.primary,
-                ),
-              ),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-                color: AppColors.onSurface,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              description,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.textSecondary,
-              ),
-            ),
-            const SizedBox(height: 14),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.secondarySoft,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Text(
-                'Tahap Pengembangan Modul',
-                style: TextStyle(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -1,5 +1,17 @@
 import 'package:get_it/get_it.dart';
 import 'core/network/dio_client.dart';
+import 'features/akun/data/datasources/akun_remote_data_source.dart';
+import 'features/akun/data/datasources/akun_remote_data_source_impl.dart';
+import 'features/akun/data/repositories/akun_repository_impl.dart';
+import 'features/akun/domain/repositories/akun_repository.dart';
+import 'features/akun/domain/usecases/get_akun_profile.dart';
+import 'features/akun/presentation/bloc/akun_bloc.dart';
+import 'features/auth/data/datasources/auth_remote_data_source.dart';
+import 'features/auth/data/datasources/auth_remote_data_source_impl.dart';
+import 'features/auth/data/repositories/auth_repository_impl.dart';
+import 'features/auth/domain/repositories/auth_repository.dart';
+import 'features/auth/domain/usecases/login_user.dart';
+import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/cuti/cuti_tahunan/data/datasources/cuti_tahunan_remote_data_source.dart';
 import 'features/cuti/cuti_tahunan/data/datasources/cuti_tahunan_remote_data_source_impl.dart';
 import 'features/cuti/cuti_tahunan/data/repositories/cuti_tahunan_repository_impl.dart';
@@ -330,6 +342,56 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<RiwayatAbsenRemoteDataSource>(
     () => RiwayatAbsenRemoteDataSourceImpl(
+      dioClient: sl(),
+    ),
+  );
+
+  //! Features - Akun
+  // Bloc
+  sl.registerFactory(
+    () => AkunBloc(
+      getAkunProfile: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetAkunProfile(sl()));
+
+  // Repository
+  sl.registerLazySingleton<AkunRepository>(
+    () => AkunRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<AkunRemoteDataSource>(
+    () => AkunRemoteDataSourceImpl(
+      dioClient: sl(),
+    ),
+  );
+
+  //! Features - Auth
+  // Bloc
+  sl.registerFactory(
+    () => AuthBloc(
+      loginUser: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => LoginUser(sl()));
+
+  // Repository
+  sl.registerLazySingleton<AuthRepository>(
+    () => AuthRepositoryImpl(
+      remoteDataSource: sl(),
+    ),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<AuthRemoteDataSource>(
+    () => AuthRemoteDataSourceImpl(
       dioClient: sl(),
     ),
   );
