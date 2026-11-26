@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../domain/entities/izin_darurat_entity.dart';
 
 abstract class IzinDaruratEvent extends Equatable {
   const IzinDaruratEvent();
@@ -9,6 +10,15 @@ abstract class IzinDaruratEvent extends Equatable {
 
 class LoadIzinDaruratInitialEvent extends IzinDaruratEvent {
   const LoadIzinDaruratInitialEvent();
+}
+
+class ChangeIzinDaruratJenisEvent extends IzinDaruratEvent {
+  final IzinDaruratJenis jenis;
+
+  const ChangeIzinDaruratJenisEvent(this.jenis);
+
+  @override
+  List<Object?> get props => [jenis];
 }
 
 class ChangeIzinDaruratDateRangeEvent extends IzinDaruratEvent {
@@ -22,6 +32,19 @@ class ChangeIzinDaruratDateRangeEvent extends IzinDaruratEvent {
 
   @override
   List<Object?> get props => [startDate, endDate];
+}
+
+class ChangeIzinDaruratTimeEvent extends IzinDaruratEvent {
+  final String jamTiba;
+  final int menitTerlambat;
+
+  const ChangeIzinDaruratTimeEvent({
+    required this.jamTiba,
+    required this.menitTerlambat,
+  });
+
+  @override
+  List<Object?> get props => [jamTiba, menitTerlambat];
 }
 
 class ChangeIzinDaruratKategoriEvent extends IzinDaruratEvent {

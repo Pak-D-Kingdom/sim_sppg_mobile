@@ -1,4 +1,5 @@
 import 'package:sim_sppg_mobile/core/network/dio_client.dart';
+import '../../domain/entities/izin_darurat_entity.dart';
 import '../models/izin_darurat_model.dart';
 import 'izin_darurat_remote_data_source.dart';
 
@@ -10,11 +11,16 @@ class IzinDaruratRemoteDataSourceImpl implements IzinDaruratRemoteDataSource {
   @override
   Future<IzinDaruratModel> getInitialData() async {
     return IzinDaruratModel(
+      jenis: IzinDaruratJenis.tidakMasuk,
       startDate: DateTime(2026, 11, 20),
       endDate: DateTime(2026, 11, 20),
       durationDays: 1,
-      kategori: 'Keluarga Sakit Kritis',
-      alasan: 'Keluarga inti masuk IGD mendadak.',
+      jamTiba: '06:15 WIB',
+      jadwalMasuk: '05:00 WIB',
+      menitTerlambat: 75,
+      kuotaCuti: 5,
+      kategori: 'Keluarga Rawat Darurat',
+      alasan: 'Anggota keluarga inti masuk IGD RSUD pagi ini.',
       statusPengajuan: null,
     );
   }

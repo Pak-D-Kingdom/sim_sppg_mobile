@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../domain/entities/izin_darurat_entity.dart';
 import '../../domain/usecases/submit_izin_darurat.dart';
 import 'izin_darurat_event.dart';
 import 'izin_darurat_state.dart';
@@ -12,7 +13,9 @@ class IzinDaruratBloc extends Bloc<IzinDaruratEvent, IzinDaruratState> {
     required this.submitIzinDarurat,
   }) : super(const IzinDaruratInitial()) {
     on<LoadIzinDaruratInitialEvent>(_onLoadInitial);
+    on<ChangeIzinDaruratJenisEvent>(_onChangeJenis);
     on<ChangeIzinDaruratDateRangeEvent>(_onChangeDateRange);
+    on<ChangeIzinDaruratTimeEvent>(_onChangeTime);
     on<ChangeIzinDaruratKategoriEvent>(_onChangeKategori);
     on<ChangeIzinDaruratAlasanEvent>(_onChangeAlasan);
     on<ChangeIzinDaruratAttachmentEvent>(_onChangeAttachment);
@@ -31,6 +34,41 @@ class IzinDaruratBloc extends Bloc<IzinDaruratEvent, IzinDaruratState> {
     );
   }
 
+  void _onChangeJenis(
+    ChangeIzinDaruratJenisEvent event,
+    Emitter<IzinDaruratState> emit,
+  ) {
+    if (state is! IzinDaruratLoaded) return;
+    final currentState = state as IzinDaruratLoaded;
+
+    final isSwitchingToTerlambat = event.jenis == IzinDaruratJenis.terlambat;
+    String newKategori = currentState.data.kategori;
+    String newAlasan = currentState.data.alasan;
+
+    if (isSwitchingToTerlambat) {
+      if (newKategori == 'Keluarga Rawat Darurat') {
+        newKategori = 'Kendaraan Mogok';
+      }
+      if (newAlasan == 'Anggota keluarga inti masuk IGD RSUD pagi ini.') {
+        newAlasan = 'Ban motor bocor & rantai putus di jalan menuju dapur.';
+      }
+    } else {
+      if (newKategori == 'Kendaraan Mogok') {
+        newKategori = 'Keluarga Rawat Darurat';
+      }
+      if (newAlasan == 'Ban motor bocor & rantai putus di jalan menuju dapur.') {
+        newAlasan = 'Anggota keluarga inti masuk IGD RSUD pagi ini.';
+      }
+    }
+
+    final updatedData = currentState.data.copyWith(
+      jenis: event.jenis,
+      kategori: newKategori,
+      alasan: newAlasan,
+    );
+    emit(currentState.copyWith(data: updatedData, clearMessages: true));
+  }
+
   void _onChangeDateRange(
     ChangeIzinDaruratDateRangeEvent event,
     Emitter<IzinDaruratState> emit,
@@ -45,6 +83,20 @@ class IzinDaruratBloc extends Bloc<IzinDaruratEvent, IzinDaruratState> {
       durationDays: duration > 0 ? duration : 1,
     );
 
+    emit(currentState.copyWith(data: updatedData, clearMessages: true));
+  }
+
+  void _onChangeTime(
+    ChangeIzinDaruratTimeEvent event,
+    Emitter<IzinDaruratState> emit,
+  ) {
+    if (state is! IzinDaruratLoaded) return;
+    final currentState = state as IzinDaruratLoaded;
+
+    final updatedData = currentState.data.copyWith(
+      jamTiba: event.jamTiba,
+      menitTerlambat: event.menitTerlambat,
+    );
     emit(currentState.copyWith(data: updatedData, clearMessages: true));
   }
 
@@ -121,7 +173,9 @@ class IzinDaruratBloc extends Bloc<IzinDaruratEvent, IzinDaruratState> {
       (data) => emit(
         IzinDaruratLoaded(
           data: data.copyWith(isSubmitting: false),
-          successMessage: 'Laporan izin darurat berhasil dikirim ke KSPPG!',
+          successMessage: currentState.data.jenis == IzinDaruratJenis.terlambat
+              ? 'Laporan izin terlambat berhasil dikirim ke KSPPG!'
+              : 'Laporan izin darurat berhasil dikirim ke KSPPG!',
         ),
       ),
     );
