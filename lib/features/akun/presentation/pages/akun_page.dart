@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
+import '../../../../core/localization/locale_cubit.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../injection_container.dart';
 import '../bloc/akun_bloc.dart';
@@ -31,6 +33,7 @@ class _AkunPageView extends StatelessWidget {
   const _AkunPageView();
 
   void _showLogoutDialog(BuildContext context) {
+    final l10n = context.l10n;
     showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -38,17 +41,17 @@ class _AkunPageView extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),
-        title: const Text(
-          'Keluar dari Akun?',
-          style: TextStyle(
+        title: Text(
+          l10n.logoutConfirmationTitle,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w800,
             color: AppColors.onSurface,
           ),
         ),
-        content: const Text(
-          'Anda harus masuk kembali menggunakan kredensial personel SPPG untuk mengakses aplikasi.',
-          style: TextStyle(
+        content: Text(
+          l10n.logoutConfirmationMessage,
+          style: const TextStyle(
             fontSize: 13,
             color: AppColors.textSecondary,
             height: 1.4,
@@ -57,9 +60,9 @@ class _AkunPageView extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(),
-            child: const Text(
-              'Batal',
-              style: TextStyle(
+            child: Text(
+              l10n.cancel,
+              style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 color: AppColors.textSecondary,
               ),
@@ -83,9 +86,9 @@ class _AkunPageView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text(
-              'Keluar',
-              style: TextStyle(fontWeight: FontWeight.w700),
+            child: Text(
+              l10n.logout,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
         ],
@@ -93,9 +96,156 @@ class _AkunPageView extends StatelessWidget {
     );
   }
 
+  void _showLanguageBottomSheet(BuildContext context) {
+    final l10n = context.l10n;
+    final currentLanguageCode = Localizations.localeOf(context).languageCode;
+
+    showModalBottomSheet<void>(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (bottomSheetContext) {
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE2E8F0),
+                      borderRadius: BorderRadius.circular(2),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  l10n.selectLanguage,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.onSurface,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                _buildLanguageOption(
+                  title: l10n.indonesian,
+                  codeBadge: 'ID',
+                  isSelected: currentLanguageCode == 'id',
+                  onTap: () {
+                    _setLocale(context, const Locale('id'));
+                    Navigator.pop(bottomSheetContext);
+                  },
+                ),
+                const SizedBox(height: 10),
+                _buildLanguageOption(
+                  title: l10n.english,
+                  codeBadge: 'EN',
+                  isSelected: currentLanguageCode == 'en',
+                  onTap: () {
+                    _setLocale(context, const Locale('en'));
+                    Navigator.pop(bottomSheetContext);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _setLocale(BuildContext context, Locale locale) {
+    try {
+      context.read<LocaleCubit>().setLocale(locale);
+    } catch (_) {
+      if (sl.isRegistered<LocaleCubit>()) {
+        sl<LocaleCubit>().setLocale(locale);
+      }
+    }
+  }
+
+  Widget _buildLanguageOption({
+    required String title,
+    required String codeBadge,
+    required bool isSelected,
+    required VoidCallback onTap,
+  }) {
+    return Material(
+      color: isSelected ? const Color(0xFFEFF6FF) : const Color(0xFFF8FAFC),
+      borderRadius: BorderRadius.circular(14),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(14),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(14),
+            border: Border.all(
+              color: isSelected
+                  ? const Color(0xFF2563EB)
+                  : const Color(0xFFE2E8F0),
+              width: isSelected ? 1.5 : 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: isSelected ? const Color(0xFFDBEAFE) : Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Text(
+                    codeBadge,
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: isSelected
+                          ? const Color(0xFF1D5CE6)
+                          : const Color(0xFF64748B),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14.5,
+                    fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
+                    color: isSelected
+                        ? const Color(0xFF1D5CE6)
+                        : AppColors.onSurface,
+                  ),
+                ),
+              ),
+              if (isSelected)
+                const Icon(
+                  Icons.check_circle_rounded,
+                  color: Color(0xFF2563EB),
+                  size: 22,
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final canPop = Navigator.canPop(context);
+    final l10n = context.l10n;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
@@ -113,49 +263,54 @@ class _AkunPageView extends StatelessWidget {
             child: SafeArea(
               bottom: false,
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                 child: Row(
                   children: [
                     if (canPop) ...[
-                      InkWell(
-                        onTap: () => Navigator.of(context).maybePop(),
-                        borderRadius: BorderRadius.circular(999),
-                        child: Container(
-                          width: 40,
-                          height: 40,
-                          margin: const EdgeInsets.only(right: 12),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: const Color(0xFFE2E8F0)),
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              Icons.chevron_left_rounded,
-                              size: 22,
-                              color: AppColors.onSurface,
+                      Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            width: 38,
+                            height: 38,
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFF8FAFC),
+                              borderRadius: BorderRadius.circular(10),
+                              border:
+                                  Border.all(color: const Color(0xFFE2E8F0)),
+                            ),
+                            child: const Center(
+                              child: Icon(
+                                Icons.chevron_left_rounded,
+                                size: 22,
+                                color: AppColors.onSurface,
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      const SizedBox(width: 12),
                     ],
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Profil',
-                            style: TextStyle(
+                            l10n.profile,
+                            style: const TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.w800,
                               color: AppColors.onSurface,
                               letterSpacing: -0.4,
                             ),
                           ),
-                          SizedBox(height: 2),
+                          const SizedBox(height: 2),
                           Text(
-                            'Informasi kepegawaian & pengaturan akun',
-                            style: TextStyle(
+                            l10n.profileSubtitle,
+                            style: const TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w500,
                               color: AppColors.textSecondary,
@@ -206,7 +361,7 @@ class _AkunPageView extends StatelessWidget {
                                   .read<AkunBloc>()
                                   .add(const LoadAkunProfileEvent());
                             },
-                            child: const Text('Coba Lagi'),
+                            child: Text(l10n.tryAgain),
                           ),
                         ],
                       ),
@@ -242,6 +397,9 @@ class _AkunPageView extends StatelessWidget {
                               AppRoutes.pusatBantuan,
                             );
                           },
+                          onChangeLanguageTap: () {
+                            _showLanguageBottomSheet(context);
+                          },
                         ),
                         const SizedBox(height: 14),
 
@@ -262,18 +420,18 @@ class _AkunPageView extends StatelessWidget {
                                   width: 1,
                                 ),
                               ),
-                              child: const Row(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(
+                                  const Icon(
                                     Icons.logout_rounded,
                                     size: 18,
                                     color: Color(0xFFDC2626),
                                   ),
-                                  SizedBox(width: 8),
+                                  const SizedBox(width: 8),
                                   Text(
-                                    'Keluar dari Akun',
-                                    style: TextStyle(
+                                    l10n.logout,
+                                    style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w700,
                                       color: Color(0xFFDC2626),

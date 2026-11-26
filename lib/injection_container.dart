@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'core/localization/locale_cubit.dart';
 import 'core/network/dio_client.dart';
 import 'features/akun/data/datasources/akun_remote_data_source.dart';
 import 'features/akun/data/datasources/akun_remote_data_source_impl.dart';
@@ -398,4 +399,5 @@ Future<void> init() async {
 
   //! Core
   sl.registerLazySingleton(() => DioClient());
+  sl.registerLazySingleton(() => LocaleCubit());
 }

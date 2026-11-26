@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class MainBottomNavWidget extends StatelessWidget {
   final int currentIndex;
@@ -15,6 +16,7 @@ class MainBottomNavWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceContainerLowest,
@@ -44,8 +46,8 @@ class MainBottomNavWidget extends StatelessWidget {
                 index: 0,
                 icon: Icons.home_outlined,
                 activeIcon: Icons.home_rounded,
-                label: 'Beranda',
-                tooltip: 'Beranda',
+                label: l10n.home,
+                tooltip: l10n.home,
               ),
 
               // 2. Jadwal
@@ -53,14 +55,14 @@ class MainBottomNavWidget extends StatelessWidget {
                 index: 1,
                 icon: Icons.calendar_today_outlined,
                 activeIcon: Icons.calendar_today_rounded,
-                label: 'Jadwal',
-                tooltip: 'Jadwal',
+                label: l10n.schedule,
+                tooltip: l10n.schedule,
               ),
 
               // 3. Central Raised Scan Button (Presensi) dengan 3 Lingkaran Konsentris
               Expanded(
                 child: Tooltip(
-                  message: 'Presensi',
+                  message: l10n.attendance,
                   child: GestureDetector(
                     onTap: () => onTap(2),
                     behavior: HitTestBehavior.opaque,
@@ -138,8 +140,8 @@ class MainBottomNavWidget extends StatelessWidget {
                 index: 3,
                 icon: Icons.credit_card_outlined,
                 activeIcon: Icons.credit_card_rounded,
-                label: 'Payroll',
-                tooltip: 'Payroll',
+                label: l10n.payroll,
+                tooltip: l10n.payroll,
               ),
 
               // 5. Akun
@@ -147,8 +149,8 @@ class MainBottomNavWidget extends StatelessWidget {
                 index: 4,
                 icon: Icons.person_outline_rounded,
                 activeIcon: Icons.person_rounded,
-                label: 'Akun',
-                tooltip: 'Akun',
+                label: l10n.account,
+                tooltip: l10n.account,
               ),
             ],
           ),
