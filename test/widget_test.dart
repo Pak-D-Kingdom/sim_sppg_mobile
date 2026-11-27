@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sim_sppg_mobile/features/home/presentation/pages/home_page.dart';
 import 'package:sim_sppg_mobile/features/main/presentation/widgets/main_bottom_nav_widget.dart';
 import 'package:sim_sppg_mobile/injection_container.dart' as di;
@@ -7,6 +8,7 @@ import 'package:sim_sppg_mobile/main.dart';
 
 void main() {
   setUp(() async {
+    SharedPreferences.setMockInitialValues({});
     await di.sl.reset();
     await di.init();
   });

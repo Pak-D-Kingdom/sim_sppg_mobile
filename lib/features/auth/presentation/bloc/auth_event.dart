@@ -21,3 +21,11 @@ class SubmitLoginEvent extends AuthEvent {
   @override
   List<Object?> get props => [identifier, password, rememberMe];
 }
+
+class CheckAuthStatusEvent extends AuthEvent {
+  const CheckAuthStatusEvent();
+}
+
+class LogoutEvent extends AuthEvent {
+  const LogoutEvent();
+}

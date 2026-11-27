@@ -18,4 +18,14 @@ class AuthSessionModel extends AuthSession {
       rememberMe: json['remember_me'] as bool? ?? true,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'personnel_id': personnelId,
+      'full_name': fullName,
+      'email': email,
+      'access_token': accessToken,
+      'remember_me': rememberMe,
+    };
+  }
 }

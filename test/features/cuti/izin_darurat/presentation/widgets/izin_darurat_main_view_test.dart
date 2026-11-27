@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sim_sppg_mobile/features/cuti/main/domain/entities/cuti_tab_type.dart';
 import 'package:sim_sppg_mobile/features/cuti/main/presentation/pages/main_cuti_page.dart';
 import 'package:sim_sppg_mobile/injection_container.dart' as di;
 
 void main() {
   setUp(() async {
+    SharedPreferences.setMockInitialValues({});
     await di.sl.reset();
     await di.init();
   });

@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sim_sppg_mobile/core/theme/app_theme.dart';
 import 'package:sim_sppg_mobile/features/notification/presentation/pages/notification_page.dart';
 import 'package:sim_sppg_mobile/injection_container.dart' as di;
 
 void main() {
   setUp(() async {
+    SharedPreferences.setMockInitialValues({});
     await di.sl.reset();
     await di.init();
   });

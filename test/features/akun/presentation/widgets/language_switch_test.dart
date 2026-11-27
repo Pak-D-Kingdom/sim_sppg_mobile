@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sim_sppg_mobile/core/localization/app_localizations_extension.dart';
 import 'package:sim_sppg_mobile/core/localization/locale_cubit.dart';
 import 'package:sim_sppg_mobile/core/routes/app_router.dart';
@@ -9,6 +10,7 @@ import 'package:sim_sppg_mobile/injection_container.dart' as di;
 
 void main() {
   setUp(() async {
+    SharedPreferences.setMockInitialValues({});
     await di.sl.reset();
     await di.init();
   });

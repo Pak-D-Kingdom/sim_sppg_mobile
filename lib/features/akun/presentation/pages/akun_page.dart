@@ -4,7 +4,9 @@ import '../../../../core/constants/app_colors.dart';
 import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/localization/locale_cubit.dart';
 import '../../../../core/routes/app_routes.dart';
+import '../../../../core/usecase/usecase.dart';
 import '../../../../injection_container.dart';
+import '../../../auth/domain/usecases/logout_user.dart';
 import '../bloc/akun_bloc.dart';
 import '../bloc/akun_event.dart';
 import '../bloc/akun_state.dart';
@@ -69,7 +71,11 @@ class _AkunPageView extends StatelessWidget {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
+              if (sl.isRegistered<LogoutUser>()) {
+                await sl<LogoutUser>()(const NoParams());
+              }
+              if (!dialogContext.mounted || !context.mounted) return;
               Navigator.of(dialogContext).pop();
               Navigator.of(context, rootNavigator: true)
                   .pushNamedAndRemoveUntil(

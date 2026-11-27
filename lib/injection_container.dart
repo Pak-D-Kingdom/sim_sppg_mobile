@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'core/localization/locale_cubit.dart';
 import 'core/network/dio_client.dart';
 import 'features/akun/data/datasources/akun_remote_data_source.dart';
@@ -7,11 +8,15 @@ import 'features/akun/data/repositories/akun_repository_impl.dart';
 import 'features/akun/domain/repositories/akun_repository.dart';
 import 'features/akun/domain/usecases/get_akun_profile.dart';
 import 'features/akun/presentation/bloc/akun_bloc.dart';
+import 'features/auth/data/datasources/auth_local_data_source.dart';
+import 'features/auth/data/datasources/auth_local_data_source_impl.dart';
 import 'features/auth/data/datasources/auth_remote_data_source.dart';
 import 'features/auth/data/datasources/auth_remote_data_source_impl.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
+import 'features/auth/domain/usecases/get_cached_session.dart';
 import 'features/auth/domain/usecases/login_user.dart';
+import 'features/auth/domain/usecases/logout_user.dart';
 import 'features/auth/presentation/bloc/auth_bloc.dart';
 import 'features/cuti/cuti_tahunan/data/datasources/cuti_tahunan_remote_data_source.dart';
 import 'features/cuti/cuti_tahunan/data/datasources/cuti_tahunan_remote_data_source_impl.dart';
@@ -377,16 +382,21 @@ Future<void> init() async {
   sl.registerFactory(
     () => AuthBloc(
       loginUser: sl(),
+      getCachedSession: sl(),
+      logoutUser: sl(),
     ),
   );
 
   // Use cases
   sl.registerLazySingleton(() => LoginUser(sl()));
+  sl.registerLazySingleton(() => GetCachedSession(sl()));
+  sl.registerLazySingleton(() => LogoutUser(sl()));
 
   // Repository
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(
       remoteDataSource: sl(),
+      localDataSource: sl(),
     ),
   );
 
@@ -396,8 +406,15 @@ Future<void> init() async {
       dioClient: sl(),
     ),
   );
+  sl.registerLazySingleton<AuthLocalDataSource>(
+    () => AuthLocalDataSourceImpl(
+      sharedPreferences: sl(),
+    ),
+  );
 
   //! Core
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => DioClient());
   sl.registerLazySingleton(() => LocaleCubit());
 }

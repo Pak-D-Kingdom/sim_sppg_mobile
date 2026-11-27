@@ -8,4 +8,8 @@ abstract class AuthRepository {
     required String password,
     required bool rememberMe,
   });
+
+  Future<Either<Failure, AuthSession?>> getCachedSession();
+
+  Future<Either<Failure, Unit>> logout();
 }

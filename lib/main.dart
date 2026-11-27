@@ -6,6 +6,8 @@ import 'core/localization/locale_cubit.dart';
 import 'core/routes/app_router.dart';
 import 'core/routes/app_routes.dart';
 import 'core/theme/app_theme.dart';
+import 'core/usecase/usecase.dart';
+import 'features/auth/domain/usecases/get_cached_session.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
@@ -13,11 +15,17 @@ void main() async {
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(AppTheme.systemUiOverlayStyle);
   await di.init();
-  runApp(const MyApp());
+  final sessionResult = await di.sl<GetCachedSession>()(const NoParams());
+  final hasSession = sessionResult.fold((_) => false, (s) => s != null);
+  runApp(
+    MyApp(initialRoute: hasSession ? AppRoutes.main : AppRoutes.login),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String initialRoute;
+
+  const MyApp({super.key, this.initialRoute = AppRoutes.login});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +43,7 @@ class MyApp extends StatelessWidget {
             localizationsDelegates:
                 AppLocalizationsConfig.localizationsDelegates,
             supportedLocales: AppLocalizationsConfig.supportedLocales,
-            initialRoute: AppRoutes.login,
+            initialRoute: initialRoute,
             onGenerateRoute: AppRouter.onGenerateRoute,
             builder: (context, child) {
               return AnnotatedRegion<SystemUiOverlayStyle>(

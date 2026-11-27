@@ -25,6 +25,10 @@ class AuthAuthenticated extends AuthState {
   List<Object?> get props => [session];
 }
 
+class AuthUnauthenticated extends AuthState {
+  const AuthUnauthenticated();
+}
+
 class AuthFailure extends AuthState {
   final String message;
 
