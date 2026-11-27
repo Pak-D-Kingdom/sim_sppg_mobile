@@ -1,6 +1,8 @@
 import 'package:material_ui/material_ui.dart';
 import '../constants/app_colors.dart';
+import '../../features/akun/domain/entities/akun_profile.dart';
 import '../../features/akun/presentation/pages/akun_page.dart';
+import '../../features/akun/presentation/pages/detail_akun_page.dart';
 import '../../features/akun/presentation/pages/pusat_bantuan_page.dart';
 import '../../features/akun/presentation/pages/ubah_kata_sandi_page.dart';
 import '../../features/auth/presentation/pages/login_page.dart';
@@ -98,6 +100,15 @@ class AppRouter {
       case AppRoutes.akun:
         return MaterialPageRoute(
           builder: (_) => const AkunPage(),
+          settings: settings,
+        );
+
+      case AppRoutes.detailAkun:
+        final profile = settings.arguments is AkunProfile
+            ? settings.arguments as AkunProfile
+            : null;
+        return MaterialPageRoute(
+          builder: (_) => DetailAkunPage(profile: profile),
           settings: settings,
         );
 

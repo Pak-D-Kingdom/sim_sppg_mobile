@@ -13,6 +13,7 @@ class AppRoutes {
   static const String payrollDetail = '/payroll/detail';
   static const String payrollDendaTunjangan = '/payroll/denda-tunjangan';
   static const String akun = '/akun';
+  static const String detailAkun = '/akun/detail';
   static const String ubahKataSandi = '/akun/ubah-kata-sandi';
   static const String pusatBantuan = '/akun/pusat-bantuan';
 }

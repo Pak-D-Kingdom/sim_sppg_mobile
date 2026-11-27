@@ -15,6 +15,16 @@ class AkunProfileModel extends AkunProfile {
     required super.appVersionText,
     super.avatarUrl,
     super.isOnline,
+    super.employmentStatus,
+    super.birthPlaceDate,
+    super.domicile,
+    super.operationalDivision,
+    super.joinDate,
+    super.bankName,
+    super.accountNumber,
+    super.accountHolderName,
+    super.isPayrollVerified,
+    super.bpjsStatus,
   });
 
   factory AkunProfileModel.fromJson(Map<String, dynamic> json) {
@@ -36,6 +46,23 @@ class AkunProfileModel extends AkunProfile {
           'SIM-SPPG Mobile v2.4.0 • Badan Gizi Nasional',
       avatarUrl: json['avatar_url']?.toString(),
       isOnline: json['is_online'] as bool? ?? true,
+      employmentStatus:
+          json['employment_status']?.toString() ?? 'Personel Aktif',
+      birthPlaceDate:
+          json['birth_place_date']?.toString() ?? 'Jakarta, 14 Agu 1998',
+      domicile: json['domicile']?.toString() ?? 'Rawamangun, Jakarta Timur',
+      operationalDivision:
+          json['operational_division']?.toString() ?? 'Gizi & Pengawasan Mutu',
+      joinDate: json['join_date']?.toString() ?? '01 Agustus 2025',
+      bankName:
+          json['bank_name']?.toString() ?? 'Bank Rakyat Indonesia (BRI)',
+      accountNumber:
+          json['account_number']?.toString() ?? '0341-01-048291-50-9',
+      accountHolderName:
+          json['account_holder_name']?.toString() ?? 'SITI RAHMAWATI',
+      isPayrollVerified: json['is_payroll_verified'] as bool? ?? true,
+      bpjsStatus:
+          json['bpjs_status']?.toString() ?? 'Aktif • Ditanggung Lembaga',
     );
   }
 }

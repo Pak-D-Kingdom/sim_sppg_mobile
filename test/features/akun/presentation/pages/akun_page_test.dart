@@ -35,13 +35,9 @@ void main() {
     expect(find.text('MASA KERJA'), findsOneWidget);
     expect(find.text('1 Thn 4 Bln'), findsOneWidget);
 
-    // Data Kepegawaian & Payroll Card
-    expect(find.text('DATA KEPEGAWAIAN & PAYROLL'), findsOneWidget);
-    expect(find.text('3175025408980004'), findsOneWidget);
-    expect(find.text('siti.rahmawati@sppg.go.id'), findsOneWidget);
-    expect(find.text('0812-8490-3321'), findsOneWidget);
-    expect(find.text('BRI •••• 4829 (Terverifikasi)'), findsOneWidget);
-    expect(find.text('Shift Pagi (05:00 - 13:00)'), findsOneWidget);
+    // Detail Akun Button (replaces Data Kepegawaian & Payroll card)
+    expect(find.text('Detail Akun'), findsOneWidget);
+    expect(find.text('Data kepegawaian, penempatan & payroll'), findsOneWidget);
 
     // Settings & Logout
     expect(find.text('Ubah Kata Sandi'), findsOneWidget);
@@ -51,6 +47,34 @@ void main() {
       find.text('SIM-SPPG Mobile v2.4.0 • Badan Gizi Nasional'),
       findsOneWidget,
     );
+
+    // Navigate to Detail Akun (Data Kepegawaian & Payroll)
+    await tester.ensureVisible(find.text('Detail Akun'));
+    await tester.tap(find.text('Detail Akun'));
+    await tester.pumpAndSettle();
+    expect(find.text('Data Kepegawaian & Payroll'), findsOneWidget);
+    expect(find.text('Personel Aktif'), findsOneWidget);
+    expect(find.text('IDENTITAS PRIBADI & KONTAK'), findsOneWidget);
+    expect(find.text('3175025408980004'), findsOneWidget);
+    expect(find.text('Jakarta, 14 Agu 1998'), findsOneWidget);
+    expect(find.text('siti.rahmawati@sppg.go.id'), findsOneWidget);
+    expect(find.text('0812-8490-3321'), findsOneWidget);
+    expect(find.text('Rawamangun, Jakarta Timur'), findsOneWidget);
+    expect(find.text('PENEMPATAN & JADWAL SHIFT'), findsOneWidget);
+    expect(find.text('Gizi & Pengawasan Mutu'), findsOneWidget);
+    expect(find.text('01 Agustus 2025'), findsOneWidget);
+    expect(find.text('Shift Pagi (05:00 - 13:00)'), findsOneWidget);
+    expect(find.text('REKENING PAYROLL & JAMINAN'), findsOneWidget);
+    expect(find.text('Terverifikasi'), findsOneWidget);
+    expect(find.text('Bank Rakyat Indonesia (BRI)'), findsOneWidget);
+    expect(find.text('0341-01-048291-50-9'), findsOneWidget);
+    expect(find.text('SITI RAHMAWATI'), findsOneWidget);
+    expect(find.text('Aktif • Ditanggung Lembaga'), findsOneWidget);
+
+    // Pop back to AkunPage
+    await tester.tap(find.byIcon(Icons.chevron_left_rounded));
+    await tester.pumpAndSettle();
+    expect(find.text('Detail Akun'), findsOneWidget);
 
     // Navigate to Ubah Kata Sandi
     await tester.ensureVisible(find.text('Ubah Kata Sandi'));

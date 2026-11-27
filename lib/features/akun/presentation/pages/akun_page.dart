@@ -11,7 +11,6 @@ import '../bloc/akun_bloc.dart';
 import '../bloc/akun_event.dart';
 import '../bloc/akun_state.dart';
 import '../widgets/akun_hero_card_widget.dart';
-import '../widgets/akun_kepegawaian_card_widget.dart';
 import '../widgets/akun_settings_card_widget.dart';
 
 class AkunPage extends StatelessWidget {
@@ -385,8 +384,91 @@ class _AkunPageView extends StatelessWidget {
                         AkunHeroCardWidget(profile: profile),
                         const SizedBox(height: 14),
 
-                        // 2. Data Kepegawaian & Payroll Card
-                        AkunKepegawaianCardWidget(profile: profile),
+                        // 2. Detail Akun Button (navigates to Data Kepegawaian & Payroll)
+                        Material(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                AppRoutes.detailAkun,
+                                arguments: profile,
+                              );
+                            },
+                            borderRadius: BorderRadius.circular(18),
+                            child: Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 14,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(18),
+                                border: Border.all(
+                                  color: const Color(0xFFE2E8F0),
+                                ),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color(0x060F172A),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFEFF6FF),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.badge_outlined,
+                                        size: 20,
+                                        color: Color(0xFF1D5CE6),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 14),
+                                  const Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Detail Akun',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.onSurface,
+                                          ),
+                                        ),
+                                        SizedBox(height: 2),
+                                        Text(
+                                          'Data kepegawaian, penempatan & payroll',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const Icon(
+                                    Icons.chevron_right_rounded,
+                                    size: 20,
+                                    color: Color(0xFF94A3B8),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
                         const SizedBox(height: 14),
 
                         // 3. Account Settings & Help Menu Card
