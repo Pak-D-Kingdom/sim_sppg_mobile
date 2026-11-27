@@ -32,6 +32,16 @@ void main() {
       cubit.switchToIndonesian();
       expect(cubit.state, const Locale('id'));
     });
+
+    test('persists selected locale in SharedPreferences', () async {
+      final prefs = await SharedPreferences.getInstance();
+      final cubit = LocaleCubit(null, prefs);
+      cubit.switchToEnglish();
+      expect(prefs.getString(LocaleCubit.localePrefKey), 'en');
+
+      final restored = LocaleCubit(null, prefs);
+      expect(restored.state, const Locale('en'));
+    });
   });
 
   testWidgets(

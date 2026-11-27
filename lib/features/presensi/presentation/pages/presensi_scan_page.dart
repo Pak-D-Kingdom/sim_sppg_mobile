@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../injection_container.dart';
 import '../../../home/presentation/bloc/home_bloc.dart';
 import '../../../home/presentation/bloc/home_event.dart';
@@ -152,7 +153,7 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                                 ),
                               );
                         },
-                        child: const Text('Coba Lagi'),
+                        child: Text(context.l10n.tryAgain),
                       ),
                     ],
                   ),
@@ -208,8 +209,8 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                             children: [
                               Text(
                                 isClockIn
-                                    ? 'Presensi Kehadiran'
-                                    : 'Presensi Pulang',
+                                    ? context.l10n.attendanceCheckInTitle
+                                    : context.l10n.attendanceCheckOutTitle,
                                 style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w800,
@@ -218,9 +219,11 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                                 ),
                               ),
                               const SizedBox(height: 2),
-                              const Text(
-                                'SPPG Rawamangun 01 • Shift Pagi (05:00 - 13:00 WIB)',
-                                style: TextStyle(
+                              Text(
+                                context.localizeDynamic(
+                                  'SPPG Rawamangun 01 • Shift Pagi (05:00 - 13:00 WIB)',
+                                ),
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.textSecondary,
@@ -329,8 +332,8 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                                         const SizedBox(width: 8),
                                         Text(
                                           isClockIn
-                                              ? 'Konfirmasi Clock-In (Masuk)'
-                                              : 'Konfirmasi Clock-Out (Pulang)',
+                                              ? context.l10n.confirmClockIn
+                                              : context.l10n.confirmClockOut,
                                           style: const TextStyle(
                                             fontSize: 14.5,
                                             fontWeight: FontWeight.w800,

@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class PresensiCameraViewfinderWidget extends StatefulWidget {
   final bool isFaceDetected;
@@ -82,9 +83,9 @@ class _PresensiCameraViewfinderWidgetState
   Future<void> _switchCamera() async {
     if (_cameras == null || _cameras!.length < 2) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Hanya 1 kamera tersedia atau menggunakan simulasi.'),
-          duration: Duration(seconds: 1),
+        SnackBar(
+          content: Text(context.l10n.singleCameraNotice),
+          duration: const Duration(seconds: 1),
           behavior: SnackBarBehavior.floating,
         ),
       );
@@ -250,10 +251,10 @@ class _PresensiCameraViewfinderWidgetState
           const SizedBox(height: 10),
 
           // Teks Instruksi Bawah
-          const Text(
-            'Pastikan wajah terlihat jelas di dalam bingkai tanpa masker',
+          Text(
+            context.l10n.faceFrameInstruction,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11.5,
               fontWeight: FontWeight.w500,
               color: AppColors.textSecondary,

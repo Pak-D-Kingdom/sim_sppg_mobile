@@ -1,34 +1,20 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class PusatBantuanPage extends StatelessWidget {
   const PusatBantuanPage({super.key});
 
-  static const List<Map<String, String>> _faqItems = [
-    {
-      'title': 'SOP Presensi Biometrik & Radius GPS',
-      'body':
-          'Pastikan GPS aktif dan Anda berada dalam radius 50 meter dari titik dapur SPPG saat melakukan Clock-In maupun Clock-Out.',
-    },
-    {
-      'title': 'Prosedur Unggah Surat Keterangan Dokter',
-      'body':
-          'Untuk pengajuan Izin Sakit, unggah bukti surat dokter maksimal 48 jam sejak tanggal ketidakhadiran melalui menu Cuti & Izin.',
-    },
-    {
-      'title': 'Pengajuan Koreksi Absensi',
-      'body':
-          'Jika terjadi kendala teknis saat presensi, ajukan koreksi pada halaman Riwayat Absen agar diverifikasi oleh KSPPG.',
-    },
-    {
-      'title': 'Kontak Admin Operasional SPPG',
-      'body':
-          'WhatsApp Helpdesk: 0811-9000-2401 (Senin–Sabtu, 05:00 - 17:00 WIB) atau email support@sppg.go.id.',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final faqItems = [
+      (title: l10n.faqBiometricTitle, body: l10n.faqBiometricBody),
+      (title: l10n.faqSickNoteTitle, body: l10n.faqSickNoteBody),
+      (title: l10n.faqCorrectionTitle, body: l10n.faqCorrectionBody),
+      (title: l10n.faqContactTitle, body: l10n.faqContactBody),
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -68,9 +54,9 @@ class PusatBantuanPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Text(
-                      'Pusat Bantuan & SOP',
-                      style: TextStyle(
+                    Text(
+                      l10n.helpCenter,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -85,10 +71,10 @@ class PusatBantuanPage extends StatelessWidget {
           Expanded(
             child: ListView.separated(
               padding: const EdgeInsets.all(16),
-              itemCount: _faqItems.length,
+              itemCount: faqItems.length,
               separatorBuilder: (_, _) => const SizedBox(height: 12),
               itemBuilder: (context, index) {
-                final item = _faqItems[index];
+                final item = faqItems[index];
                 return Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -100,7 +86,7 @@ class PusatBantuanPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item['title']!,
+                        item.title,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
@@ -109,7 +95,7 @@ class PusatBantuanPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        item['body']!,
+                        item.body,
                         style: const TextStyle(
                           fontSize: 12.5,
                           color: AppColors.textSecondary,

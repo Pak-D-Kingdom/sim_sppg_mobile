@@ -1,14 +1,30 @@
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocaleCubit extends Cubit<Locale> {
-  LocaleCubit([Locale? initialLocale])
-      : super(initialLocale ?? const Locale('id'));
+  static const String localePrefKey = 'APP_LOCALE';
 
-  // shortcut: in-memory locale only, add shared_preferences when persistent language across restarts is required.
+  final SharedPreferences? _prefs;
+
+  LocaleCubit([Locale? initialLocale, SharedPreferences? prefs])
+      : _prefs = prefs,
+        super(
+          initialLocale ?? _readSavedLocale(prefs) ?? const Locale('id'),
+        );
+
+  static Locale? _readSavedLocale(SharedPreferences? prefs) {
+    final code = prefs?.getString(localePrefKey);
+    if (code == 'id' || code == 'en') {
+      return Locale(code!);
+    }
+    return null;
+  }
+
   void setLocale(Locale locale) {
     if (state != locale) {
       emit(locale);
+      _prefs?.setString(localePrefKey, locale.languageCode);
     }
   }
 

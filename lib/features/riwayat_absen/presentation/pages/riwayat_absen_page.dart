@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../injection_container.dart';
 import '../../../cuti/main/domain/entities/cuti_tab_type.dart';
@@ -55,6 +56,7 @@ class _RiwayatAbsenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -102,9 +104,9 @@ class _RiwayatAbsenView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Text(
-                      'Riwayat Absen',
-                      style: TextStyle(
+                    Text(
+                      l10n.attendanceHistory,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -166,7 +168,7 @@ class _RiwayatAbsenView extends StatelessWidget {
                                   .read<RiwayatAbsenBloc>()
                                   .add(const LoadRiwayatAbsenEvent());
                             },
-                            child: const Text('Coba Lagi'),
+                            child: Text(l10n.tryAgain),
                           ),
                         ],
                       ),
@@ -234,17 +236,17 @@ class _RiwayatAbsenView extends StatelessWidget {
                               border:
                                   Border.all(color: const Color(0xFFE2E8F0)),
                             ),
-                            child: const Column(
+                            child: Column(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.history_toggle_off_rounded,
                                   size: 40,
                                   color: AppColors.textTertiary,
                                 ),
-                                SizedBox(height: 10),
+                                const SizedBox(height: 10),
                                 Text(
-                                  'Belum ada data untuk filter ini',
-                                  style: TextStyle(
+                                  l10n.noDataForFilter,
+                                  style: const TextStyle(
                                     fontSize: 13.5,
                                     fontWeight: FontWeight.w600,
                                     color: AppColors.textSecondary,
@@ -297,8 +299,8 @@ class _RiwayatAbsenView extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   state.showAll
-                                      ? 'Tampilkan Lebih Sedikit  ↑'
-                                      : 'Tampilkan Semua di Bulan Ini (${filtered.length})  ↓',
+                                      ? l10n.showLess
+                                      : l10n.showAllThisMonth(filtered.length),
                                   style: const TextStyle(
                                     fontSize: 13,
                                     fontWeight: FontWeight.w700,

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../injection_container.dart';
 import '../bloc/payroll_bloc.dart';
 import '../bloc/payroll_event.dart';
@@ -70,7 +71,7 @@ class _PayrollPageView extends StatelessWidget {
                         onPressed: () {
                           context.read<PayrollBloc>().add(const LoadPayrollEvent());
                         },
-                        child: const Text('Coba Lagi'),
+                        child: Text(context.l10n.tryAgain),
                       ),
                     ],
                   ),
@@ -84,8 +85,8 @@ class _PayrollPageView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                     child: PayrollHeaderWidget(
-                      title: state.data.title,
-                      subtitle: state.data.subtitle,
+                      title: context.l10n.payrollTitle,
+                      subtitle: context.l10n.payrollHeaderSubtitle,
                       showBackButton: canPop,
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/routes/app_routes.dart';
 
 class PayrollDetailSlipPage extends StatelessWidget {
@@ -12,6 +13,7 @@ class PayrollDetailSlipPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
@@ -50,10 +52,10 @@ class PayrollDetailSlipPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Detail Slip Gaji',
-                      style: TextStyle(
+                      l10n.payslipDetailTitle,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -68,18 +70,18 @@ class PayrollDetailSlipPage extends StatelessWidget {
                       color: const Color(0xFFDCFCE7),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Row(
+                    child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.check_rounded,
                           size: 12,
                           color: Color(0xFF16A34A),
                         ),
-                        SizedBox(width: 3),
+                        const SizedBox(width: 3),
                         Text(
-                          'Terbayar',
-                          style: TextStyle(
+                          l10n.paidStatus,
+                          style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w700,
                             color: Color(0xFF16A34A),
@@ -685,31 +687,29 @@ class PayrollDetailSlipPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Slip Gaji (PDF) berhasil diunduh ke perangkat Anda.',
-                        ),
-                        backgroundColor: Color(0xFF16A34A),
+                      SnackBar(
+                        content: Text(l10n.payslipDownloaded),
+                        backgroundColor: const Color(0xFF16A34A),
                         behavior: SnackBarBehavior.floating,
                       ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF9FC5E8),
-                    foregroundColor: const Color(0xFF0F172A),
+                    backgroundColor: const Color(0xFF2563EB),
+                    foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.download_rounded, size: 18),
-                      SizedBox(width: 6),
+                      const Icon(Icons.download_rounded, size: 18),
+                      const SizedBox(width: 6),
                       Text(
-                        'Unduh Slip Gaji (PDF)',
-                        style: TextStyle(
+                        l10n.downloadPayslipPdf,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
                           letterSpacing: -0.2,

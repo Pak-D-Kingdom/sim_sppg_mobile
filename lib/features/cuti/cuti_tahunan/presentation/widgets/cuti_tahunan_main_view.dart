@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sim_sppg_mobile/core/constants/app_colors.dart';
+import 'package:sim_sppg_mobile/core/localization/app_localizations_extension.dart';
 import 'package:sim_sppg_mobile/injection_container.dart';
 import '../bloc/cuti_tahunan_bloc.dart';
 import '../bloc/cuti_tahunan_event.dart';
@@ -102,17 +103,18 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
         .read<CutiTahunanBloc>()
         .add(const UpdateCutiTahunanAttachmentEvent(sampleFileName));
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('File "$sampleFileName" berhasil dilampirkan.'),
-        backgroundColor: Color(0xFF16A34A),
+      SnackBar(
+        content: Text(context.l10n.fileAttachedSuccess(sampleFileName)),
+        backgroundColor: const Color(0xFF16A34A),
         behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 2),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocConsumer<CutiTahunanBloc, CutiTahunanState>(
       listener: (context, state) {
         if (state is CutiTahunanLoaded) {
@@ -161,7 +163,7 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                           .read<CutiTahunanBloc>()
                           .add(const LoadCutiTahunanInitialEvent());
                     },
-                    child: const Text('Coba Lagi'),
+                    child: Text(l10n.tryAgain),
                   ),
                 ],
               ),
@@ -201,9 +203,9 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
-                          'Kuota Cuti Tahunan 2026',
-                          style: TextStyle(
+                        Text(
+                          l10n.annualLeaveQuotaTitle,
+                          style: const TextStyle(
                             fontSize: 13.5,
                             fontWeight: FontWeight.w800,
                             color: AppColors.onSurface,
@@ -235,10 +237,10 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Row(
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 1.0),
                           child: Icon(
                             Icons.info_outline_rounded,
@@ -246,11 +248,11 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                             color: Color(0xFF2563EB),
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Cuti tahunan diajukan min. H-2. Izin sakit/darurat dapat diajukan hari-H tanpa memotong kuota.',
-                            style: TextStyle(
+                            l10n.annualLeavePolicyDesc,
+                            style: const TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w500,
                               color: AppColors.textSecondary,
@@ -284,9 +286,9 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Pilih Tanggal Pengajuan',
-                      style: TextStyle(
+                    Text(
+                      l10n.selectSubmissionDate,
+                      style: const TextStyle(
                         fontSize: 14.5,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -298,7 +300,7 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                       children: [
                         Expanded(
                           child: _buildDateItem(
-                            label: 'Tanggal Mulai',
+                            label: l10n.startDate,
                             dateText: _formatDate(form.startDate),
                             onTap: () => _selectDate(
                               context,
@@ -315,7 +317,7 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: _buildDateItem(
-                            label: 'Tanggal Selesai',
+                            label: l10n.endDate,
                             dateText: _formatDate(form.endDate),
                             onTap: () => _selectDate(
                               context,
@@ -358,7 +360,7 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                               ),
                               const SizedBox(width: 6),
                               Text(
-                                '• Durasi: ${form.durationDays} Hari Kerja',
+                                l10n.durationWorkDays(form.durationDays),
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
@@ -374,15 +376,15 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                                 fontSize: 12,
                               ),
                               children: [
-                                const TextSpan(
-                                  text: 'Sisa Saldo: ',
-                                  style: TextStyle(
+                                TextSpan(
+                                  text: l10n.remainingBalancePrefix,
+                                  style: const TextStyle(
                                     color: AppColors.textSecondary,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 TextSpan(
-                                  text: '${form.remainingAfter} Hari',
+                                  text: l10n.daysCount(form.remainingAfter),
                                   style: const TextStyle(
                                     color: Color(0xFF2563EB),
                                     fontWeight: FontWeight.w800,
@@ -418,9 +420,9 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Alasan / Keterangan',
-                      style: TextStyle(
+                    Text(
+                      l10n.reasonOrNotes,
+                      style: const TextStyle(
                         fontSize: 14.5,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -455,13 +457,12 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                               color: AppColors.onSurface,
                               height: 1.45,
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               border: InputBorder.none,
                               isDense: true,
                               contentPadding: EdgeInsets.zero,
-                              hintText:
-                                  'Tuliskan alasan pengajuan cuti secara singkat...',
-                              hintStyle: TextStyle(
+                              hintText: l10n.reasonHint,
+                              hintStyle: const TextStyle(
                                 fontSize: 13,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.textTertiary,
@@ -486,9 +487,9 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'Lampirkan Bukti',
-                      style: TextStyle(
+                    Text(
+                      l10n.attachEvidence,
+                      style: const TextStyle(
                         fontSize: 14.5,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -531,9 +532,9 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                                     ),
                                   ),
                                   const SizedBox(height: 2),
-                                  const Text(
-                                    'Tersimpan • 1.2 MB',
-                                    style: TextStyle(
+                                  Text(
+                                    l10n.savedFileMeta,
+                                    style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w500,
                                       color: AppColors.textSecondary,
@@ -570,19 +571,19 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                               width: 1.2,
                             ),
                           ),
-                          child: const Column(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.file_upload_outlined,
                                 size: 26,
                                 color: Color(0xFF2563EB),
                               ),
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
                               Text(
-                                'Opsional untuk cuti • Wajib menyusul maks. 2x24 jam untuk Izin Sakit (JPG, PNG, PDF • Maks. 2MB)',
+                                l10n.evidenceOptionalHint,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.textSecondary,
@@ -600,19 +601,19 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
               const SizedBox(height: 20),
 
               // 4. Footer Note & Action Button
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.person_outline_rounded,
                     size: 16,
                     color: AppColors.textSecondary,
                   ),
-                  SizedBox(width: 6),
+                  const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      'Akan diteruskan ke Koordinator Unit SPPG Rawamangun 01.',
-                      style: TextStyle(
+                      l10n.forwardedToCoordinator,
+                      style: const TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textSecondary,
@@ -650,20 +651,20 @@ class _CutiTahunanContentState extends State<_CutiTahunanContent> {
                             color: Color(0xFF0F172A),
                           ),
                         )
-                      : const Row(
+                      : Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Kirim Pengajuan',
-                              style: TextStyle(
+                              l10n.submitRequest,
+                              style: const TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w800,
                                 color: Color(0xFF0F172A),
                                 letterSpacing: -0.2,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            Text(
+                            const SizedBox(width: 6),
+                            const Text(
                               '→',
                               style: TextStyle(
                                 fontSize: 16,

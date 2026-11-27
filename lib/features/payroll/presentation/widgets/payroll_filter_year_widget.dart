@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class PayrollFilterYearWidget extends StatelessWidget {
   final int selectedYear;
@@ -15,12 +16,13 @@ class PayrollFilterYearWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text(
-          'Daftar Slip Gaji',
-          style: TextStyle(
+        Text(
+          l10n.payslipList,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w800,
             color: AppColors.onSurface,
@@ -41,7 +43,7 @@ class PayrollFilterYearWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Tahun $year',
+                      l10n.yearLabel(year),
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight:
@@ -73,7 +75,7 @@ class PayrollFilterYearWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Tahun $selectedYear',
+                  l10n.yearLabel(selectedYear),
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w700,

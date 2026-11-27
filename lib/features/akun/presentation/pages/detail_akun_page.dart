@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/akun_profile.dart';
 import '../bloc/akun_bloc.dart';
@@ -110,11 +111,11 @@ class _DetailAkunHeader extends StatelessWidget {
                   ),
                 ),
               ),
-              const Expanded(
+              Expanded(
                 child: Text(
-                  'Data Kepegawaian & Payroll',
+                  context.l10n.employmentAndPayrollData,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                     color: AppColors.onSurface,
@@ -152,6 +153,7 @@ class _DetailAkunView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -163,7 +165,7 @@ class _DetailAkunView extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 32),
               child: Column(
                 children: [
-                  _buildHeroCard(),
+                  _buildHeroCard(context, l10n),
                   const SizedBox(height: 16),
 
                   // 1. IDENTITAS PRIBADI & KONTAK
@@ -171,27 +173,27 @@ class _DetailAkunView extends StatelessWidget {
                     icon: Icons.badge_outlined,
                     iconBgColor: const Color(0xFFEFF6FF),
                     iconColor: const Color(0xFF1D5CE6),
-                    title: 'IDENTITAS PRIBADI & KONTAK',
+                    title: l10n.personalIdentityAndContact,
                     rows: [
                       _DetailRowItem(
-                        label: 'NIK (KTP)',
+                        label: l10n.nikKtp,
                         value: profile.nik,
                         isMonospace: true,
                       ),
                       _DetailRowItem(
-                        label: 'Tempat, Tgl Lahir',
+                        label: l10n.birthPlaceDate,
                         value: profile.birthPlaceDate,
                       ),
                       _DetailRowItem(
-                        label: 'Email Resmi',
+                        label: l10n.officialEmail,
                         value: profile.email,
                       ),
                       _DetailRowItem(
-                        label: 'No. WhatsApp',
+                        label: l10n.whatsappNumber,
                         value: profile.whatsappNumber,
                       ),
                       _DetailRowItem(
-                        label: 'Domisili',
+                        label: l10n.domicile,
                         value: profile.domicile,
                       ),
                     ],
@@ -203,22 +205,22 @@ class _DetailAkunView extends StatelessWidget {
                     icon: Icons.apartment_rounded,
                     iconBgColor: const Color(0xFFEEF2FF),
                     iconColor: const Color(0xFF4F46E5),
-                    title: 'PENEMPATAN & JADWAL SHIFT',
+                    title: l10n.placementAndShift,
                     rows: [
                       _DetailRowItem(
-                        label: 'Unit Dapur SPPG',
+                        label: l10n.kitchenUnit,
                         value: profile.locationBadge,
                       ),
                       _DetailRowItem(
-                        label: 'Divisi Operasional',
+                        label: l10n.operationalDivision,
                         value: profile.operationalDivision,
                       ),
                       _DetailRowItem(
-                        label: 'Tanggal Bergabung',
+                        label: l10n.joinDate,
                         value: profile.joinDate,
                       ),
                       _DetailRowItem(
-                        label: 'Jadwal Shift Utama',
+                        label: l10n.mainShiftSchedule,
                         valueWidget: Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 10,
@@ -229,7 +231,7 @@ class _DetailAkunView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
-                            profile.mainShiftSchedule,
+                            context.localizeDynamic(profile.mainShiftSchedule),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w700,
@@ -247,7 +249,7 @@ class _DetailAkunView extends StatelessWidget {
                     icon: Icons.credit_card_rounded,
                     iconBgColor: const Color(0xFFECFDF5),
                     iconColor: const Color(0xFF16A34A),
-                    title: 'REKENING PAYROLL & JAMINAN',
+                    title: l10n.payrollAccountAndInsurance,
                     headerTrailing: profile.isPayrollVerified
                         ? Container(
                             padding: const EdgeInsets.symmetric(
@@ -261,18 +263,18 @@ class _DetailAkunView extends StatelessWidget {
                                 color: const Color(0xFFBBF7D0),
                               ),
                             ),
-                            child: const Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.check_rounded,
                                   size: 13,
                                   color: Color(0xFF15803D),
                                 ),
-                                SizedBox(width: 4),
+                                const SizedBox(width: 4),
                                 Text(
-                                  'Terverifikasi',
-                                  style: TextStyle(
+                                  l10n.verified,
+                                  style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w700,
                                     color: Color(0xFF15803D),
@@ -284,20 +286,20 @@ class _DetailAkunView extends StatelessWidget {
                         : null,
                     rows: [
                       _DetailRowItem(
-                        label: 'Bank Penyalur',
+                        label: l10n.disbursementBank,
                         value: profile.bankName,
                       ),
                       _DetailRowItem(
-                        label: 'Nomor Rekening',
+                        label: l10n.accountNumber,
                         value: profile.accountNumber,
                         isMonospace: true,
                       ),
                       _DetailRowItem(
-                        label: 'Nama Pemilik',
+                        label: l10n.accountHolderName,
                         value: profile.accountHolderName,
                       ),
                       _DetailRowItem(
-                        label: 'BPJS Kesehatan & TK',
+                        label: l10n.bpjsHealthAndEmployment,
                         valueWidget: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -312,7 +314,7 @@ class _DetailAkunView extends StatelessWidget {
                             const SizedBox(width: 6),
                             Flexible(
                               child: Text(
-                                profile.bpjsStatus,
+                                context.localizeDynamic(profile.bpjsStatus),
                                 textAlign: TextAlign.right,
                                 style: const TextStyle(
                                   fontSize: 12.5,
@@ -337,10 +339,10 @@ class _DetailAkunView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(color: const Color(0xFFDCEAFE)),
                     ),
-                    child: const Row(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 1),
                           child: Icon(
                             Icons.info_outline_rounded,
@@ -348,11 +350,11 @@ class _DetailAkunView extends StatelessWidget {
                             color: Color(0xFF1D5CE6),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Expanded(
                           child: Text(
-                            'Perubahan data NIK, nomor rekening gaji, atau jadwal shift utama hanya dapat dilakukan melalui Admin Unit SPPG / HR Pusat.',
-                            style: TextStyle(
+                            l10n.dataChangeNotice,
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF1E40AF),
@@ -384,7 +386,7 @@ class _DetailAkunView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeroCard() {
+  Widget _buildHeroCard(BuildContext context, AppLocalizations l10n) {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -498,7 +500,9 @@ class _DetailAkunView extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 6),
                                   Text(
-                                    profile.employmentStatus,
+                                    context.localizeDynamic(
+                                      profile.employmentStatus,
+                                    ),
                                     style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w600,
@@ -550,7 +554,7 @@ class _DetailAkunView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'ID PERSONEL',
+                              l10n.personnelIdLabel,
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,
@@ -576,7 +580,7 @@ class _DetailAkunView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'MASA KERJA',
+                              l10n.workTenureLabel,
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.w600,

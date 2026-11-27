@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/riwayat_absen_item.dart';
 
 class RiwayatKoreksiBottomSheet extends StatefulWidget {
@@ -28,6 +29,7 @@ class _RiwayatKoreksiBottomSheetState extends State<RiwayatKoreksiBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Padding(
@@ -47,9 +49,9 @@ class _RiwayatKoreksiBottomSheetState extends State<RiwayatKoreksiBottomSheet> {
             ),
           ),
           const SizedBox(height: 16),
-          const Text(
-            'Ajukan Koreksi Absensi',
-            style: TextStyle(
+          Text(
+            l10n.requestAttendanceCorrection,
+            style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w800,
               color: AppColors.onSurface,
@@ -68,8 +70,7 @@ class _RiwayatKoreksiBottomSheetState extends State<RiwayatKoreksiBottomSheet> {
             controller: _reasonController,
             maxLines: 3,
             decoration: InputDecoration(
-              hintText:
-                  'Tuliskan alasan koreksi (misal: kendala GPS atau tugas distribusi bahan)...',
+              hintText: l10n.correctionReasonHint,
               hintStyle: const TextStyle(
                 fontSize: 12.5,
                 color: AppColors.textTertiary,
@@ -99,7 +100,7 @@ class _RiwayatKoreksiBottomSheetState extends State<RiwayatKoreksiBottomSheet> {
               onPressed: () {
                 final reason = _reasonController.text.trim();
                 widget.onSubmit(
-                  reason.isEmpty ? 'Koreksi jam kehadiran' : reason,
+                  reason.isEmpty ? l10n.attendanceTimeCorrection : reason,
                 );
                 Navigator.of(context).pop();
               },
@@ -111,9 +112,9 @@ class _RiwayatKoreksiBottomSheetState extends State<RiwayatKoreksiBottomSheet> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
-                'Kirim Pengajuan Koreksi',
-                style: TextStyle(
+              child: Text(
+                l10n.submitCorrectionRequest,
+                style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),

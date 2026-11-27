@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class NotificationFilterChips extends StatelessWidget {
   final String selectedFilter;
@@ -15,6 +16,7 @@ class NotificationFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -22,17 +24,19 @@ class NotificationFilterChips extends StatelessWidget {
         children: [
           _buildChip(
             keyId: 'semua',
-            label: unreadCount > 0 ? 'Semua ($unreadCount)' : 'Semua',
+            label: unreadCount > 0
+                ? l10n.filterAllUnread(unreadCount)
+                : l10n.filterAll,
           ),
           const SizedBox(width: 8),
           _buildChip(
             keyId: 'operasional',
-            label: 'Operasional',
+            label: l10n.filterOperational,
           ),
           const SizedBox(width: 8),
           _buildChip(
             keyId: 'persetujuan',
-            label: 'Persetujuan',
+            label: l10n.filterApproval,
           ),
         ],
       ),

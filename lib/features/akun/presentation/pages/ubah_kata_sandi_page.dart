@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class UbahKataSandiPage extends StatefulWidget {
   const UbahKataSandiPage({super.key});
@@ -26,14 +27,15 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
   }
 
   void _submit() {
+    final l10n = context.l10n;
     final oldPass = _oldController.text.trim();
     final newPass = _newController.text.trim();
     final confirmPass = _confirmController.text.trim();
 
     if (oldPass.isEmpty || newPass.isEmpty || confirmPass.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Harap lengkapi seluruh kolom kata sandi.'),
+        SnackBar(
+          content: Text(l10n.passwordFieldsRequired),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
         ),
@@ -43,8 +45,8 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
 
     if (newPass.length < 8) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Kata sandi baru minimal 8 karakter.'),
+        SnackBar(
+          content: Text(l10n.passwordMinLength8),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
         ),
@@ -54,8 +56,8 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
 
     if (newPass != confirmPass) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Konfirmasi kata sandi baru tidak cocok.'),
+        SnackBar(
+          content: Text(l10n.passwordConfirmationMismatch),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
         ),
@@ -64,9 +66,9 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Kata sandi berhasil diperbarui.'),
-        backgroundColor: Color(0xFF15803D),
+      SnackBar(
+        content: Text(l10n.passwordUpdatedSuccess),
+        backgroundColor: const Color(0xFF15803D),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -75,6 +77,7 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -114,9 +117,9 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Text(
-                      'Ubah Kata Sandi',
-                      style: TextStyle(
+                    Text(
+                      l10n.changePassword,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -141,9 +144,9 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Gunakan minimal 8 karakter dengan kombinasi huruf dan angka untuk menjaga keamanan akun personel Anda.',
-                      style: TextStyle(
+                    Text(
+                      l10n.changePasswordHint,
+                      style: const TextStyle(
                         fontSize: 12.5,
                         color: AppColors.textSecondary,
                         height: 1.45,
@@ -151,7 +154,8 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
                     ),
                     const SizedBox(height: 18),
                     _buildPasswordField(
-                      label: 'Kata Sandi Saat Ini',
+                      label: l10n.currentPassword,
+                      hintText: l10n.enterField(l10n.currentPassword),
                       controller: _oldController,
                       obscure: _obscureOld,
                       onToggle: () =>
@@ -159,7 +163,8 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
                     ),
                     const SizedBox(height: 14),
                     _buildPasswordField(
-                      label: 'Kata Sandi Baru',
+                      label: l10n.newPassword,
+                      hintText: l10n.enterField(l10n.newPassword),
                       controller: _newController,
                       obscure: _obscureNew,
                       onToggle: () =>
@@ -167,7 +172,8 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
                     ),
                     const SizedBox(height: 14),
                     _buildPasswordField(
-                      label: 'Konfirmasi Kata Sandi Baru',
+                      label: l10n.confirmNewPassword,
+                      hintText: l10n.enterField(l10n.confirmNewPassword),
                       controller: _confirmController,
                       obscure: _obscureConfirm,
                       onToggle: () =>
@@ -187,9 +193,9 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text(
-                          'Simpan Kata Sandi Baru',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.saveNewPassword,
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                           ),
@@ -208,6 +214,7 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
 
   Widget _buildPasswordField({
     required String label,
+    required String hintText,
     required TextEditingController controller,
     required bool obscure,
     required VoidCallback onToggle,
@@ -228,7 +235,7 @@ class _UbahKataSandiPageState extends State<UbahKataSandiPage> {
           controller: controller,
           obscureText: obscure,
           decoration: InputDecoration(
-            hintText: 'Masukkan $label',
+            hintText: hintText,
             hintStyle: const TextStyle(
               fontSize: 12.5,
               color: AppColors.textTertiary,

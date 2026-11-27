@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/routes/app_routes.dart';
 
 class PayrollDendaTunjanganPage extends StatelessWidget {
@@ -12,6 +13,7 @@ class PayrollDendaTunjanganPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: SafeArea(
@@ -50,10 +52,10 @@ class PayrollDendaTunjanganPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 12),
-                  const Expanded(
+                  Expanded(
                     child: Text(
-                      'Rincian Denda & Tunjangan',
-                      style: TextStyle(
+                      l10n.penaltiesAndAllowances,
+                      style: const TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -118,9 +120,9 @@ class PayrollDendaTunjanganPage extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      'TOTAL TUNJANGAN',
-                                      style: TextStyle(
+                                    Text(
+                                      l10n.totalAllowanceUpper,
+                                      style: const TextStyle(
                                         fontSize: 9.5,
                                         fontWeight: FontWeight.w700,
                                         color: AppColors.textSecondary,

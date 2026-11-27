@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class PresensiLocationCardWidget extends StatelessWidget {
   final String title;
@@ -15,6 +16,7 @@ class PresensiLocationCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -66,7 +68,9 @@ class PresensiLocationCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  title == 'Lokasi Dapur Terverifikasi'
+                      ? l10n.kitchenLocationVerified
+                      : title,
                   style: const TextStyle(
                     fontSize: 13.5,
                     fontWeight: FontWeight.w800,
@@ -76,7 +80,7 @@ class PresensiLocationCardWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  distance,
+                  context.localizeDynamic(distance),
                   style: const TextStyle(
                     fontSize: 11.5,
                     fontWeight: FontWeight.w500,
@@ -102,7 +106,7 @@ class PresensiLocationCardWidget extends StatelessWidget {
               ),
             ),
             child: Text(
-              isInRadius ? 'Dalam Radius' : 'Luar Radius',
+              isInRadius ? l10n.withinRadius : l10n.outsideRadius,
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w800,

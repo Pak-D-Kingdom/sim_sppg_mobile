@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/riwayat_absen_item.dart';
 
 class RiwayatFilterTabsWidget extends StatelessWidget {
@@ -12,8 +13,22 @@ class RiwayatFilterTabsWidget extends StatelessWidget {
     required this.onFilterSelected,
   });
 
+  String _localizedLabel(RiwayatFilterType filter, AppLocalizations l10n) {
+    switch (filter) {
+      case RiwayatFilterType.semua:
+        return l10n.filterAll;
+      case RiwayatFilterType.hadir:
+        return l10n.filterPresent;
+      case RiwayatFilterType.telat:
+        return l10n.filterLate;
+      case RiwayatFilterType.cutiIzin:
+        return l10n.filterLeave;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(4),
@@ -38,7 +53,7 @@ class RiwayatFilterTabsWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
-                  filter.label,
+                  _localizedLabel(filter, l10n),
                   textAlign: TextAlign.center,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

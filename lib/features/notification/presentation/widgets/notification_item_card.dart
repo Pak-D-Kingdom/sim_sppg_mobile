@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/app_notification.dart';
 
 class NotificationItemCard extends StatelessWidget {
@@ -46,6 +47,7 @@ class NotificationItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final bool isUnread = !notification.isRead;
     final Color categoryColor = _getCategoryColor(notification.category);
     final Color iconBg = _getIconBgColor(notification.category);
@@ -159,17 +161,17 @@ class NotificationItemCard extends StatelessWidget {
                     if (isUnread)
                       Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: const [
+                        children: [
                           Text(
-                            'Belum dibaca',
-                            style: TextStyle(
+                            l10n.unread,
+                            style: const TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w700,
                               color: AppColors.primary,
                             ),
                           ),
-                          SizedBox(width: 4),
-                          Text(
+                          const SizedBox(width: 4),
+                          const Text(
                             '●',
                             style: TextStyle(
                               fontSize: 9,
@@ -181,16 +183,16 @@ class NotificationItemCard extends StatelessWidget {
                     else
                       Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Icon(
+                        children: [
+                          const Icon(
                             Icons.check_rounded,
                             size: 14,
                             color: AppColors.success,
                           ),
-                          SizedBox(width: 3),
+                          const SizedBox(width: 3),
                           Text(
-                            'Sudah dibaca',
-                            style: TextStyle(
+                            l10n.read,
+                            style: const TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w700,
                               color: AppColors.success,

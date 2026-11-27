@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/home_menu.dart';
 
 class HomeMenuGridWidget extends StatelessWidget {
@@ -61,6 +62,7 @@ class HomeMenuGridWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -71,9 +73,9 @@ class HomeMenuGridWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                'Layanan Mandiri Personel',
-                style: TextStyle(
+              Text(
+                l10n.personnelSelfService,
+                style: const TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w800,
                   color: AppColors.onSurface,
@@ -81,7 +83,7 @@ class HomeMenuGridWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                '${menus.length} Modul Utama',
+                l10n.mainModulesCount(menus.length),
                 style: const TextStyle(
                   fontSize: 12.5,
                   fontWeight: FontWeight.w500,
@@ -137,7 +139,7 @@ class HomeMenuGridWidget extends StatelessWidget {
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Membuka modul: ${menu.title}'),
+                            content: Text(l10n.openingModule(menu.title)),
                             duration: const Duration(seconds: 1),
                             behavior: SnackBarBehavior.floating,
                           ),
@@ -172,7 +174,10 @@ class HomeMenuGridWidget extends StatelessWidget {
                               ),
                               if (menu.badgeText != null &&
                                   menu.badgeText!.isNotEmpty)
-                                _buildBadge(menu.badgeText!, menu.theme),
+                                _buildBadge(
+                                  context.localizeDynamic(menu.badgeText!),
+                                  menu.theme,
+                                ),
                             ],
                           ),
 
@@ -182,7 +187,7 @@ class HomeMenuGridWidget extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                menu.title,
+                                context.localizeDynamic(menu.title),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -194,7 +199,7 @@ class HomeMenuGridWidget extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                menu.subtitle,
+                                context.localizeDynamic(menu.subtitle),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(

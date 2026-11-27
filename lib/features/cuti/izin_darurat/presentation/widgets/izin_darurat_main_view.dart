@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sim_sppg_mobile/core/constants/app_colors.dart';
+import 'package:sim_sppg_mobile/core/localization/app_localizations_extension.dart';
 import 'package:sim_sppg_mobile/injection_container.dart';
 import '../../domain/entities/izin_darurat_entity.dart';
 import '../bloc/izin_darurat_bloc.dart';
@@ -178,9 +179,9 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Pilih Kategori Kondisi Darurat',
-                  style: TextStyle(
+                Text(
+                  context.l10n.selectEmergencyCategory,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w800,
                     color: Color(0xFF0F172A),
@@ -226,6 +227,7 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocConsumer<IzinDaruratBloc, IzinDaruratState>(
       listener: (context, state) {
         if (state is IzinDaruratLoaded) {
@@ -282,7 +284,7 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
                     onPressed: () => context
                         .read<IzinDaruratBloc>()
                         .add(const LoadIzinDaruratInitialEvent()),
-                    child: const Text('Coba Lagi'),
+                    child: Text(l10n.tryAgain),
                   ),
                 ],
               ),
@@ -318,9 +320,9 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        'Ketentuan Izin Darurat',
-                        style: TextStyle(
+                      Text(
+                        l10n.emergencyLeaveTerms,
+                        style: const TextStyle(
                           fontSize: 14.5,
                           fontWeight: FontWeight.w800,
                           color: AppColors.onSurface,
@@ -336,9 +338,9 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
                           color: const Color(0xFFDCFCE7),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Text(
-                          'Tidak Potong Kuota',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.noQuotaDeduction,
+                          style: const TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w800,
                             color: Color(0xFF16A34A),
@@ -355,10 +357,10 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(color: const Color(0xFFDBEAFE)),
                     ),
-                    child: const Row(
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(top: 2.0),
                           child: Icon(
                             Icons.info_outline_rounded,
@@ -366,11 +368,11 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
                             color: Color(0xFF2563EB),
                           ),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Khusus kondisi mendesak hari-H (musibah keluarga, kendala perjalanan, atau bencana) tanpa memotong jatah cuti tahunan.',
-                            style: TextStyle(
+                            l10n.emergencyLeavePolicyDesc,
+                            style: const TextStyle(
                               fontSize: 11.5,
                               fontWeight: FontWeight.w500,
                               color: Color(0xFF475569),
@@ -405,8 +407,8 @@ class _IzinDaruratContentState extends State<_IzinDaruratContent> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Jenis & Waktu Darurat',
+                  Text(
+                    l10n.emergencyTypeAndTime,
                     style: TextStyle(
                       fontSize: 14.5,
                       fontWeight: FontWeight.w800,

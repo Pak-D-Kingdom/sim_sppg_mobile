@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/riwayat_absen_item.dart';
 
 class RiwayatAbsenCardWidget extends StatelessWidget {
@@ -16,6 +17,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
@@ -41,7 +43,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  item.dateLabel,
+                  context.localizeDynamic(item.dateLabel),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -51,7 +53,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              _buildStatusPill(),
+              _buildStatusPill(context),
             ],
           ),
 
@@ -86,7 +88,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 if (item.canRequestCorrection)
-                  _buildKoreksiButton()
+                  _buildKoreksiButton(l10n)
                 else if (item.correctionSubmitted)
                   Container(
                     padding:
@@ -96,9 +98,9 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(color: const Color(0xFFBFDBFE)),
                     ),
-                    child: const Text(
-                      'Koreksi Diajukan',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.correctionSubmitted,
+                      style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF1D5CE6),
@@ -107,7 +109,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
                   )
                 else if (item.durationText != null)
                   Text(
-                    'Durasi: ${item.durationText}',
+                    l10n.durationPrefix(item.durationText!),
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
@@ -133,7 +135,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      item.actionBannerText!,
+                      context.localizeDynamic(item.actionBannerText!),
                       style: const TextStyle(
                         fontSize: 11.5,
                         fontWeight: FontWeight.w500,
@@ -153,7 +155,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
                           vertical: 2,
                         ),
                         child: Text(
-                          '${item.actionBannerCta!} →',
+                          '${context.localizeDynamic(item.actionBannerCta!)} →',
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -172,7 +174,8 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusPill() {
+  Widget _buildStatusPill(BuildContext context) {
+    final badgeText = context.localizeDynamic(item.statusBadge);
     switch (item.statusType) {
       case RiwayatStatusType.menungguAcc:
         return Container(
@@ -192,7 +195,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                item.statusBadge,
+                badgeText,
                 style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -220,7 +223,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
               ),
               const SizedBox(width: 3),
               Text(
-                item.statusBadge,
+                badgeText,
                 style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -252,7 +255,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
               ),
               const SizedBox(width: 4),
               Text(
-                item.statusBadge,
+                badgeText,
                 style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -280,7 +283,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
               ),
               const SizedBox(width: 3),
               Text(
-                item.statusBadge,
+                badgeText,
                 style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w700,
@@ -293,7 +296,7 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
     }
   }
 
-  Widget _buildKoreksiButton() {
+  Widget _buildKoreksiButton(AppLocalizations l10n) {
     return InkWell(
       onTap: onKoreksiTap,
       borderRadius: BorderRadius.circular(8),
@@ -304,9 +307,9 @@ class RiwayatAbsenCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: const Color(0xFF93C5FD)),
         ),
-        child: const Text(
-          'Ajukan Koreksi',
-          style: TextStyle(
+        child: Text(
+          l10n.requestCorrection,
+          style: const TextStyle(
             fontSize: 11.5,
             fontWeight: FontWeight.w700,
             color: Color(0xFF1D5CE6),

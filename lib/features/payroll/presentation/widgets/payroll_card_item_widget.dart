@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../domain/entities/payroll_item.dart';
 
@@ -31,7 +32,7 @@ class PayrollCardItemWidget extends StatelessWidget {
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
                 color: isExpanded
-                    ? const Color(0xFF93C5FD)
+                    ? const Color(0xFF2563EB)
                     : const Color(0xFFE2E8F0),
               ),
               boxShadow: [
@@ -52,7 +53,7 @@ class PayrollCardItemWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            item.monthYear,
+                            context.localizeDynamic(item.monthYear),
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w800,
@@ -73,9 +74,9 @@ class PayrollCardItemWidget extends StatelessWidget {
                                 border:
                                     Border.all(color: const Color(0xFFBFDBFE)),
                               ),
-                              child: const Text(
-                                'Terbaru',
-                                style: TextStyle(
+                              child: Text(
+                                context.l10n.latestBadge,
+                                style: const TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF2563EB),
@@ -87,7 +88,7 @@ class PayrollCardItemWidget extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        item.summaryText,
+                        context.localizeDynamic(item.summaryText),
                         style: const TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
@@ -131,7 +132,7 @@ class PayrollCardItemWidget extends StatelessWidget {
                           ),
                           const SizedBox(width: 2),
                           Text(
-                            item.status,
+                            context.localizeDynamic(item.status),
                             style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -191,12 +192,13 @@ class PayrollCardItemWidget extends StatelessWidget {
   }
 
   Widget _buildExpandedContent(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 8),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF9FC5E8),
+        color: const Color(0xFF2563EB),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
@@ -207,10 +209,11 @@ class PayrollCardItemWidget extends StatelessWidget {
               // Kehadiran
               Expanded(
                 child: _buildMetricCard(
-                  title: 'KEHADIRAN',
-                  value: item.detail.kehadiranValue,
+                  title: l10n.attendanceUpper,
+                  value: context.localizeDynamic(item.detail.kehadiranValue),
                   valueColor: AppColors.onSurface,
-                  subtitle: item.detail.kehadiranSubtitle,
+                  subtitle:
+                      context.localizeDynamic(item.detail.kehadiranSubtitle),
                   subtitleColor: const Color(0xFFEA580C),
                 ),
               ),
@@ -219,10 +222,10 @@ class PayrollCardItemWidget extends StatelessWidget {
               // Cuti / Izin
               Expanded(
                 child: _buildMetricCard(
-                  title: 'CUTI / IZIN',
-                  value: item.detail.cutiValue,
+                  title: l10n.leaveSlashUpper,
+                  value: context.localizeDynamic(item.detail.cutiValue),
                   valueColor: const Color(0xFF7C3AED),
-                  subtitle: item.detail.cutiSubtitle,
+                  subtitle: context.localizeDynamic(item.detail.cutiSubtitle),
                   subtitleColor: const Color(0xFF16A34A),
                 ),
               ),
@@ -231,10 +234,10 @@ class PayrollCardItemWidget extends StatelessWidget {
               // Denda Telat
               Expanded(
                 child: _buildMetricCard(
-                  title: 'DENDA TELAT',
+                  title: l10n.latePenaltyUpper,
                   value: item.detail.dendaValue,
                   valueColor: const Color(0xFFDC2626),
-                  subtitle: item.detail.dendaSubtitle,
+                  subtitle: context.localizeDynamic(item.detail.dendaSubtitle),
                   subtitleColor: const Color(0xFF64748B),
                 ),
               ),
@@ -258,18 +261,18 @@ class PayrollCardItemWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Lihat Rincian Slip',
-                    style: TextStyle(
+                    l10n.viewSlipDetails,
+                    style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward_rounded, size: 15),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.arrow_forward_rounded, size: 15),
                 ],
               ),
             ),
@@ -314,9 +317,9 @@ class PayrollCardItemWidget extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Rincian Denda & Tunjangan',
-                          style: TextStyle(
+                        Text(
+                          l10n.penaltiesAndAllowances,
+                          style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w800,
                             color: AppColors.onSurface,
@@ -324,7 +327,9 @@ class PayrollCardItemWidget extends StatelessWidget {
                         ),
                         const SizedBox(height: 1),
                         Text(
-                          item.detail.rincianBannerSubtitle,
+                          context.localizeDynamic(
+                            item.detail.rincianBannerSubtitle,
+                          ),
                           style: const TextStyle(
                             fontSize: 10.5,
                             fontWeight: FontWeight.w500,

@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../../../injection_container.dart';
 import '../bloc/auth_bloc.dart';
@@ -61,6 +62,7 @@ class _LoginViewState extends State<_LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final topPadding = MediaQuery.paddingOf(context).top;
     final bottomPadding = MediaQuery.paddingOf(context).bottom;
 
@@ -240,7 +242,7 @@ class _LoginViewState extends State<_LoginView> {
 
                                 // App Subtitle
                                 Text(
-                                  'Sistem Informasi Manajemen Satuan Pelayanan\nPemenuhan Gizi',
+                                  l10n.appFullSubtitle,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 12,
@@ -275,9 +277,9 @@ class _LoginViewState extends State<_LoginView> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      const Text(
-                                        'Masuk ke Akun',
-                                        style: TextStyle(
+                                      Text(
+                                        l10n.loginToAccount,
+                                        style: const TextStyle(
                                           fontSize: 19,
                                           fontWeight: FontWeight.w800,
                                           color: AppColors.onSurface,
@@ -285,9 +287,9 @@ class _LoginViewState extends State<_LoginView> {
                                         ),
                                       ),
                                       const SizedBox(height: 4),
-                                      const Text(
-                                        'Gunakan ID Personel atau email resmi yang terdaftar',
-                                        style: TextStyle(
+                                      Text(
+                                        l10n.loginSubtitle,
+                                        style: const TextStyle(
                                           fontSize: 12,
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.textSecondary,
@@ -296,9 +298,9 @@ class _LoginViewState extends State<_LoginView> {
                                       const SizedBox(height: 18),
 
                                       // ID Personel / Email
-                                      const Text(
-                                        'ID Personel / Email',
-                                        style: TextStyle(
+                                      Text(
+                                        l10n.personnelIdOrEmail,
+                                        style: const TextStyle(
                                           fontSize: 12.5,
                                           fontWeight: FontWeight.w700,
                                           color: AppColors.onSurface,
@@ -360,9 +362,9 @@ class _LoginViewState extends State<_LoginView> {
                                       const SizedBox(height: 14),
 
                                       // Kata Sandi
-                                      const Text(
-                                        'Kata Sandi',
-                                        style: TextStyle(
+                                      Text(
+                                        l10n.password,
+                                        style: const TextStyle(
                                           fontSize: 12.5,
                                           fontWeight: FontWeight.w700,
                                           color: AppColors.onSurface,
@@ -381,7 +383,7 @@ class _LoginViewState extends State<_LoginView> {
                                           letterSpacing: 1.2,
                                         ),
                                         decoration: InputDecoration(
-                                          hintText: 'Masukkan kata sandi',
+                                          hintText: l10n.enterPassword,
                                           hintStyle: const TextStyle(
                                             fontSize: 13.5,
                                             color: AppColors.textTertiary,
@@ -498,9 +500,9 @@ class _LoginViewState extends State<_LoginView> {
                                                         : null,
                                                   ),
                                                   const SizedBox(width: 8),
-                                                  const Text(
-                                                    'Ingat sesi saya',
-                                                    style: TextStyle(
+                                                  Text(
+                                                    l10n.rememberMe,
+                                                    style: const TextStyle(
                                                       fontSize: 12.5,
                                                       fontWeight:
                                                           FontWeight.w500,
@@ -520,14 +522,15 @@ class _LoginViewState extends State<_LoginView> {
                                             },
                                             borderRadius:
                                                 BorderRadius.circular(6),
-                                            child: const Padding(
-                                              padding: EdgeInsets.symmetric(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
                                                 horizontal: 2,
                                                 vertical: 2,
                                               ),
                                               child: Text(
-                                                'Lupa kata sandi?',
-                                                style: TextStyle(
+                                                l10n.forgotPassword,
+                                                style: const TextStyle(
                                                   fontSize: 12.5,
                                                   fontWeight: FontWeight.w700,
                                                   color: Color(0xFF1D5CE6),
@@ -581,9 +584,9 @@ class _LoginViewState extends State<_LoginView> {
                                                     ),
                                                   ),
                                                 )
-                                              : const Text(
-                                                  'Masuk  →',
-                                                  style: TextStyle(
+                                              : Text(
+                                                  l10n.loginButtonArrow,
+                                                  style: const TextStyle(
                                                     fontSize: 14.5,
                                                     fontWeight: FontWeight.w700,
                                                   ),
@@ -630,10 +633,10 @@ class _LoginViewState extends State<_LoginView> {
                                         ),
                                       ),
                                       const SizedBox(width: 12),
-                                      const Expanded(
+                                      Expanded(
                                         child: Text(
-                                          'Akun personel diterbitkan & dikelola oleh Admin Unit SPPG. Hubungi KSPPG jika belum memiliki akses.',
-                                          style: TextStyle(
+                                          l10n.accountManagedNotice,
+                                          style: const TextStyle(
                                             fontSize: 11.5,
                                             fontWeight: FontWeight.w500,
                                             color: Color(0xFF475569),

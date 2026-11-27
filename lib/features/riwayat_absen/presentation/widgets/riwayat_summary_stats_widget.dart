@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class RiwayatSummaryStatsWidget extends StatelessWidget {
   final int hadirCount;
@@ -17,11 +18,12 @@ class RiwayatSummaryStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Row(
       children: [
         Expanded(
           child: _buildStatCard(
-            label: 'HADIR',
+            label: l10n.presentUpper,
             value: hadirCount.toString(),
             valueColor: const Color(0xFF15803D),
           ),
@@ -29,7 +31,7 @@ class RiwayatSummaryStatsWidget extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _buildStatCard(
-            label: 'TELAT',
+            label: l10n.lateUpper,
             value: telatCount.toString(),
             valueColor: const Color(0xFFB45309),
           ),
@@ -37,7 +39,7 @@ class RiwayatSummaryStatsWidget extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _buildStatCard(
-            label: 'CUTI/IZIN',
+            label: l10n.leaveUpper,
             value: cutiIzinCount.toString(),
             valueColor: const Color(0xFF7C3AED),
           ),
@@ -45,7 +47,7 @@ class RiwayatSummaryStatsWidget extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: _buildStatCard(
-            label: 'MENUNGGU',
+            label: l10n.waitingUpper,
             value: menungguCount.toString(),
             valueColor: const Color(0xFF1D5CE6),
           ),

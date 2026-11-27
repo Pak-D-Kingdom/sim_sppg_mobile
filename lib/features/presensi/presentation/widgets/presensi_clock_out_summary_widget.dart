@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class PresensiClockOutSummaryWidget extends StatelessWidget {
   final String clockInTime;
@@ -15,6 +16,7 @@ class PresensiClockOutSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -37,9 +39,9 @@ class PresensiClockOutSummaryWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'CLOCK-IN MASUK',
-                  style: TextStyle(
+                Text(
+                  l10n.clockInEntryUpper,
+                  style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textSecondary,
@@ -60,7 +62,7 @@ class PresensiClockOutSummaryWidget extends StatelessWidget {
                     const SizedBox(width: 5),
                     Expanded(
                       child: Text(
-                        '$clockInTime • $clockInStatus',
+                        '$clockInTime • ${context.localizeDynamic(clockInStatus)}',
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12.5,
@@ -88,9 +90,9 @@ class PresensiClockOutSummaryWidget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'TOTAL DURASI KERJA',
-                  style: TextStyle(
+                Text(
+                  l10n.totalWorkDurationUpper,
+                  style: const TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w700,
                     color: AppColors.textSecondary,
@@ -99,7 +101,7 @@ class PresensiClockOutSummaryWidget extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  workDuration,
+                  context.localizeDynamic(workDuration),
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 13,

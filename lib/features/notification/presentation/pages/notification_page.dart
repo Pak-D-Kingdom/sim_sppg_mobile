@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../injection_container.dart';
 import '../../../main/presentation/widgets/main_bottom_nav_widget.dart';
 import '../bloc/notification_bloc.dart';
@@ -27,6 +28,7 @@ class _NotificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -76,9 +78,9 @@ class _NotificationView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 14),
-                      const Text(
-                        'Notifikasi',
-                        style: TextStyle(
+                      Text(
+                        l10n.notificationsTitle,
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
                           color: AppColors.onSurface,
@@ -98,11 +100,11 @@ class _NotificationView extends StatelessWidget {
                             .read<NotificationBloc>()
                             .add(const MarkAllNotificationsAsReadEvent());
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
-                              'Semua notifikasi ditandai sudah dibaca',
+                              l10n.allNotificationsMarkedRead,
                             ),
-                            duration: Duration(seconds: 2),
+                            duration: const Duration(seconds: 2),
                             behavior: SnackBarBehavior.floating,
                           ),
                         );
@@ -122,16 +124,16 @@ class _NotificationView extends StatelessWidget {
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
-                            Icon(
+                          children: [
+                            const Icon(
                               Icons.check_rounded,
                               size: 16,
                               color: AppColors.primary,
                             ),
-                            SizedBox(width: 6),
+                            const SizedBox(width: 6),
                             Text(
-                              'Tandai dibaca',
-                              style: TextStyle(
+                              l10n.markAsRead,
+                              style: const TextStyle(
                                 fontSize: 12.5,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.primary,
@@ -181,7 +183,7 @@ class _NotificationView extends StatelessWidget {
                                   .read<NotificationBloc>()
                                   .add(const LoadNotificationsEvent());
                             },
-                            child: const Text('Coba Lagi'),
+                            child: Text(l10n.tryAgain),
                           ),
                         ],
                       ),
@@ -210,9 +212,9 @@ class _NotificationView extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
-                                'HARI INI',
-                                style: TextStyle(
+                              Text(
+                                l10n.todayUpper,
+                                style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w700,
                                   color: Color(0xFF64748B),
@@ -220,7 +222,7 @@ class _NotificationView extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '${notifications.length} Pesan',
+                                l10n.messagesCount(notifications.length),
                                 style: const TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w500,
@@ -235,10 +237,10 @@ class _NotificationView extends StatelessWidget {
                         // Notification List
                         Expanded(
                           child: notifications.isEmpty
-                              ? const Center(
+                              ? Center(
                                   child: Text(
-                                    'Tidak ada notifikasi',
-                                    style: TextStyle(
+                                    l10n.noNotifications,
+                                    style: const TextStyle(
                                       color: AppColors.textSecondary,
                                     ),
                                   ),

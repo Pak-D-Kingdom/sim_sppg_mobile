@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 
 class LupaKataSandiPage extends StatefulWidget {
   const LupaKataSandiPage({super.key});
@@ -18,11 +19,12 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
   }
 
   void _onRequestReset() {
+    final l10n = context.l10n;
     final value = _identifierController.text.trim();
     if (value.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Masukkan ID Personel atau email resmi Anda.'),
+        SnackBar(
+          content: Text(l10n.enterIdentifierError),
           backgroundColor: AppColors.error,
           behavior: SnackBarBehavior.floating,
         ),
@@ -31,11 +33,9 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
     }
 
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          'Permintaan reset kata sandi dikirim ke Admin Unit SPPG & email terdaftar.',
-        ),
-        backgroundColor: Color(0xFF15803D),
+      SnackBar(
+        content: Text(l10n.resetRequestSent),
+        backgroundColor: const Color(0xFF15803D),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -44,6 +44,7 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       backgroundColor: const Color(0xFFF8FAFC),
       body: Column(
@@ -83,9 +84,9 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
                       ),
                     ),
                     const SizedBox(width: 14),
-                    const Text(
-                      'Lupa Kata Sandi',
-                      style: TextStyle(
+                    Text(
+                      l10n.forgotPasswordTitle,
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -110,27 +111,27 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Pemulihan Akses Personel',
-                      style: TextStyle(
+                    Text(
+                      l10n.personnelAccessRecovery,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
                       ),
                     ),
                     const SizedBox(height: 6),
-                    const Text(
-                      'Masukkan ID Personel atau email resmi SPPG Anda. Tautan reset atau verifikasi admin akan dikirimkan ke kontak terdaftar.',
-                      style: TextStyle(
+                    Text(
+                      l10n.forgotPasswordDescription,
+                      style: const TextStyle(
                         fontSize: 12.5,
                         color: AppColors.textSecondary,
                         height: 1.45,
                       ),
                     ),
                     const SizedBox(height: 18),
-                    const Text(
-                      'ID Personel / Email',
-                      style: TextStyle(
+                    Text(
+                      l10n.personnelIdOrEmail,
+                      style: const TextStyle(
                         fontSize: 12.5,
                         fontWeight: FontWeight.w700,
                         color: AppColors.onSurface,
@@ -141,7 +142,7 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
                       controller: _identifierController,
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
-                        hintText: 'Contoh: SPPG-RMG-014 atau nama@sppg.go.id',
+                        hintText: l10n.identifierExampleHint,
                         hintStyle: const TextStyle(
                           fontSize: 12.5,
                           color: AppColors.textTertiary,
@@ -190,9 +191,9 @@ class _LupaKataSandiPageState extends State<LupaKataSandiPage> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: const Text(
-                          'Kirim Permintaan Reset',
-                          style: TextStyle(
+                        child: Text(
+                          l10n.sendResetRequest,
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                           ),

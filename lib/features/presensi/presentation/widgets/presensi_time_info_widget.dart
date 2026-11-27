@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/presensi_data.dart';
 
 class PresensiTimeInfoWidget extends StatelessWidget {
@@ -37,7 +38,7 @@ class PresensiTimeInfoWidget extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              text,
+              context.localizeDynamic(text),
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,
@@ -57,7 +58,7 @@ class PresensiTimeInfoWidget extends StatelessWidget {
                 ),
               ),
               child: Text(
-                trimmedBadge,
+                context.localizeDynamic(trimmedBadge),
                 style: const TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.w800,

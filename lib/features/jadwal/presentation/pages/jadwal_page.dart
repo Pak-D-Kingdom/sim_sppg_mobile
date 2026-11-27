@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../injection_container.dart';
 import '../bloc/jadwal_bloc.dart';
 import '../bloc/jadwal_event.dart';
@@ -71,7 +72,7 @@ class _JadwalPageView extends StatelessWidget {
                         onPressed: () {
                           context.read<JadwalBloc>().add(const LoadJadwalEvent());
                         },
-                        child: const Text('Coba Lagi'),
+                        child: Text(context.l10n.tryAgain),
                       ),
                     ],
                   ),
@@ -85,7 +86,7 @@ class _JadwalPageView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 16, 16, 12),
                     child: JadwalHeaderWidget(
-                      title: state.data.title,
+                      title: context.l10n.scheduleAndHolidays,
                       location: state.data.location,
                       showBackButton: canPop,
                     ),

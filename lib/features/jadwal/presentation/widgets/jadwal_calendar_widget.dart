@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/jadwal_day.dart';
 import '../../domain/entities/jadwal_day_type.dart';
 
@@ -27,16 +28,6 @@ class JadwalCalendarWidget extends StatelessWidget {
     this.isLoading = false,
   });
 
-  static const List<String> _weekdays = [
-    'Min',
-    'Sen',
-    'Sel',
-    'Rab',
-    'Kam',
-    'Jum',
-    'Sab',
-  ];
-
   Color _getDotColor(JadwalDayType type) {
     switch (type) {
       case JadwalDayType.hariKerja:
@@ -52,6 +43,16 @@ class JadwalCalendarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final weekdays = [
+      l10n.daySun,
+      l10n.dayMon,
+      l10n.dayTue,
+      l10n.dayWed,
+      l10n.dayThu,
+      l10n.dayFri,
+      l10n.daySat,
+    ];
     // Determine the weekday of the 1st day of the month
     // DateTime.weekday: 1 = Mon, 7 = Sun. We want 0 = Sun (Min), 6 = Sat (Sab)
     final firstDayOfMonth = DateTime(currentYear, currentMonth, 1);
@@ -90,7 +91,7 @@ class JadwalCalendarWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    currentMonthYear,
+                    context.localizeDynamic(currentMonthYear),
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w800,
@@ -126,7 +127,7 @@ class JadwalCalendarWidget extends StatelessWidget {
 
           // 2. Day of Week Labels
           Row(
-            children: _weekdays.map((day) {
+            children: weekdays.map((day) {
               return Expanded(
                 child: Center(
                   child: Text(
@@ -158,10 +159,10 @@ class JadwalCalendarWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildLegendItem(const Color(0xFF10B981), 'Hari Kerja'),
-              _buildLegendItem(const Color(0xFF94A3B8), 'Libur'),
-              _buildLegendItem(const Color(0xFFEA580C), 'Libur SPPG'),
-              _buildLegendItem(const Color(0xFF8B5CF6), 'Cuti'),
+              _buildLegendItem(const Color(0xFF10B981), l10n.workDay),
+              _buildLegendItem(const Color(0xFF94A3B8), l10n.dayOff),
+              _buildLegendItem(const Color(0xFFEA580C), l10n.sppgHoliday),
+              _buildLegendItem(const Color(0xFF8B5CF6), l10n.leave),
             ],
           ),
         ],

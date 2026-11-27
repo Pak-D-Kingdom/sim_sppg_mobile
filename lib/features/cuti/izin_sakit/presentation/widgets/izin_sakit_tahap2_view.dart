@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sim_sppg_mobile/core/constants/app_colors.dart';
+import 'package:sim_sppg_mobile/core/localization/app_localizations_extension.dart';
 import '../bloc/izin_sakit_bloc.dart';
 import '../bloc/izin_sakit_event.dart';
 import '../bloc/izin_sakit_state.dart';
@@ -28,6 +29,7 @@ class IzinSakitTahap2View extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final data = state.data;
 
     return Column(
@@ -58,17 +60,17 @@ class IzinSakitTahap2View extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Row(
+                  Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.warning_amber_rounded,
                         size: 20,
                         color: Color(0xFF2563EB),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
-                        'Menunggu Bukti Sakit',
-                        style: TextStyle(
+                        l10n.waitingSickEvidence,
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w800,
                           color: AppColors.onSurface,
@@ -119,19 +121,19 @@ class IzinSakitTahap2View extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: const Color(0xFFE2E8F0)),
                 ),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Batas Akhir Unggah (2x24 Jam)',
-                      style: TextStyle(
+                      l10n.uploadDeadline2x24,
+                      style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    SizedBox(height: 3),
-                    Text(
+                    const SizedBox(height: 3),
+                    const Text(
                       'Minggu, 22 Nov 2026 • 04:52 WIB',
                       style: TextStyle(
                         fontSize: 13,
@@ -143,9 +145,9 @@ class IzinSakitTahap2View extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Laporan awal sudah diterima KSPPG. Wajib unggah surat dokter/bukti sebelum batas waktu berakhir.',
-                style: TextStyle(
+              Text(
+                l10n.sickReportReceivedNotice,
+                style: const TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.w500,
                   color: AppColors.textSecondary,
@@ -176,12 +178,12 @@ class IzinSakitTahap2View extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Ringkasan Laporan Terkirim',
-                    style: TextStyle(
+                    l10n.submittedReportSummary,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
                       color: AppColors.onSurface,
@@ -189,8 +191,8 @@ class IzinSakitTahap2View extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '✓ Diterima KSPPG',
-                    style: TextStyle(
+                    l10n.receivedByKsppg,
+                    style: const TextStyle(
                       fontSize: 11.5,
                       fontWeight: FontWeight.w700,
                       color: Color(0xFF16A34A),
@@ -202,9 +204,9 @@ class IzinSakitTahap2View extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Tanggal Sakit',
-                    style: TextStyle(
+                  Text(
+                    l10n.sickDate,
+                    style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: AppColors.textSecondary,
@@ -225,8 +227,8 @@ class IzinSakitTahap2View extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Keluhan',
+                  Text(
+                    l10n.symptoms,
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
@@ -274,9 +276,9 @@ class IzinSakitTahap2View extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Lampirkan Bukti Sakit',
-                    style: TextStyle(
+                  Text(
+                    l10n.attachSickEvidence,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
                       color: AppColors.onSurface,
@@ -292,9 +294,9 @@ class IzinSakitTahap2View extends StatelessWidget {
                       color: const Color(0xFFEFF6FF),
                       borderRadius: BorderRadius.circular(6),
                     ),
-                    child: const Text(
-                      'Wajib Diunggah',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.uploadRequired,
+                      style: const TextStyle(
                         fontSize: 10.5,
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF2563EB),

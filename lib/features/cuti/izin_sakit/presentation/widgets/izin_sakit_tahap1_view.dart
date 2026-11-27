@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:sim_sppg_mobile/core/constants/app_colors.dart';
+import 'package:sim_sppg_mobile/core/localization/app_localizations_extension.dart';
 import '../bloc/izin_sakit_bloc.dart';
 import '../bloc/izin_sakit_event.dart';
 import '../bloc/izin_sakit_state.dart';
@@ -93,6 +94,7 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final data = widget.state.data;
 
     return Column(
@@ -120,9 +122,9 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Ketentuan Izin Sakit',
-                    style: TextStyle(
+                  Text(
+                    l10n.sickLeaveTerms,
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w800,
                       color: AppColors.onSurface,
@@ -138,9 +140,9 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
                       color: const Color(0xFFDCFCE7),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      'Tidak Potong Kuota',
-                      style: TextStyle(
+                    child: Text(
+                      l10n.noQuotaDeduction,
+                      style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.w800,
                         color: Color(0xFF16A34A),
@@ -206,9 +208,9 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Pilih Tanggal Sakit',
-                style: TextStyle(
+              Text(
+                l10n.selectSickDate,
+                style: const TextStyle(
                   fontSize: 14.5,
                   fontWeight: FontWeight.w800,
                   color: AppColors.onSurface,
@@ -220,7 +222,7 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
                 children: [
                   Expanded(
                     child: _buildDateItem(
-                      label: 'Tanggal Mulai',
+                      label: l10n.startDate,
                       dateText: _formatDate(data.startDate),
                       onTap: () => _selectDate(
                         context,
@@ -237,7 +239,7 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: _buildDateItem(
-                      label: 'Tanggal Selesai',
+                      label: l10n.endDate,
                       dateText: _formatDate(data.endDate),
                       onTap: () => _selectDate(
                         context,
@@ -280,7 +282,7 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
                         ),
                         const SizedBox(width: 6),
                         Text(
-                          '• Durasi: ${data.durationDays} Hari Kerja',
+                          l10n.durationWorkDays(data.durationDays),
                           style: const TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w700,
@@ -324,9 +326,9 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Alasan / Keluhan Sakit',
-                style: TextStyle(
+              Text(
+                l10n.sickReasonLabel,
+                style: const TextStyle(
                   fontSize: 14.5,
                   fontWeight: FontWeight.w800,
                   color: AppColors.onSurface,
@@ -361,12 +363,12 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
                         color: AppColors.onSurface,
                         height: 1.45,
                       ),
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: InputBorder.none,
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
-                        hintText: 'Tuliskan keluhan atau gejala sakit...',
-                        hintStyle: TextStyle(
+                        hintText: l10n.sickReasonHint,
+                        hintStyle: const TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
                           color: AppColors.textTertiary,
@@ -396,19 +398,19 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
         const SizedBox(height: 20),
 
         // 4. Footer Note & Action Button (Matching Gambar 1)
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.person_outline_rounded,
               size: 16,
               color: AppColors.textSecondary,
             ),
-            SizedBox(width: 6),
+            const SizedBox(width: 6),
             Expanded(
               child: Text(
-                'Akan diteruskan ke Koordinator Unit SPPG Rawamangun 01.',
-                style: TextStyle(
+                l10n.forwardedToCoordinator,
+                style: const TextStyle(
                   fontSize: 11.5,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondary,
@@ -446,20 +448,20 @@ class _IzinSakitTahap1ViewState extends State<IzinSakitTahap1View> {
                       color: Color(0xFF0F172A),
                     ),
                   )
-                : const Row(
+                : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Kirim Laporan ke KSPPG',
-                        style: TextStyle(
+                        l10n.sendReportToKsppg,
+                        style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w800,
                           color: Color(0xFF0F172A),
                           letterSpacing: -0.2,
                         ),
                       ),
-                      SizedBox(width: 6),
-                      Text(
+                      const SizedBox(width: 6),
+                      const Text(
                         '→',
                         style: TextStyle(
                           fontSize: 16,

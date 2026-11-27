@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/home_statistic.dart';
 import '../../domain/entities/today_attendance.dart';
 
@@ -53,16 +54,29 @@ class HomeAttendanceCardWidget extends StatelessWidget {
     return stat.value;
   }
 
-  String _getFooterText(HomeStatistic stat) {
+  String _getTitleText(HomeStatistic stat, AppLocalizations l10n) {
     switch (stat.code) {
       case 'leave_balance':
-        return 'Tersedia';
+        return l10n.leaveBalance;
       case 'attendance':
-        return '90% Target';
+        return l10n.attendanceLabel;
       case 'penalty':
-        return 'Disiplin Prima';
+        return l10n.latePenalty;
       default:
-        return stat.footer.isNotEmpty ? stat.footer : 'Tersedia';
+        return stat.title;
+    }
+  }
+
+  String _getFooterText(HomeStatistic stat, AppLocalizations l10n) {
+    switch (stat.code) {
+      case 'leave_balance':
+        return l10n.available;
+      case 'attendance':
+        return l10n.target90;
+      case 'penalty':
+        return l10n.primeDiscipline;
+      default:
+        return stat.footer.isNotEmpty ? stat.footer : l10n.available;
     }
   }
 
@@ -105,6 +119,7 @@ class HomeAttendanceCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     // Standardize formatted date to single line if containing newlines
     final String displayDate = attendance.dateFormatted.replaceAll('\n', ' ');
     final stats = (statistics != null && statistics!.isNotEmpty)
@@ -164,7 +179,7 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            displayDate,
+                            context.localizeDynamic(displayDate),
                             style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -176,7 +191,7 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                           ),
                           const SizedBox(height: 2),
                           Text(
-                            attendance.shiftSchedule,
+                            context.localizeDynamic(attendance.shiftSchedule),
                             style: TextStyle(
                               fontSize: 12.5,
                               fontWeight: FontWeight.w500,
@@ -228,9 +243,9 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const Text(
-                                'CLOCK-IN',
-                                style: TextStyle(
+                              Text(
+                                l10n.clockIn,
+                                style: const TextStyle(
                                   fontSize: 11,
                                   fontWeight: FontWeight.w700,
                                   letterSpacing: 0.6,
@@ -274,10 +289,10 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                                   color: AppColors.successLight,
                                   borderRadius: BorderRadius.circular(999),
                                 ),
-                                child: const Row(
+                                child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(
+                                    const Text(
                                       '•',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -286,10 +301,10 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                                         height: 1.0,
                                       ),
                                     ),
-                                    SizedBox(width: 4),
+                                    const SizedBox(width: 4),
                                     Text(
-                                      'Tepat Waktu',
-                                      style: TextStyle(
+                                      l10n.onTime,
+                                      style: const TextStyle(
                                         fontSize: 11,
                                         fontWeight: FontWeight.w700,
                                         color: AppColors.success,
@@ -328,9 +343,9 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                              'CLOCK-OUT',
-                              style: TextStyle(
+                            Text(
+                              l10n.clockOut,
+                              style: const TextStyle(
                                 fontSize: 11,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 0.6,
@@ -401,8 +416,8 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                                   const SizedBox(width: 4),
                                   Text(
                                     attendance.isClockedOut
-                                        ? 'Selesai'
-                                        : 'Menunggu',
+                                        ? l10n.completed
+                                        : l10n.waiting,
                                     style: TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.w700,
@@ -456,8 +471,8 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                           const SizedBox(width: 8),
                           Text(
                             attendance.isClockedOut
-                                ? 'Presensi Selesai'
-                                : 'Clock-Out Sekarang (Pulang)',
+                                ? l10n.attendanceCompleted
+                                : l10n.clockOutNow,
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -486,9 +501,9 @@ class HomeAttendanceCardWidget extends StatelessWidget {
                     right: index == stats.length - 1 ? 0 : 4,
                   ),
                   child: _buildMetricItem(
-                    title: stat.title,
-                    value: _getDisplayValue(stat),
-                    footer: _getFooterText(stat),
+                    title: _getTitleText(stat, l10n),
+                    value: context.localizeDynamic(_getDisplayValue(stat)),
+                    footer: _getFooterText(stat, l10n),
                     footerColor: _getFooterColor(stat.code),
                     bgColor: _getCardBgColor(stat.code),
                     borderColor: _getCardBorderColor(stat.code),

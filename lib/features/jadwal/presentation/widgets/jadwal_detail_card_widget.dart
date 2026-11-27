@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/jadwal_day.dart';
 import '../../domain/entities/jadwal_day_type.dart';
 
@@ -13,6 +14,7 @@ class JadwalDetailCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -41,7 +43,7 @@ class JadwalDetailCardWidget extends StatelessWidget {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 200),
                   child: Text(
-                    day.formattedDisplayDate,
+                    context.localizeDynamic(day.formattedDisplayDate),
                     key: ValueKey(day.formattedDisplayDate),
                     style: const TextStyle(
                       fontSize: 15,
@@ -52,14 +54,14 @@ class JadwalDetailCardWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              _buildStatusBadge(day.type),
+              _buildStatusBadge(day.type, l10n),
             ],
           ),
           const SizedBox(height: 12),
 
           // 2. Shift Title
           Text(
-            day.shiftTitle,
+            context.localizeDynamic(day.shiftTitle),
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w800,
@@ -92,7 +94,7 @@ class JadwalDetailCardWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildInfoItem(
-                  label: 'Divisi Dapur',
+                  label: l10n.kitchenDivision,
                   value: day.divisiDapur,
                   valueColor: AppColors.onSurface,
                 ),
@@ -100,7 +102,7 @@ class JadwalDetailCardWidget extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: _buildInfoItem(
-                  label: 'Jam Shift',
+                  label: l10n.shiftHours,
                   value: day.jamShift,
                   valueColor: AppColors.onSurface,
                 ),
@@ -112,8 +114,8 @@ class JadwalDetailCardWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: _buildInfoItem(
-                  label: 'Toleransi Telat',
-                  value: day.toleransiTelat,
+                  label: l10n.lateTolerance,
+                  value: context.localizeDynamic(day.toleransiTelat),
                   valueColor: day.toleransiTelat == '–'
                       ? AppColors.textSecondary
                       : const Color(0xFFD97706), // Warm Amber
@@ -122,8 +124,8 @@ class JadwalDetailCardWidget extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: _buildInfoItem(
-                  label: 'Status Jadwal',
-                  value: day.statusJadwal,
+                  label: l10n.scheduleStatus,
+                  value: context.localizeDynamic(day.statusJadwal),
                   valueColor: day.type == JadwalDayType.libur
                       ? AppColors.textSecondary
                       : const Color(0xFF16A34A), // Emerald Green
@@ -136,7 +138,7 @@ class JadwalDetailCardWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBadge(JadwalDayType type) {
+  Widget _buildStatusBadge(JadwalDayType type, AppLocalizations l10n) {
     Color bgColor;
     Color textColor;
     String label;
@@ -145,22 +147,22 @@ class JadwalDetailCardWidget extends StatelessWidget {
       case JadwalDayType.hariKerja:
         bgColor = const Color(0xFFDCFCE7);
         textColor = const Color(0xFF16A34A);
-        label = 'HARI KERJA';
+        label = l10n.workDayUpper;
         break;
       case JadwalDayType.libur:
         bgColor = const Color(0xFFF1F5F9);
         textColor = const Color(0xFF64748B);
-        label = 'LIBUR';
+        label = l10n.dayOffUpper;
         break;
       case JadwalDayType.liburSppg:
         bgColor = const Color(0xFFFEF3C7);
         textColor = const Color(0xFFD97706);
-        label = 'LIBUR SPPG';
+        label = l10n.sppgHolidayUpper;
         break;
       case JadwalDayType.cuti:
         bgColor = const Color(0xFFF3E8FF);
         textColor = const Color(0xFF7C3AED);
-        label = 'CUTI TAHUNAN';
+        label = l10n.annualLeaveUpper;
         break;
     }
 

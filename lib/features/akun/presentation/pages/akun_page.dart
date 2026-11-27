@@ -434,23 +434,23 @@ class _AkunPageView extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(width: 14),
-                                  const Expanded(
+                                  Expanded(
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Detail Akun',
-                                          style: TextStyle(
+                                          l10n.accountDetail,
+                                          style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.onSurface,
                                           ),
                                         ),
-                                        SizedBox(height: 2),
+                                        const SizedBox(height: 2),
                                         Text(
-                                          'Data kepegawaian, penempatan & payroll',
-                                          style: TextStyle(
+                                          l10n.accountDetailSubtitle,
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.textSecondary,

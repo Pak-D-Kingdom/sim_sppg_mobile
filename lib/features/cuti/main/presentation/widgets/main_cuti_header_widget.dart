@@ -1,14 +1,15 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../../core/constants/app_colors.dart';
+import '../../../../../core/localization/app_localizations_extension.dart';
 
 class MainCutiHeaderWidget extends StatelessWidget {
   final VoidCallback? onBackTap;
-  final String title;
+  final String? title;
 
   const MainCutiHeaderWidget({
     super.key,
     this.onBackTap,
-    this.title = 'Pengajuan Cuti & Izin',
+    this.title,
   });
 
   @override
@@ -47,7 +48,7 @@ class MainCutiHeaderWidget extends StatelessWidget {
           const SizedBox(width: 14),
           Expanded(
             child: Text(
-              title,
+              title ?? context.l10n.leaveRequestTitle,
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w800,

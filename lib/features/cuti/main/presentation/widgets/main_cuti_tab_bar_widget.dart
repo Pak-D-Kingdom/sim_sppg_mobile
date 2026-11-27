@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import '../../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/cuti_tab_type.dart';
 
 class MainCutiTabBarWidget extends StatelessWidget {
@@ -11,8 +12,20 @@ class MainCutiTabBarWidget extends StatelessWidget {
     required this.onTabSelected,
   });
 
+  String _localizedLabel(CutiTabType tab, AppLocalizations l10n) {
+    switch (tab) {
+      case CutiTabType.cutiTahunan:
+        return l10n.annualLeave;
+      case CutiTabType.izinSakit:
+        return l10n.sickLeave;
+      case CutiTabType.izinDarurat:
+        return l10n.emergencyLeave;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(4),
@@ -46,7 +59,7 @@ class MainCutiTabBarWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    tab.label,
+                    _localizedLabel(tab, l10n),
                     style: TextStyle(
                       fontSize: 12.5,
                       fontWeight:

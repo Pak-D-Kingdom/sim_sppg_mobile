@@ -8,10 +8,58 @@
   "profile": "Profil",
   "profileSubtitle": "Informasi kepegawaian & pengaturan akun",
   "accountSettings": "Pengaturan Akun",
+  "accountDetail": "Detail Akun",
+  "accountDetailSubtitle": "Data kepegawaian, penempatan & payroll",
+  "employmentAndPayrollData": "Data Kepegawaian & Payroll",
+  "personalIdentityAndContact": "IDENTITAS PRIBADI & KONTAK",
+  "nikKtp": "NIK (KTP)",
+  "birthPlaceDate": "Tempat, Tgl Lahir",
+  "officialEmail": "Email Resmi",
+  "whatsappNumber": "No. WhatsApp",
+  "domicile": "Domisili",
+  "placementAndShift": "PENEMPATAN & JADWAL SHIFT",
+  "kitchenUnit": "Unit Dapur SPPG",
+  "operationalDivision": "Divisi Operasional",
+  "joinDate": "Tanggal Bergabung",
+  "mainShiftSchedule": "Jadwal Shift Utama",
+  "payrollAccountAndInsurance": "REKENING PAYROLL & JAMINAN",
+  "verified": "Terverifikasi",
+  "disbursementBank": "Bank Penyalur",
+  "accountNumber": "Nomor Rekening",
+  "accountHolderName": "Nama Pemilik",
+  "bpjsHealthAndEmployment": "BPJS Kesehatan & TK",
+  "dataChangeNotice": "Perubahan data NIK, nomor rekening gaji, atau jadwal shift utama hanya dapat dilakukan melalui Admin Unit SPPG / HR Pusat.",
+  "personnelIdLabel": "ID PERSONEL",
+  "workTenureLabel": "MASA KERJA",
   "changePassword": "Ubah Kata Sandi",
   "changePasswordSubtitle": "Perbarui keamanan akses akun",
+  "changePasswordHint": "Gunakan minimal 8 karakter dengan kombinasi huruf dan angka untuk menjaga keamanan akun personel Anda.",
+  "currentPassword": "Kata Sandi Saat Ini",
+  "newPassword": "Kata Sandi Baru",
+  "confirmNewPassword": "Konfirmasi Kata Sandi Baru",
+  "saveNewPassword": "Simpan Kata Sandi Baru",
+  "enterField": "Masukkan {label}",
+  "@enterField": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
+  "passwordFieldsRequired": "Harap lengkapi seluruh kolom kata sandi.",
+  "passwordMinLength8": "Kata sandi baru minimal 8 karakter.",
+  "passwordConfirmationMismatch": "Konfirmasi kata sandi baru tidak cocok.",
+  "passwordUpdatedSuccess": "Kata sandi berhasil diperbarui.",
   "helpCenter": "Pusat Bantuan & SOP",
   "helpCenterSubtitle": "Panduan operasional & kontak admin",
+  "faqBiometricTitle": "SOP Presensi Biometrik & Radius GPS",
+  "faqBiometricBody": "Pastikan GPS aktif dan Anda berada dalam radius 50 meter dari titik dapur SPPG saat melakukan Clock-In maupun Clock-Out.",
+  "faqSickNoteTitle": "Prosedur Unggah Surat Keterangan Dokter",
+  "faqSickNoteBody": "Untuk pengajuan Izin Sakit, unggah bukti surat dokter maksimal 48 jam sejak tanggal ketidakhadiran melalui menu Cuti & Izin.",
+  "faqCorrectionTitle": "Pengajuan Koreksi Absensi",
+  "faqCorrectionBody": "Jika terjadi kendala teknis saat presensi, ajukan koreksi pada halaman Riwayat Absen agar diverifikasi oleh KSPPG.",
+  "faqContactTitle": "Kontak Admin Operasional SPPG",
+  "faqContactBody": "WhatsApp Helpdesk: 0811-9000-2401 (Senin–Sabtu, 05:00 - 17:00 WIB) atau email support@sppg.go.id.",
   "changeLanguage": "Ganti Bahasa",
   "changeLanguageSubtitle": "Pilih bahasa tampilan aplikasi",
   "logout": "Keluar dari Akun",
@@ -21,9 +69,270 @@
   "confirm": "Konfirmasi",
   "tryAgain": "Coba Lagi",
   "login": "Masuk",
+  "loginToAccount": "Masuk ke Akun",
+  "loginSubtitle": "Gunakan ID Personel atau email resmi yang terdaftar",
+  "appFullSubtitle": "Sistem Informasi Manajemen Satuan Pelayanan\nPemenuhan Gizi",
+  "personnelIdOrEmail": "ID Personel / Email",
+  "password": "Kata Sandi",
+  "enterPassword": "Masukkan kata sandi",
+  "rememberMe": "Ingat sesi saya",
+  "forgotPassword": "Lupa kata sandi?",
+  "forgotPasswordTitle": "Lupa Kata Sandi",
+  "loginButtonArrow": "Masuk  →",
+  "accountManagedNotice": "Akun personel diterbitkan & dikelola oleh Admin Unit SPPG. Hubungi KSPPG jika belum memiliki akses.",
+  "personnelAccessRecovery": "Pemulihan Akses Personel",
+  "forgotPasswordDescription": "Masukkan ID Personel atau email resmi SPPG Anda. Tautan reset atau verifikasi admin akan dikirimkan ke kontak terdaftar.",
+  "identifierExampleHint": "Contoh: SPPG-RMG-014 atau nama@sppg.go.id",
+  "sendResetRequest": "Kirim Permintaan Reset",
+  "enterIdentifierError": "Masukkan ID Personel atau email resmi Anda.",
+  "resetRequestSent": "Permintaan reset kata sandi dikirim ke Admin Unit SPPG & email terdaftar.",
   "home": "Beranda",
   "schedule": "Jadwal",
   "attendance": "Presensi",
   "payroll": "Gaji",
-  "account": "Akun"
+  "account": "Akun",
+  "leaveBalance": "Saldo Cuti",
+  "available": "Tersedia",
+  "attendanceLabel": "Kehadiran",
+  "target90": "90% Target",
+  "latePenalty": "Denda Telat",
+  "primeDiscipline": "Disiplin Prima",
+  "clockIn": "CLOCK-IN",
+  "clockOut": "CLOCK-OUT",
+  "onTime": "Tepat Waktu",
+  "completed": "Selesai",
+  "waiting": "Menunggu",
+  "attendanceCompleted": "Presensi Selesai",
+  "clockOutNow": "Clock-Out Sekarang (Pulang)",
+  "failedToLoadData": "Gagal Memuat Data",
+  "personnelSelfService": "Layanan Mandiri Personel",
+  "mainModulesCount": "{count} Modul Utama",
+  "@mainModulesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "openingModule": "Membuka modul: {title}",
+  "@openingModule": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "monthlySummary": "Ringkasan Bulan Ini",
+  "scheduleAndHolidays": "Jadwal & Libur",
+  "daySun": "Min",
+  "dayMon": "Sen",
+  "dayTue": "Sel",
+  "dayWed": "Rab",
+  "dayThu": "Kam",
+  "dayFri": "Jum",
+  "daySat": "Sab",
+  "workDay": "Hari Kerja",
+  "dayOff": "Libur",
+  "sppgHoliday": "Libur SPPG",
+  "leave": "Cuti",
+  "kitchenDivision": "Divisi Dapur",
+  "shiftHours": "Jam Shift",
+  "lateTolerance": "Toleransi Telat",
+  "scheduleStatus": "Status Jadwal",
+  "workDayUpper": "HARI KERJA",
+  "dayOffUpper": "LIBUR",
+  "sppgHolidayUpper": "LIBUR SPPG",
+  "annualLeaveUpper": "CUTI TAHUNAN",
+  "dayOffSlashUpper": "LIBUR / OFF",
+  "leaveQuotaUpper": "KUOTA CUTI",
+  "daysCount": "{count} Hari",
+  "@daysCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceCheckInTitle": "Presensi Kehadiran",
+  "attendanceCheckOutTitle": "Presensi Pulang",
+  "confirmClockIn": "Konfirmasi Clock-In (Masuk)",
+  "confirmClockOut": "Konfirmasi Clock-Out (Pulang)",
+  "singleCameraNotice": "Hanya 1 kamera tersedia atau menggunakan simulasi.",
+  "faceFrameInstruction": "Pastikan wajah terlihat jelas di dalam bingkai tanpa masker",
+  "clockInEntryUpper": "CLOCK-IN MASUK",
+  "totalWorkDurationUpper": "TOTAL DURASI KERJA",
+  "kitchenLocationVerified": "Lokasi Dapur Terverifikasi",
+  "withinRadius": "Dalam Radius",
+  "outsideRadius": "Luar Radius",
+  "attendanceHistory": "Riwayat Absen",
+  "noDataForFilter": "Belum ada data untuk filter ini",
+  "showLess": "Tampilkan Lebih Sedikit  ↑",
+  "showAllThisMonth": "Tampilkan Semua di Bulan Ini ({count})  ↓",
+  "@showAllThisMonth": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterAll": "Semua",
+  "filterPresent": "Hadir",
+  "filterLate": "Telat",
+  "filterLeave": "Cuti & Izin",
+  "presentUpper": "HADIR",
+  "lateUpper": "TELAT",
+  "leaveUpper": "CUTI/IZIN",
+  "waitingUpper": "MENUNGGU",
+  "correctionSubmitted": "Koreksi Diajukan",
+  "durationPrefix": "Durasi: {duration}",
+  "@durationPrefix": {
+    "placeholders": {
+      "duration": {
+        "type": "String"
+      }
+    }
+  },
+  "requestCorrection": "Ajukan Koreksi",
+  "requestAttendanceCorrection": "Ajukan Koreksi Absensi",
+  "correctionReasonHint": "Tuliskan alasan koreksi (misal: kendala GPS atau tugas distribusi bahan)...",
+  "attendanceTimeCorrection": "Koreksi jam kehadiran",
+  "submitCorrectionRequest": "Kirim Pengajuan Koreksi",
+  "payrollTitle": "Payroll",
+  "payrollHeaderSubtitle": "SPPG Rawamangun 01 • Closing Tgl 25",
+  "payslipList": "Daftar Slip Gaji",
+  "yearLabel": "Tahun {year}",
+  "@yearLabel": {
+    "placeholders": {
+      "year": {
+        "type": "int"
+      }
+    }
+  },
+  "latestBadge": "Terbaru",
+  "attendanceUpper": "KEHADIRAN",
+  "leaveSlashUpper": "CUTI / IZIN",
+  "latePenaltyUpper": "DENDA TELAT",
+  "viewSlipDetails": "Lihat Rincian Slip",
+  "penaltiesAndAllowances": "Rincian Denda & Tunjangan",
+  "payslipDetailTitle": "Detail Slip Gaji",
+  "paidStatus": "Terbayar",
+  "kitchenUnitUpper": "UNIT DAPUR",
+  "approved": "Disetujui",
+  "earningsUpper": "PENDAPATAN (+)",
+  "basePositionSalary": "Gaji Pokok Posisi",
+  "attendanceAndPositionAllowance": "Tunjangan Hadir & Jabatan",
+  "totalGrossEarnings": "Total Pendapatan Kotor",
+  "deductionsUpper": "POTONGAN (-)",
+  "totalNetReceived": "Total Diterima (Bersih)",
+  "afterPenaltiesAndTax": "Sudah dipotong denda & pajak",
+  "destinationAccount": "Rekening Tujuan",
+  "disbursementDate": "Tanggal Pencairan",
+  "officialPayslipFooter": "Dokumen resmi terverifikasi sistem payroll SIM-SPPG",
+  "payslipDownloaded": "Slip Gaji (PDF) berhasil diunduh ke perangkat Anda.",
+  "downloadPayslipPdf": "Unduh Slip Gaji (PDF)",
+  "totalAllowanceUpper": "TOTAL TUNJANGAN",
+  "attendanceAndRole": "Hadir & Jabatan",
+  "totalLatePenaltyUpper": "TOTAL DENDA TELAT",
+  "lateLogThisPeriod": "Log Keterlambatan Periode Ini",
+  "viewInHistory": "Lihat di Riwayat",
+  "activeAllowanceBreakdown": "Rincian Tunjangan Aktif",
+  "attendanceAllowance": "Tunjangan Kehadiran",
+  "positionAllowance": "Tunjangan Posisi (Ahli Gizi)",
+  "totalAllowanceThisPeriod": "Total Tunjangan Periode Ini",
+  "payrollPolicyTitle": "Ketentuan Payroll SPPG",
+  "notificationsTitle": "Notifikasi",
+  "allNotificationsMarkedRead": "Semua notifikasi ditandai sudah dibaca",
+  "markAsRead": "Tandai dibaca",
+  "todayUpper": "HARI INI",
+  "messagesCount": "{count} Pesan",
+  "@messagesCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noNotifications": "Tidak ada notifikasi",
+  "filterAllUnread": "Semua ({count})",
+  "@filterAllUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterOperational": "Operasional",
+  "filterApproval": "Persetujuan",
+  "unread": "Belum dibaca",
+  "read": "Sudah dibaca",
+  "leaveRequestTitle": "Pengajuan Cuti & Izin",
+  "annualLeave": "Cuti Tahunan",
+  "sickLeave": "Izin Sakit",
+  "emergencyLeave": "Izin Darurat",
+  "annualLeaveQuotaTitle": "Kuota Cuti Tahunan 2026",
+  "annualLeavePolicyDesc": "Cuti tahunan diajukan min. H-2. Izin sakit/darurat dapat diajukan hari-H tanpa memotong kuota.",
+  "selectSubmissionDate": "Pilih Tanggal Pengajuan",
+  "startDate": "Tanggal Mulai",
+  "endDate": "Tanggal Selesai",
+  "durationWorkDays": "• Durasi: {days} Hari Kerja",
+  "@durationWorkDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "remainingBalancePrefix": "Sisa Saldo: ",
+  "fixedBalancePrefix": "Saldo Tetap: ",
+  "reasonOrNotes": "Alasan / Keterangan",
+  "reasonHint": "Tuliskan alasan pengajuan cuti secara singkat...",
+  "attachEvidence": "Lampirkan Bukti",
+  "savedFileMeta": "Tersimpan • 1.2 MB",
+  "evidenceOptionalHint": "Opsional untuk cuti • Wajib menyusul maks. 2x24 jam untuk Izin Sakit (JPG, PNG, PDF • Maks. 2MB)",
+  "forwardedToCoordinator": "Akan diteruskan ke Koordinator Unit SPPG Rawamangun 01.",
+  "submitRequest": "Kirim Pengajuan",
+  "fileAttachedSuccess": "File \"{fileName}\" berhasil dilampirkan.",
+  "@fileAttachedSuccess": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
+  "quotaFree": "Bebas Kuota",
+  "noQuotaDeduction": "Tidak Potong Kuota",
+  "sickLeaveTerms": "Ketentuan Izin Sakit",
+  "selectSickDate": "Pilih Tanggal Sakit",
+  "sickReasonLabel": "Alasan / Keluhan Sakit",
+  "sickReasonHint": "Tuliskan keluhan atau gejala sakit...",
+  "sendReportToKsppg": "Kirim Laporan ke KSPPG",
+  "waitingSickEvidence": "Menunggu Bukti Sakit",
+  "uploadDeadline2x24": "Batas Akhir Unggah (2x24 Jam)",
+  "sickReportReceivedNotice": "Laporan awal sudah diterima KSPPG. Wajib unggah surat dokter/bukti sebelum batas waktu berakhir.",
+  "submittedReportSummary": "Ringkasan Laporan Terkirim",
+  "receivedByKsppg": "✓ Diterima KSPPG",
+  "sickDate": "Tanggal Sakit",
+  "symptoms": "Keluhan",
+  "attachSickEvidence": "Lampirkan Bukti Sakit",
+  "uploadRequired": "Wajib Diunggah",
+  "fileSelectedReady": "File terpilih • Siap dikirim",
+  "takePhotoOrPickDoc": "Ambil Foto atau Pilih Dokumen",
+  "sickDocHint": "Surat keterangan dokter, resep obat, atau bukti klinik (JPG, PNG, PDF • Maks. 2MB)",
+  "submitSickEvidence": "Kirim Bukti Sakit",
+  "emergencyLeaveTerms": "Ketentuan Izin Darurat",
+  "emergencyLeavePolicyDesc": "Khusus kondisi mendesak hari-H (musibah keluarga, kendala perjalanan, atau bencana) tanpa memotong jatah cuti tahunan.",
+  "emergencyTypeAndTime": "Jenis & Waktu Darurat",
+  "absentFullDay": "Tidak Masuk (Full)",
+  "latePermission": "Izin Terlambat",
+  "shiftDate": "Tanggal Shift",
+  "estimatedArrivalTime": "Estimasi Jam Tiba",
+  "emergencyCategory": "Kategori Kondisi Darurat",
+  "selectEmergencyCategory": "Pilih Kategori Kondisi Darurat",
+  "emergencyCategoryExample": "Contoh: Keluarga rawat darurat, kendaraan mogok, banjir/bencana, dll.",
+  "shortDescription": "Keterangan Singkat",
+  "emergencyReasonHint": "Jelaskan kondisi darurat secara singkat...",
+  "emergencyEvidenceHint": "Unggah foto kondisi di tempat, surat IGD, atau\ntangkapan layar (JPG, PNG, PDF • Maks. 2MB)",
+  "forwardedAsPriority": "Akan diteruskan sebagai prioritas ke Koordinator Unit SPPG\nRawamangun 01.",
+  "submitLatePermission": "Kirim Izin Terlambat",
+  "submitEmergencyLeave": "Kirim Izin Darurat"
 }

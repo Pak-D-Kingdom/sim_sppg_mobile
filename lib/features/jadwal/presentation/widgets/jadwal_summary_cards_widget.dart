@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import '../../../../core/constants/app_colors.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../../../core/routes/app_routes.dart';
 import '../../domain/entities/jadwal_summary.dart';
 
@@ -13,13 +14,14 @@ class JadwalSummaryCardsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Row(
       children: [
         // 1. Hari Kerja
         Expanded(
           child: _buildSummaryCard(
-            title: 'HARI KERJA',
-            value: '${summary.hariKerja} Hari',
+            title: l10n.workDayUpper,
+            value: l10n.daysCount(summary.hariKerja),
             valueColor: AppColors.onSurface,
           ),
         ),
@@ -28,8 +30,8 @@ class JadwalSummaryCardsWidget extends StatelessWidget {
         // 2. Libur / Off
         Expanded(
           child: _buildSummaryCard(
-            title: 'LIBUR / OFF',
-            value: '${summary.liburOff} Hari',
+            title: l10n.dayOffSlashUpper,
+            value: l10n.daysCount(summary.liburOff),
             valueColor: const Color(0xFF2563EB),
           ),
         ),
@@ -38,10 +40,10 @@ class JadwalSummaryCardsWidget extends StatelessWidget {
         // 3. Kuota Cuti
         Expanded(
           child: _buildSummaryCard(
-            title: 'KUOTA CUTI',
-            value: summary.kuotaCuti,
+            title: l10n.leaveQuotaUpper,
+            value: context.localizeDynamic(summary.kuotaCuti),
             valueColor: const Color(0xFF7C3AED),
-            subtitle: summary.sisaCuti,
+            subtitle: context.localizeDynamic(summary.sisaCuti),
             onTap: () {
               Navigator.pushNamed(context, AppRoutes.ajukanCuti);
             },

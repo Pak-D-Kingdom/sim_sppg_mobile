@@ -1,4 +1,5 @@
 import 'package:material_ui/material_ui.dart';
+import '../../../../core/localization/app_localizations_extension.dart';
 import '../../domain/entities/akun_profile.dart';
 
 class AkunHeroCardWidget extends StatelessWidget {
@@ -11,6 +12,7 @@ class AkunHeroCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(18),
@@ -154,7 +156,7 @@ class AkunHeroCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'ID PERSONEL',
+                      l10n.personnelIdLabel,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
@@ -180,7 +182,7 @@ class AkunHeroCardWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'MASA KERJA',
+                      l10n.workTenureLabel,
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
