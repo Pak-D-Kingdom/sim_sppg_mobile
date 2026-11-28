@@ -429,6 +429,30 @@ class AppLocalizationsEn extends AppLocalizations {
       'Ensure your face is clearly visible inside the frame without a mask';
 
   @override
+  String get turnOnCamera => 'Turn On Camera';
+
+  @override
+  String get capturePhoto => 'Capture';
+
+  @override
+  String get retakePhoto => 'Retake Photo';
+
+  @override
+  String get cameraOffInstruction =>
+      'Tap Turn On Camera to take an attendance photo';
+
+  @override
+  String get photoCapturedInstruction =>
+      'Photo captured. Please confirm your attendance.';
+
+  @override
+  String get cameraPermissionDenied =>
+      'Camera permission denied. Enable camera permission to take an attendance photo.';
+
+  @override
+  String get cameraUnavailable => 'Camera is unavailable on this device.';
+
+  @override
   String get clockInEntryUpper => 'CLOCK-IN TIME';
 
   @override

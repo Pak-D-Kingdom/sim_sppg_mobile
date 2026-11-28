@@ -884,6 +884,48 @@ abstract class AppLocalizations {
   /// **'Pastikan wajah terlihat jelas di dalam bingkai tanpa masker'**
   String get faceFrameInstruction;
 
+  /// No description provided for @turnOnCamera.
+  ///
+  /// In id, this message translates to:
+  /// **'Hidupkan Kamera'**
+  String get turnOnCamera;
+
+  /// No description provided for @capturePhoto.
+  ///
+  /// In id, this message translates to:
+  /// **'Capture'**
+  String get capturePhoto;
+
+  /// No description provided for @retakePhoto.
+  ///
+  /// In id, this message translates to:
+  /// **'Foto Ulang'**
+  String get retakePhoto;
+
+  /// No description provided for @cameraOffInstruction.
+  ///
+  /// In id, this message translates to:
+  /// **'Tekan tombol Hidupkan Kamera untuk mengambil foto presensi'**
+  String get cameraOffInstruction;
+
+  /// No description provided for @photoCapturedInstruction.
+  ///
+  /// In id, this message translates to:
+  /// **'Foto berhasil diambil. Silakan konfirmasi presensi.'**
+  String get photoCapturedInstruction;
+
+  /// No description provided for @cameraPermissionDenied.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin kamera ditolak. Aktifkan izin kamera untuk mengambil foto presensi.'**
+  String get cameraPermissionDenied;
+
+  /// No description provided for @cameraUnavailable.
+  ///
+  /// In id, this message translates to:
+  /// **'Kamera tidak tersedia pada perangkat ini.'**
+  String get cameraUnavailable;
+
   /// No description provided for @clockInEntryUpper.
   ///
   /// In id, this message translates to:

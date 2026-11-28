@@ -53,11 +53,13 @@ class PresensiBloc extends Bloc<PresensiEvent, PresensiState> {
 
     emit(
       currentState.copyWith(
-        data: currentState.data.copyWith(
-          capturedPhotoPath: event.photoPath,
-          isFaceDetected: true,
-          isLivenessOk: true,
-        ),
+        data: event.photoPath == null
+            ? currentState.data.copyWith(clearCapturedPhoto: true)
+            : currentState.data.copyWith(
+                capturedPhotoPath: event.photoPath,
+                isFaceDetected: true,
+                isLivenessOk: true,
+              ),
         clearMessages: true,
       ),
     );
@@ -72,10 +74,10 @@ class PresensiBloc extends Bloc<PresensiEvent, PresensiState> {
 
     if (currentState.isSubmitting) return;
 
-    emit(currentState.copyWith(isSubmitting: true, clearMessages: true));
+    final photoPath = currentState.data.capturedPhotoPath;
+    if (photoPath == null || photoPath.isEmpty) return;
 
-    final photoPath = currentState.data.capturedPhotoPath ??
-        'presensi_${DateTime.now().millisecondsSinceEpoch}.jpg';
+    emit(currentState.copyWith(isSubmitting: true, clearMessages: true));
 
     if (currentState.data.type == PresensiType.clockIn) {
       final result = await submitClockIn(photoPath: photoPath);

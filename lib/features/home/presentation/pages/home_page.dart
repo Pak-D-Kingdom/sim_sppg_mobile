@@ -12,24 +12,28 @@ import '../widgets/home_error_widget.dart';
 import '../widgets/home_menu_grid_widget.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  final ValueChanged<PresensiType>? onOpenPresensi;
+
+  const HomePage({super.key, this.onOpenPresensi});
 
   @override
   Widget build(BuildContext context) {
     try {
       context.read<HomeBloc>();
-      return const HomeView();
+      return HomeView(onOpenPresensi: onOpenPresensi);
     } catch (_) {
       return BlocProvider(
         create: (_) => sl<HomeBloc>()..add(const LoadHomeDashboardEvent()),
-        child: const HomeView(),
+        child: HomeView(onOpenPresensi: onOpenPresensi),
       );
     }
   }
 }
 
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  final ValueChanged<PresensiType>? onOpenPresensi;
+
+  const HomeView({super.key, this.onOpenPresensi});
 
   @override
   Widget build(BuildContext context) {
@@ -71,18 +75,26 @@ class HomeView extends StatelessWidget {
                       attendance: dashboard.todayAttendance,
                       statistics: dashboard.statistics,
                       onClockInTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.presensi,
-                          arguments: PresensiType.clockIn,
-                        );
+                        if (onOpenPresensi != null) {
+                          onOpenPresensi!(PresensiType.clockIn);
+                        } else {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.presensi,
+                            arguments: PresensiType.clockIn,
+                          );
+                        }
                       },
                       onClockOutTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          AppRoutes.presensi,
-                          arguments: PresensiType.clockOut,
-                        );
+                        if (onOpenPresensi != null) {
+                          onOpenPresensi!(PresensiType.clockOut);
+                        } else {
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.presensi,
+                            arguments: PresensiType.clockOut,
+                          );
+                        }
                       },
                     ),
                     const SizedBox(height: 20),

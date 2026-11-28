@@ -17,22 +17,30 @@ import '../widgets/presensi_time_info_widget.dart';
 
 class PresensiScanPage extends StatelessWidget {
   final PresensiType? initialType;
+  final bool isActive;
 
   const PresensiScanPage({
     super.key,
     this.initialType,
+    this.isActive = true,
   });
 
   @override
   Widget build(BuildContext context) {
     try {
       context.read<PresensiBloc>();
-      return _PresensiScanPageView(initialType: initialType);
+      return _PresensiScanPageView(
+        initialType: initialType,
+        isActive: isActive,
+      );
     } catch (_) {
       return BlocProvider(
         create: (_) => sl<PresensiBloc>()
           ..add(LoadPresensiStatusEvent(requestedType: initialType)),
-        child: _PresensiScanPageView(initialType: initialType),
+        child: _PresensiScanPageView(
+          initialType: initialType,
+          isActive: isActive,
+        ),
       );
     }
   }
@@ -40,8 +48,12 @@ class PresensiScanPage extends StatelessWidget {
 
 class _PresensiScanPageView extends StatefulWidget {
   final PresensiType? initialType;
+  final bool isActive;
 
-  const _PresensiScanPageView({this.initialType});
+  const _PresensiScanPageView({
+    this.initialType,
+    this.isActive = true,
+  });
 
   @override
   State<_PresensiScanPageView> createState() => _PresensiScanPageViewState();
@@ -263,13 +275,13 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
 
                           // Kamera & Viewfinder Biometrik (Gambar 1 & Gambar 2)
                           PresensiCameraViewfinderWidget(
+                            isActive: widget.isActive,
                             isFaceDetected: data.isFaceDetected,
                             isLivenessOk: data.isLivenessOk,
-                            onPhotoCaptured: () {
+                            capturedPhotoPath: data.capturedPhotoPath,
+                            onPhotoCaptured: (photoPath) {
                               context.read<PresensiBloc>().add(
-                                    CaptureFacePhotoEvent(
-                                      'selfie_${DateTime.now().millisecondsSinceEpoch}.jpg',
-                                    ),
+                                    CaptureFacePhotoEvent(photoPath),
                                   );
                             },
                           ),
@@ -283,12 +295,14 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                           ),
                           const SizedBox(height: 16),
 
-                          // Tombol Konfirmasi Presensi
+                          // Tombol Konfirmasi Presensi (aktif setelah Capture)
                           SizedBox(
                             width: double.infinity,
                             height: 50,
                             child: ElevatedButton(
-                              onPressed: state.isSubmitting
+                              onPressed: (state.isSubmitting ||
+                                      data.capturedPhotoPath == null ||
+                                      data.capturedPhotoPath!.isEmpty)
                                   ? null
                                   : () {
                                       context
@@ -298,6 +312,10 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFF9FC5E8),
                                 foregroundColor: const Color(0xFF0F172A),
+                                disabledBackgroundColor:
+                                    const Color(0xFFE2E8F0),
+                                disabledForegroundColor:
+                                    const Color(0xFF94A3B8),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(16),
@@ -320,9 +338,14 @@ class _PresensiScanPageViewState extends State<_PresensiScanPageView> {
                                           MainAxisAlignment.center,
                                       children: [
                                         isClockIn
-                                            ? const FaceScanIcon(
+                                            ? FaceScanIcon(
                                                 size: 20,
-                                                color: Color(0xFF0F172A),
+                                                color: (data.capturedPhotoPath !=
+                                                            null &&
+                                                        data.capturedPhotoPath!
+                                                            .isNotEmpty)
+                                                    ? const Color(0xFF0F172A)
+                                                    : const Color(0xFF94A3B8),
                                                 strokeWidth: 2.2,
                                               )
                                             : const Icon(

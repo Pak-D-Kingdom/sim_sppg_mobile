@@ -27,7 +27,7 @@ class TogglePresensiTypeEvent extends PresensiEvent {
 }
 
 class CaptureFacePhotoEvent extends PresensiEvent {
-  final String photoPath;
+  final String? photoPath;
 
   const CaptureFacePhotoEvent(this.photoPath);
 

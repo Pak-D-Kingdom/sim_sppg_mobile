@@ -15,6 +15,7 @@ import '../../../jadwal/presentation/pages/jadwal_page.dart';
 import '../../../payroll/presentation/bloc/payroll_bloc.dart';
 import '../../../payroll/presentation/bloc/payroll_event.dart';
 import '../../../payroll/presentation/pages/payroll_page.dart';
+import '../../../presensi/domain/entities/presensi_data.dart';
 import '../../../presensi/presentation/bloc/presensi_bloc.dart';
 import '../../../presensi/presentation/bloc/presensi_event.dart';
 import '../../../presensi/presentation/pages/presensi_scan_page.dart';
@@ -59,16 +60,23 @@ class _MainPageContent extends StatefulWidget {
 class _MainPageContentState extends State<_MainPageContent> {
   int _currentIndex = 0;
 
-  final List<Widget> _pages = const [
-    HomePage(),
-    JadwalPage(),
-    PresensiScanPage(),
-    PayrollPage(),
-    AkunPage(),
-  ];
+  void _openPresensi(PresensiType type) {
+    context.read<PresensiBloc>().add(TogglePresensiTypeEvent(type));
+    setState(() {
+      _currentIndex = 2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      HomePage(onOpenPresensi: _openPresensi),
+      const JadwalPage(),
+      PresensiScanPage(isActive: _currentIndex == 2),
+      const PayrollPage(),
+      const AkunPage(),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: Column(
@@ -92,7 +100,7 @@ class _MainPageContentState extends State<_MainPageContent> {
           Expanded(
             child: IndexedStack(
               index: _currentIndex,
-              children: _pages,
+              children: pages,
             ),
           ),
         ],

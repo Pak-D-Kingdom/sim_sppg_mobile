@@ -429,6 +429,30 @@ class AppLocalizationsId extends AppLocalizations {
       'Pastikan wajah terlihat jelas di dalam bingkai tanpa masker';
 
   @override
+  String get turnOnCamera => 'Hidupkan Kamera';
+
+  @override
+  String get capturePhoto => 'Capture';
+
+  @override
+  String get retakePhoto => 'Foto Ulang';
+
+  @override
+  String get cameraOffInstruction =>
+      'Tekan tombol Hidupkan Kamera untuk mengambil foto presensi';
+
+  @override
+  String get photoCapturedInstruction =>
+      'Foto berhasil diambil. Silakan konfirmasi presensi.';
+
+  @override
+  String get cameraPermissionDenied =>
+      'Izin kamera ditolak. Aktifkan izin kamera untuk mengambil foto presensi.';
+
+  @override
+  String get cameraUnavailable => 'Kamera tidak tersedia pada perangkat ini.';
+
+  @override
   String get clockInEntryUpper => 'CLOCK-IN MASUK';
 
   @override

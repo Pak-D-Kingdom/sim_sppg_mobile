@@ -47,6 +47,7 @@ class PresensiData extends Equatable {
     bool? isFaceDetected,
     bool? isLivenessOk,
     String? capturedPhotoPath,
+    bool clearCapturedPhoto = false,
   }) {
     return PresensiData(
       type: type ?? this.type,
@@ -60,7 +61,9 @@ class PresensiData extends Equatable {
       remainingTimeBadge: remainingTimeBadge ?? this.remainingTimeBadge,
       isFaceDetected: isFaceDetected ?? this.isFaceDetected,
       isLivenessOk: isLivenessOk ?? this.isLivenessOk,
-      capturedPhotoPath: capturedPhotoPath ?? this.capturedPhotoPath,
+      capturedPhotoPath: clearCapturedPhoto
+          ? null
+          : (capturedPhotoPath ?? this.capturedPhotoPath),
     );
   }
 

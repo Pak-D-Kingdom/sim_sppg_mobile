@@ -67,7 +67,6 @@ class PresensiRemoteDataSourceImpl implements PresensiRemoteDataSource {
       remainingTimeBadge: '',
       isFaceDetected: true,
       isLivenessOk: true,
-      capturedPhotoPath: photoPath,
     );
   }
 
@@ -91,7 +90,6 @@ class PresensiRemoteDataSourceImpl implements PresensiRemoteDataSource {
       remainingTimeBadge: '',
       isFaceDetected: true,
       isLivenessOk: true,
-      capturedPhotoPath: photoPath,
     );
   }
 }
